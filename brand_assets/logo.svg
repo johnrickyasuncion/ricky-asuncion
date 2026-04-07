@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C6A559"/>
+      <stop offset="50%" style="stop-color:#E6B979"/>
+      <stop offset="100%" style="stop-color:#C6A559"/>
+    </linearGradient>
+    <linearGradient id="gold-grad-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9A7B3C"/>
+      <stop offset="50%" style="stop-color:#C6A559"/>
+      <stop offset="100%" style="stop-color:#9A7B3C"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Rounded square background -->
+  <rect x="40" y="40" width="432" height="432" rx="80" ry="80" fill="url(#gold-grad)" opacity="0.95"/>
+  <!-- Inner shadow/depth -->
+  <rect x="40" y="40" width="432" height="432" rx="80" ry="80" fill="url(#gold-grad-dark)" opacity="0.3"/>
+  <!-- Page fold effect -->
+  <path d="M380 40 L472 40 Q472 40 472 120 Z" fill="rgba(255,255,255,0.15)"/>
+  <!-- Checkmark -->
+  <path d="M148 270 L222 344 L372 184" fill="none" stroke="#FFFFFF" stroke-width="48" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  <!-- Subtle highlight on checkmark -->
+  <path d="M148 270 L222 344 L372 184" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="52" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M148 270 L222 344 L372 184" fill="none" stroke="#FFFFFF" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
