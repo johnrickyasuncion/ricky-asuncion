@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tester.io — Timeless Luxury Jewelry</title>
+    <title>Tester.io — Shop Fine Jewelry & Gemstones</title>
     <link rel="icon" type="image/svg+xml" href="brand_assets/logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <style>
-        /* ═══════════════════════════════════════════
-           CSS CUSTOM PROPERTIES
-           ═══════════════════════════════════════════ */
         :root {
             --gold-1: #C6A559;
             --gold-2: #E6B979;
@@ -30,29 +29,36 @@
             --font-body: 'Montserrat', sans-serif;
             --gold-gradient: linear-gradient(135deg, #C6A559 0%, #E6B979 50%, #C6A559 100%);
             --gold-gradient-h: linear-gradient(90deg, #C6A559 0%, #E6B979 50%, #C6A559 100%);
-            --gold-shimmer: linear-gradient(110deg, transparent 25%, rgba(230, 185, 121, 0.15) 37%, transparent 50%);
         }
 
-        /* ═══════════════════════════════════════════
-           RESET & BASE
-           ═══════════════════════════════════════════ */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         html {
+            -webkit-text-size-adjust: 100%;
+            font-family: var(--font-body);
             scroll-behavior: smooth;
             scrollbar-width: thin;
             scrollbar-color: var(--gold-dark) var(--black-2);
         }
 
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: var(--black-2); }
         ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
 
         body {
+            background-color: var(--black-1);
             font-family: var(--font-body);
-            background: var(--black-1);
+            flex-flow: column;
+            min-height: 100vh;
+            padding-top: 0;
+            font-size: 10px;
+            line-height: 15px;
+            display: flex;
             color: var(--white);
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -62,123 +68,156 @@
             color: var(--white-pure);
         }
 
-        /* ═══════════════════════════════════════════
-           UTILITY CLASSES
-           ═══════════════════════════════════════════ */
-        .gold-text {
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-padding {
-            padding: 120px 5vw;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-
-        /* Gold decorative line */
-        .gold-line {
-            width: 60px;
-            height: 1px;
-            background: var(--gold-gradient-h);
-            margin: 20px 0;
-        }
-
-        .gold-line-center {
-            margin: 20px auto;
-        }
-
-        .section-label {
-            font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gold-1);
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: clamp(2.2rem, 4vw, 3.5rem);
-            font-weight: 300;
-            line-height: 1.2;
-            color: var(--white);
-            margin-bottom: 24px;
-        }
-
-        /* ═══════════════════════════════════════════
-           GRAIN OVERLAY
-           ═══════════════════════════════════════════ */
+        /* ─── Grain Overlay ─── */
         .grain-overlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            inset: 0;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
             background-repeat: repeat;
             background-size: 256px;
         }
 
-        /* ═══════════════════════════════════════════
-           NAVIGATION
-           ═══════════════════════════════════════════ */
-        .navbar {
-            position: fixed;
+        /* ─── Announcement Bar ─── */
+        .announcement-bar {
+            background-color: var(--black-3);
+            color: var(--gray-light);
+            text-align: center;
+            padding: 10px 20px;
+            font-family: var(--font-body);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(198, 165, 89, 0.08);
+        }
+
+        .announcement-bar::before {
+            content: '';
+            position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 0 5vw;
-            height: 80px;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.06), transparent);
+            animation: shimmer 8s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+
+        .announcement-bar span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .announcement-bar .gold-accent {
+            color: var(--gold-1);
+        }
+
+        /* ─── Navigation ─── */
+        .nav-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(5, 5, 5, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .nav-wrapper.scrolled {
+            box-shadow: 0 1px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(198, 165, 89, 0.1);
+        }
+
+        nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: all 0.5s ease;
-            background: transparent;
+            padding: 18px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .navbar.scrolled {
-            background: rgba(5, 5, 5, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(198, 165, 89, 0.1);
-            height: 70px;
+        .nav-left, .nav-right {
+            display: flex;
+            gap: 32px;
+            flex: 1;
         }
 
-        .nav-brand {
+        .nav-right {
+            justify-content: flex-end;
+        }
+
+        .nav-left a, .nav-right a {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--gray-light);
+            position: relative;
+            padding-bottom: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-left a::after, .nav-right a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold-gradient-h);
+            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-left a:hover::after, .nav-right a:hover::after {
+            width: 100%;
+        }
+
+        .nav-left a:hover, .nav-right a:hover {
+            color: var(--gold-2);
+        }
+
+        .nav-left a.active {
+            color: var(--gold-1);
+        }
+
+        .nav-left a.active::after {
+            width: 100%;
+            background: var(--gold-gradient-h);
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
+            padding: 0 20px;
+            transition: opacity 0.3s ease;
         }
 
-        .nav-brand img {
-            width: 38px;
-            height: 38px;
-            object-fit: contain;
-            border-radius: 8px;
+        .logo:hover {
+            opacity: 0.8;
         }
 
-        .nav-brand-name {
+        .logo img {
+            width: 34px;
+            height: 34px;
+            border-radius: 7px;
+        }
+
+        .logo-text {
             font-family: var(--font-body);
             font-size: 20px;
             font-weight: 700;
@@ -187,1252 +226,323 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            white-space: nowrap;
         }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-family: var(--font-body);
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--gray-light);
-            text-decoration: none;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--gold-gradient-h);
-            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .nav-links a:hover { color: var(--gold-2); }
-        .nav-links a:hover::after { width: 100%; }
-
-        .nav-cta {
-            font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            padding: 12px 28px;
-            background: var(--gold-gradient);
-            color: var(--black-1);
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-cta::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .nav-cta:hover::before { left: 100%; }
-        .nav-cta:hover { box-shadow: 0 4px 25px rgba(198, 165, 89, 0.35); }
-
-        /* Mobile nav */
-        .nav-toggle {
+        /* ─── Mobile Menu ─── */
+        .menu-toggle {
             display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
             background: none;
             border: none;
-            padding: 5px;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 200;
         }
 
-        .nav-toggle span {
-            width: 24px;
+        .menu-toggle span {
+            display: block;
+            width: 22px;
             height: 1.5px;
             background: var(--gold-2);
+            margin: 5px 0;
             transition: all 0.3s ease;
-            display: block;
         }
 
-        .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
-        .nav-toggle.active span:nth-child(2) { opacity: 0; }
-        .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
-
-        /* ═══════════════════════════════════════════
-           HERO SECTION
-           ═══════════════════════════════════════════ */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: var(--black-1);
-        }
-
-        /* Hero background layers */
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-        }
-
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 50% 40%, rgba(198, 165, 89, 0.06) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 50% at 70% 60%, rgba(198, 165, 89, 0.04) 0%, transparent 60%),
-                radial-gradient(ellipse 50% 40% at 20% 50%, rgba(230, 185, 121, 0.03) 0%, transparent 60%);
-        }
-
-        /* Geometric Art Deco lines */
-        .hero-geo {
-            position: absolute;
-            inset: 0;
-            z-index: 2;
-            opacity: 0.08;
-        }
-
-        .hero-geo::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            border: 1px solid var(--gold-1);
-            border-radius: 50%;
-            animation: hero-ring-pulse 8s ease-in-out infinite;
-        }
-
-        .hero-geo::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(45deg);
-            width: 420px;
-            height: 420px;
-            border: 1px solid var(--gold-2);
-            animation: hero-ring-pulse 8s ease-in-out infinite 2s;
-        }
-
-        @keyframes hero-ring-pulse {
-            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
-        }
-
-        /* Particle canvas */
-        #hero-particles {
-            position: absolute;
-            inset: 0;
-            z-index: 3;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            max-width: 900px;
-            padding: 0 5vw;
-        }
-
-        .hero-eyebrow {
-            font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            color: var(--gold-1);
-            margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: hero-fade-up 1s ease forwards 0.3s;
-        }
-
-        .hero-title {
-            font-family: var(--font-display);
-            font-size: clamp(3rem, 7vw, 6.5rem);
-            font-weight: 300;
-            line-height: 1.05;
-            letter-spacing: -1px;
-            color: var(--white);
-            margin-bottom: 28px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: hero-fade-up 1.2s ease forwards 0.5s;
-        }
-
-        .hero-title em {
-            font-style: italic;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-family: var(--font-body);
-            font-size: clamp(14px, 1.2vw, 17px);
-            font-weight: 300;
-            line-height: 1.8;
-            color: var(--gray-light);
-            max-width: 550px;
-            margin: 0 auto 50px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: hero-fade-up 1s ease forwards 0.8s;
-        }
-
-        .hero-cta-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: hero-fade-up 1s ease forwards 1.1s;
-        }
-
-        .btn-primary {
-            font-family: var(--font-body);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            padding: 18px 42px;
-            background: var(--gold-gradient);
-            color: var(--black-1);
+        .cart-icon {
+            display: none;
+            background: none;
             border: none;
             cursor: pointer;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s ease;
+            padding: 8px;
         }
 
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-            transition: left 0.7s ease;
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 6px 35px rgba(198, 165, 89, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary:hover::before { left: 100%; }
-
-        .btn-secondary {
-            font-family: var(--font-body);
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            padding: 17px 42px;
-            background: transparent;
-            color: var(--gold-2);
-            border: 1px solid rgba(198, 165, 89, 0.4);
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.5s ease;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--gold-2);
-            background: rgba(198, 165, 89, 0.08);
-            box-shadow: 0 0 25px rgba(198, 165, 89, 0.1);
-        }
-
-        .hero-scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            opacity: 0;
-            animation: hero-fade-up 1s ease forwards 1.5s;
-        }
-
-        .hero-scroll-indicator span {
-            font-size: 10px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gray);
-            font-weight: 500;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--gold-1), transparent);
-            animation: scroll-pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes scroll-pulse {
-            0%, 100% { opacity: 0.3; height: 40px; }
-            50% { opacity: 1; height: 55px; }
-        }
-
-        @keyframes hero-fade-up {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ═══════════════════════════════════════════
-           COLLECTIONS SECTION
-           ═══════════════════════════════════════════ */
-        .collections {
-            background: var(--black-2);
-            position: relative;
-        }
-
-        .collections::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.2), transparent);
-        }
-
-        .collections-header {
-            text-align: center;
-            margin-bottom: 70px;
-        }
-
-        .collections-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        .collection-card {
-            position: relative;
-            aspect-ratio: 3/4;
-            overflow: hidden;
-            cursor: pointer;
-            border: 1px solid rgba(198, 165, 89, 0.1);
-            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .collection-card:hover {
-            border-color: rgba(198, 165, 89, 0.3);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(198, 165, 89, 0.08);
-        }
-
-        .collection-card-bg {
-            position: absolute;
-            inset: 0;
-            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .collection-card:hover .collection-card-bg {
-            transform: scale(1.08);
-        }
-
-        /* Unique backgrounds for each collection */
-        .collection-rings .collection-card-bg {
-            background:
-                radial-gradient(circle at 50% 50%, rgba(198, 165, 89, 0.15) 0%, transparent 50%),
-                linear-gradient(180deg, var(--black-3) 0%, var(--black-4) 100%);
-        }
-
-        .collection-rings .collection-card-bg::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px; height: 120px;
-            border: 2px solid rgba(198, 165, 89, 0.25);
-            border-radius: 50%;
-            box-shadow: inset 0 0 40px rgba(198, 165, 89, 0.1), 0 0 40px rgba(198, 165, 89, 0.05);
-        }
-
-        .collection-rings .collection-card-bg::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -55%);
-            width: 18px; height: 18px;
-            background: radial-gradient(circle, var(--gold-2) 0%, var(--gold-1) 40%, transparent 70%);
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(230, 185, 121, 0.5);
-        }
-
-        .collection-necklaces .collection-card-bg {
-            background:
-                radial-gradient(circle at 50% 30%, rgba(198, 165, 89, 0.1) 0%, transparent 40%),
-                linear-gradient(180deg, var(--black-3) 0%, var(--black-4) 100%);
-        }
-
-        .collection-necklaces .collection-card-bg::before {
-            content: '';
-            position: absolute;
-            top: 35%; left: 50%;
-            transform: translateX(-50%);
-            width: 160px; height: 100px;
-            border: 1.5px solid rgba(198, 165, 89, 0.2);
-            border-radius: 0 0 50% 50%;
-            border-top: none;
-        }
-
-        .collection-necklaces .collection-card-bg::after {
-            content: '';
-            position: absolute;
-            top: calc(35% + 98px); left: 50%;
-            transform: translateX(-50%) rotate(45deg);
-            width: 14px; height: 14px;
-            background: var(--gold-gradient);
-            box-shadow: 0 0 15px rgba(198, 165, 89, 0.4);
-        }
-
-        .collection-bracelets .collection-card-bg {
-            background:
-                radial-gradient(circle at 50% 50%, rgba(198, 165, 89, 0.08) 0%, transparent 40%),
-                linear-gradient(180deg, var(--black-3) 0%, var(--black-4) 100%);
-        }
-
-        .collection-bracelets .collection-card-bg::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 140px; height: 80px;
-            border: 2px solid rgba(198, 165, 89, 0.2);
-            border-radius: 50%;
-        }
-
-        .collection-bracelets .collection-card-bg::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 110px; height: 55px;
-            border: 1px solid rgba(198, 165, 89, 0.12);
-            border-radius: 50%;
-        }
-
-        .collection-earrings .collection-card-bg {
-            background:
-                radial-gradient(circle at 50% 40%, rgba(198, 165, 89, 0.1) 0%, transparent 40%),
-                linear-gradient(180deg, var(--black-3) 0%, var(--black-4) 100%);
-        }
-
-        .collection-earrings .collection-card-bg::before {
-            content: '';
-            position: absolute;
-            top: 35%; left: 50%;
-            transform: translateX(-50%);
-            width: 2px; height: 40px;
-            background: linear-gradient(to bottom, rgba(198, 165, 89, 0.4), rgba(198, 165, 89, 0.15));
-        }
-
-        .collection-earrings .collection-card-bg::after {
-            content: '';
-            position: absolute;
-            top: calc(35% + 42px); left: 50%;
-            transform: translateX(-50%) rotate(45deg);
-            width: 35px; height: 35px;
-            border: 1.5px solid rgba(198, 165, 89, 0.25);
-            background: radial-gradient(circle at 50% 50%, rgba(198, 165, 89, 0.08) 0%, transparent 70%);
-        }
-
-        .collection-card-content {
-            position: absolute;
-            bottom: 0;
-            left: 0; right: 0;
-            padding: 30px;
-            background: linear-gradient(to top, rgba(5, 5, 5, 0.9) 0%, transparent 100%);
-            z-index: 2;
-        }
-
-        .collection-card-title {
-            font-family: var(--font-display);
-            font-size: 26px;
-            font-weight: 400;
-            color: var(--white);
-            margin-bottom: 8px;
-        }
-
-        .collection-card-count {
-            font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--gray);
-            margin-bottom: 18px;
-        }
-
-        .collection-card-link {
-            font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold-2);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: gap 0.3s ease;
-        }
-
-        .collection-card:hover .collection-card-link { gap: 14px; }
-
-        .collection-card-link svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.3s ease;
-        }
-
-        .collection-card:hover .collection-card-link svg {
-            transform: translateX(3px);
-        }
-
-        /* ═══════════════════════════════════════════
-           BRAND STORY SECTION
-           ═══════════════════════════════════════════ */
-        .brand-story {
-            background: var(--black-1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .brand-story::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.2), transparent);
-        }
-
-        .brand-story-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            max-width: 1300px;
-            margin: 0 auto;
-            align-items: center;
-        }
-
-        .brand-story-visual {
-            position: relative;
-            aspect-ratio: 4/5;
-            background: var(--black-3);
-            border: 1px solid rgba(198, 165, 89, 0.1);
-            overflow: hidden;
-        }
-
-        .brand-story-visual::before {
-            content: '';
-            position: absolute;
-            inset: 30px;
-            border: 1px solid rgba(198, 165, 89, 0.12);
-        }
-
-        .brand-story-visual::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            background:
-                radial-gradient(circle, rgba(198, 165, 89, 0.12) 0%, transparent 60%);
-        }
-
-        .brand-story-diamond {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(45deg);
-            width: 80px;
-            height: 80px;
-            border: 1px solid rgba(198, 165, 89, 0.3);
-            animation: diamond-rotate 20s linear infinite;
-        }
-
-        .brand-story-diamond::before {
-            content: '';
-            position: absolute;
-            inset: 15px;
-            border: 1px solid rgba(198, 165, 89, 0.2);
-            transform: rotate(15deg);
-        }
-
-        @keyframes diamond-rotate {
-            to { transform: translate(-50%, -50%) rotate(405deg); }
-        }
-
-        .brand-story-year {
-            position: absolute;
-            bottom: 40px;
-            left: 40px;
-            font-family: var(--font-display);
-            font-size: 72px;
-            font-weight: 300;
-            color: rgba(198, 165, 89, 0.1);
-            line-height: 1;
-        }
-
-        .brand-story-text h3 {
-            font-family: var(--font-display);
-            font-size: clamp(1.8rem, 3vw, 2.8rem);
-            font-weight: 300;
-            line-height: 1.25;
-            margin-bottom: 30px;
-        }
-
-        .brand-story-text p {
-            font-family: var(--font-body);
-            font-size: 15px;
-            font-weight: 300;
-            line-height: 1.9;
-            color: var(--gray-light);
-            margin-bottom: 20px;
-        }
-
-        .brand-story-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 50px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(198, 165, 89, 0.1);
-        }
-
-        .stat-number {
-            font-family: var(--font-display);
-            font-size: 36px;
-            font-weight: 300;
-            color: var(--gold-2);
-            margin-bottom: 6px;
-        }
-
-        .stat-label {
-            font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--gray);
-        }
-
-        /* ═══════════════════════════════════════════
-           SIGNATURE PIECES
-           ═══════════════════════════════════════════ */
-        .signature {
-            background: var(--black-2);
-            position: relative;
-        }
-
-        .signature::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.2), transparent);
-        }
-
-        .signature-header {
-            text-align: center;
-            margin-bottom: 70px;
-        }
-
-        .signature-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        .signature-card {
-            position: relative;
-            background: var(--black-3);
-            border: 1px solid rgba(198, 165, 89, 0.08);
-            transition: all 0.6s ease;
-            overflow: hidden;
-        }
-
-        .signature-card:hover {
-            border-color: rgba(198, 165, 89, 0.25);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(198, 165, 89, 0.05);
-        }
-
-        .signature-card-visual {
-            aspect-ratio: 1;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .sig-piece-1 .signature-card-visual {
-            background: radial-gradient(circle at 50% 50%, rgba(198, 165, 89, 0.08) 0%, var(--black-3) 70%);
-        }
-
-        /* Diamond ring CSS art */
-        .diamond-ring {
-            position: relative;
-            width: 100px;
-            height: 100px;
-        }
-
-        .diamond-ring::before {
-            content: '';
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90px;
-            height: 90px;
-            border: 2px solid rgba(198, 165, 89, 0.3);
-            border-radius: 50%;
-        }
-
-        .diamond-ring::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%) rotate(45deg);
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-1) 50%, var(--gold-dark) 100%);
-            box-shadow: 0 0 30px rgba(198, 165, 89, 0.5), 0 0 60px rgba(198, 165, 89, 0.2);
-        }
-
-        .sig-piece-2 .signature-card-visual {
-            background: radial-gradient(circle at 50% 50%, rgba(198, 165, 89, 0.06) 0%, var(--black-3) 70%);
-        }
-
-        /* Pendant CSS art */
-        .pendant {
-            position: relative;
-            width: 80px;
-            height: 140px;
-        }
-
-        .pendant::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, rgba(198, 165, 89, 0.5), rgba(198, 165, 89, 0.3));
-        }
-
-        .pendant::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 45px;
-            height: 60px;
-            border: 2px solid rgba(198, 165, 89, 0.35);
-            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            background: radial-gradient(ellipse at 50% 40%, rgba(198, 165, 89, 0.15) 0%, transparent 70%);
-            box-shadow: 0 0 30px rgba(198, 165, 89, 0.1);
-        }
-
-        .sig-piece-3 .signature-card-visual {
-            background: radial-gradient(circle at 50% 50%, rgba(198, 165, 89, 0.06) 0%, var(--black-3) 70%);
-        }
-
-        /* Bracelet CSS art */
-        .bracelet-art {
-            position: relative;
-            width: 140px;
-            height: 80px;
-        }
-
-        .bracelet-art::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 130px;
-            height: 70px;
-            border: 2px solid rgba(198, 165, 89, 0.25);
-            border-radius: 50%;
-        }
-
-        .bracelet-art::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 108px;
-            height: 52px;
-            border: 1px solid rgba(198, 165, 89, 0.15);
-            border-radius: 50%;
-        }
-
-        .bracelet-gems {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-        }
-
-        .bracelet-gems span {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: var(--gold-gradient);
-            border-radius: 50%;
-            box-shadow: 0 0 8px rgba(198, 165, 89, 0.4);
-        }
-
-        .bracelet-gems span:nth-child(1) { top: 3px; left: 50%; transform: translateX(-50%); }
-        .bracelet-gems span:nth-child(2) { top: 15px; right: 12px; }
-        .bracelet-gems span:nth-child(3) { bottom: 15px; right: 12px; }
-        .bracelet-gems span:nth-child(4) { bottom: 3px; left: 50%; transform: translateX(-50%); }
-        .bracelet-gems span:nth-child(5) { bottom: 15px; left: 12px; }
-        .bracelet-gems span:nth-child(6) { top: 15px; left: 12px; }
-
-        .signature-card-info {
-            padding: 30px;
-        }
-
-        .signature-card-name {
-            font-family: var(--font-display);
-            font-size: 24px;
-            font-weight: 400;
-            color: var(--white);
-            margin-bottom: 8px;
-        }
-
-        .signature-card-desc {
-            font-family: var(--font-body);
-            font-size: 13px;
-            font-weight: 300;
-            color: var(--gray-light);
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .signature-card-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .signature-price {
-            font-family: var(--font-display);
-            font-size: 22px;
-            font-weight: 400;
-            color: var(--gold-2);
-        }
-
-        .signature-view {
-            font-family: var(--font-body);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--gold-1);
-            text-decoration: none;
-            border: 1px solid rgba(198, 165, 89, 0.3);
-            padding: 10px 20px;
-            transition: all 0.3s ease;
-        }
-
-        .signature-view:hover {
-            background: rgba(198, 165, 89, 0.1);
-            border-color: var(--gold-2);
-        }
-
-        /* ═══════════════════════════════════════════
-           CRAFTSMANSHIP SECTION
-           ═══════════════════════════════════════════ */
-        .craftsmanship {
-            background: var(--black-1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .craftsmanship::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.2), transparent);
-        }
-
-        .craftsmanship-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .craftsmanship-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        .craft-card {
-            text-align: center;
-            padding: 50px 30px;
-            border: 1px solid rgba(198, 165, 89, 0.08);
-            background: rgba(17, 17, 17, 0.5);
-            transition: all 0.5s ease;
-            position: relative;
-        }
-
-        .craft-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 1px;
-            background: var(--gold-gradient-h);
-            transition: width 0.5s ease;
-        }
-
-        .craft-card:hover::before { width: 100%; }
-
-        .craft-card:hover {
-            border-color: rgba(198, 165, 89, 0.2);
-            background: rgba(17, 17, 17, 0.8);
-            transform: translateY(-5px);
-        }
-
-        .craft-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .craft-icon svg {
-            width: 40px;
-            height: 40px;
+        .cart-icon svg {
+            width: 20px;
+            height: 20px;
             stroke: var(--gold-1);
             fill: none;
-            stroke-width: 1.2;
+            stroke-width: 1.5;
         }
 
-        .craft-card h4 {
+        /* ─── Page Header ─── */
+        .page-header {
+            text-align: center;
+            padding: 60px 20px 44px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            position: relative;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: var(--gold-gradient-h);
+        }
+
+        .page-header h1 {
             font-family: var(--font-display);
-            font-size: 22px;
-            font-weight: 400;
+            font-size: 42px;
+            font-weight: 300;
+            letter-spacing: 4px;
             color: var(--white);
             margin-bottom: 14px;
         }
 
-        .craft-card p {
+        .page-header h1 em {
+            font-style: italic;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
             font-family: var(--font-body);
             font-size: 13px;
             font-weight: 300;
-            line-height: 1.8;
+            letter-spacing: 0.5px;
             color: var(--gray);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.9;
         }
 
-        /* ═══════════════════════════════════════════
-           TESTIMONIALS
-           ═══════════════════════════════════════════ */
-        .testimonials {
-            background: var(--black-2);
+        /* ─── Filter Bar ─── */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            padding: 30px 40px 36px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.15s forwards;
+        }
+
+        .filter-btn {
+            font-family: var(--font-body);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            padding: 8px 4px;
             position: relative;
+            transition: color 0.3s ease;
         }
 
-        .testimonials::before {
+        .filter-btn::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0;
+            bottom: 0;
+            left: 50%;
+            width: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.2), transparent);
+            background: var(--gold-gradient-h);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
         }
 
-        .testimonials-header {
-            text-align: center;
-            margin-bottom: 70px;
+        .filter-btn:hover, .filter-btn.active {
+            color: var(--gold-1);
         }
 
-        .testimonials-grid {
+        .filter-btn.active::after {
+            width: 100%;
+        }
+
+        /* ─── Product Grid ─── */
+        .product-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1200px;
+            gap: 3px;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 40px 40px;
+            width: 100%;
         }
 
-        .testimonial-card {
-            padding: 44px;
-            border: 1px solid rgba(198, 165, 89, 0.08);
-            background: rgba(10, 10, 10, 0.5);
-            transition: all 0.5s ease;
+        #productGridBottom {
+            padding-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .product-card {
             position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            background: var(--black-2);
+            border: 1px solid rgba(198, 165, 89, 0.04);
+            transition: border-color 0.4s ease;
         }
 
-        .testimonial-card:hover {
-            border-color: rgba(198, 165, 89, 0.2);
+        .product-card:hover {
+            border-color: rgba(198, 165, 89, 0.15);
         }
 
-        .testimonial-stars {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 24px;
+        .product-card.visible {
+            animation: fadeUp 0.6s ease forwards;
         }
 
-        .testimonial-stars svg {
-            width: 14px;
-            height: 14px;
-            fill: var(--gold-1);
+        .product-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1.15;
+            background: var(--black-3);
         }
 
-        .testimonial-quote {
-            font-family: var(--font-display);
-            font-size: 18px;
-            font-weight: 300;
-            font-style: italic;
-            line-height: 1.7;
-            color: var(--gray-light);
-            margin-bottom: 30px;
+        .product-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease;
+            will-change: transform;
         }
 
-        .testimonial-quote::before {
-            content: '\201C';
-            font-family: var(--font-display);
-            font-size: 48px;
-            color: rgba(198, 165, 89, 0.3);
-            line-height: 0;
-            display: block;
-            margin-bottom: 16px;
+        .product-image-wrapper img.broken {
+            display: none;
         }
 
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .testimonial-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--gold-gradient);
+        .product-image-wrapper .img-fallback {
+            position: absolute;
+            inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: var(--font-body);
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--black-1);
+            background: radial-gradient(circle at 50% 50%, rgba(198, 165, 89, 0.08) 0%, var(--black-3) 70%);
         }
 
-        .testimonial-author-name {
-            font-family: var(--font-body);
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--white);
-            margin-bottom: 2px;
+        .product-image-wrapper .img-fallback svg {
+            width: 48px;
+            height: 48px;
+            stroke: rgba(198, 165, 89, 0.25);
+            fill: none;
+            stroke-width: 1;
         }
 
-        .testimonial-author-title {
-            font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 400;
-            color: var(--gray);
-            letter-spacing: 1px;
+        .product-card:hover .product-image-wrapper img {
+            transform: scale(1.04);
         }
 
-        /* ═══════════════════════════════════════════
-           NEWSLETTER
-           ═══════════════════════════════════════════ */
-        .newsletter {
-            background: var(--black-1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .newsletter::before {
-            content: '';
+        .product-overlay {
             position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.2), transparent);
-        }
-
-        .newsletter-inner {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .newsletter-bg-accent {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(198, 165, 89, 0.04) 0%, transparent 60%);
-            z-index: 1;
-        }
-
-        .newsletter h3 {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 3.5vw, 3rem);
-            font-weight: 300;
-            margin-bottom: 16px;
-        }
-
-        .newsletter p {
-            font-family: var(--font-body);
-            font-size: 15px;
-            font-weight: 300;
-            color: var(--gray-light);
-            line-height: 1.7;
-            margin-bottom: 40px;
-        }
-
-        .newsletter-form {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(5, 5, 5, 0.5));
+            opacity: 0;
+            transition: opacity 0.4s ease;
             display: flex;
-            gap: 0;
-            max-width: 500px;
-            margin: 0 auto;
+            justify-content: center;
         }
 
-        .newsletter-form input {
-            flex: 1;
-            padding: 18px 24px;
-            background: rgba(26, 26, 26, 0.8);
-            border: 1px solid rgba(198, 165, 89, 0.15);
-            border-right: none;
-            color: var(--white);
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+
+        .quick-view-btn {
             font-family: var(--font-body);
-            font-size: 13px;
-            font-weight: 400;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .newsletter-form input::placeholder { color: var(--gray); }
-        .newsletter-form input:focus { border-color: rgba(198, 165, 89, 0.4); }
-
-        .newsletter-form button {
-            padding: 18px 32px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 12px 28px;
             background: var(--gold-gradient);
             border: none;
             color: var(--black-1);
-            font-family: var(--font-body);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
             cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
+            transform: translateY(10px);
         }
 
-        .newsletter-form button::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s ease;
+        .product-card:hover .quick-view-btn {
+            transform: translateY(0);
+            transition-delay: 0.1s;
         }
 
-        .newsletter-form button:hover::before { left: 100%; }
-        .newsletter-form button:hover { box-shadow: 0 4px 25px rgba(198, 165, 89, 0.35); }
+        .quick-view-btn:hover {
+            box-shadow: 0 4px 20px rgba(198, 165, 89, 0.35);
+        }
 
-        .newsletter-privacy {
+        .product-info {
+            padding: 18px 12px 24px;
+        }
+
+        .product-name {
             font-family: var(--font-body);
-            font-size: 11px;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gray-light);
+            margin-bottom: 6px;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-family: var(--font-display);
+            font-size: 18px;
             font-weight: 400;
+            color: var(--gold-2);
+            letter-spacing: 0.5px;
+        }
+
+        .product-price .from {
+            font-family: var(--font-body);
+            font-weight: 300;
             color: var(--gray);
-            margin-top: 16px;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-right: 6px;
         }
 
-        /* ═══════════════════════════════════════════
-           FOOTER
-           ═══════════════════════════════════════════ */
-        .footer {
-            background: var(--black-1);
-            padding: 80px 5vw 40px;
-            position: relative;
+        /* ─── Footer ─── */
+        footer {
+            margin-top: auto;
+            background-color: var(--black-2);
+            color: var(--white);
+            padding: 70px 40px 30px;
+            border-top: 1px solid rgba(198, 165, 89, 0.1);
         }
 
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.2), transparent);
-        }
-
-        .footer-grid {
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 60px;
-            max-width: 1300px;
-            margin: 0 auto;
-            padding-bottom: 60px;
-            border-bottom: 1px solid rgba(198, 165, 89, 0.08);
+            margin-bottom: 50px;
         }
 
-        .footer-brand img {
-            width: 40px;
-            height: 40px;
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand-logo img {
+            width: 36px;
+            height: 36px;
             border-radius: 8px;
-            margin-bottom: 12px;
         }
 
-        .footer-brand-name {
+        .footer-brand h3 {
             font-family: var(--font-body);
             font-size: 18px;
             font-weight: 700;
@@ -1440,686 +550,832 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 16px;
         }
 
         .footer-brand p {
+            font-family: var(--font-body);
             font-size: 13px;
             font-weight: 300;
+            line-height: 1.9;
             color: var(--gray);
-            line-height: 1.8;
             max-width: 300px;
         }
 
-        .footer-social {
-            display: flex;
-            gap: 16px;
-            margin-top: 24px;
-        }
-
-        .footer-social a {
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(198, 165, 89, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            background: rgba(198, 165, 89, 0.1);
-            border-color: var(--gold-1);
-        }
-
-        .footer-social a svg {
-            width: 16px;
-            height: 16px;
-            fill: var(--gold-1);
-        }
-
-        .footer-col h5 {
+        .footer-col h4 {
             font-family: var(--font-body);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             letter-spacing: 3px;
             text-transform: uppercase;
+            margin-bottom: 22px;
             color: var(--gold-1);
-            margin-bottom: 24px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
         }
 
         .footer-col a {
+            display: block;
             font-family: var(--font-body);
             font-size: 13px;
             font-weight: 400;
             color: var(--gray);
             text-decoration: none;
+            margin-bottom: 14px;
             transition: color 0.3s ease;
         }
 
-        .footer-col a:hover { color: var(--gold-2); }
+        .footer-col a:hover {
+            color: var(--gold-2);
+        }
 
-        .footer-bottom {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding-top: 30px;
+        .social-links {
+            display: flex;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .social-links a {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(198, 165, 89, 0.2);
+            transition: all 0.3s ease;
+            margin-bottom: 0;
         }
 
-        .footer-copyright {
-            font-size: 12px;
+        .social-links a:hover {
+            border-color: var(--gold-1);
+            background: rgba(198, 165, 89, 0.1);
+        }
+
+        .social-links a svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--gold-1);
+            transition: fill 0.3s ease;
+        }
+
+        .social-links a:hover svg {
+            fill: var(--gold-2);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(198, 165, 89, 0.08);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom p {
+            font-family: var(--font-body);
+            font-size: 11px;
             font-weight: 400;
             color: var(--gray);
+            letter-spacing: 0.5px;
         }
 
-        .footer-legal {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-legal a {
-            font-size: 12px;
-            font-weight: 400;
+        .footer-bottom a {
             color: var(--gray);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.3s;
         }
 
-        .footer-legal a:hover { color: var(--gold-2); }
-
-        /* ═══════════════════════════════════════════
-           SHIMMER ANIMATION
-           ═══════════════════════════════════════════ */
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+        .footer-bottom a:hover {
+            color: var(--gold-2);
         }
 
-        .shimmer-effect {
-            background: linear-gradient(110deg, transparent 33%, rgba(230, 185, 121, 0.08) 50%, transparent 67%);
-            background-size: 200% 100%;
-            animation: shimmer 4s ease-in-out infinite;
+        /* ─── Testimonials Section ─── */
+        .testimonials-section {
+            padding: 90px 40px;
+            position: relative;
+            overflow: hidden;
+            background: var(--black-2);
         }
 
-        /* ═══════════════════════════════════════════
-           RESPONSIVE
-           ═══════════════════════════════════════════ */
+        .testimonials-section::before,
+        .testimonials-section::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.15), transparent);
+        }
+
+        .testimonials-section::before { top: 0; }
+        .testimonials-section::after { bottom: 0; }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .testimonials-header.vis {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .testimonials-tag {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-1);
+            border: 1px solid rgba(198, 165, 89, 0.25);
+            padding: 8px 20px;
+            margin-bottom: 20px;
+        }
+
+        .testimonials-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .testimonials-header h2 em {
+            font-style: italic;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .testimonials-header p {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--gray);
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .testimonials-columns {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            max-height: 700px;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+        }
+
+        .testimonial-col {
+            overflow: hidden;
+            flex-shrink: 0;
+            width: 320px;
+        }
+
+        .testimonial-col-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding-bottom: 24px;
+            animation: scrollCol linear infinite;
+        }
+
+        .testimonial-col:nth-child(1) .testimonial-col-inner { animation-duration: 25s; }
+        .testimonial-col:nth-child(2) .testimonial-col-inner { animation-duration: 30s; }
+        .testimonial-col:nth-child(3) .testimonial-col-inner { animation-duration: 27s; }
+
+        @keyframes scrollCol {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        .testimonial-card-col {
+            padding: 32px;
+            border: 1px solid rgba(198, 165, 89, 0.1);
+            background: var(--black-3);
+            border-radius: 16px;
+            flex-shrink: 0;
+            transition: border-color 0.4s ease;
+        }
+
+        .testimonial-card-col:hover {
+            border-color: rgba(198, 165, 89, 0.25);
+        }
+
+        .testimonial-card-col .t-text {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--gray-light);
+            margin-bottom: 20px;
+        }
+
+        .testimonial-card-col .t-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-card-col .t-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(198, 165, 89, 0.2);
+        }
+
+        .testimonial-card-col .t-name {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.3;
+        }
+
+        .testimonial-card-col .t-role {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--gray);
+            line-height: 1.3;
+        }
+
+        .testimonial-col.hide-md { display: block; }
+        .testimonial-col.hide-lg { display: block; }
+
         @media (max-width: 1024px) {
-            .collections-grid { grid-template-columns: repeat(2, 1fr); }
-            .craftsmanship-grid { grid-template-columns: repeat(2, 1fr); }
-            .signature-grid { grid-template-columns: repeat(2, 1fr); }
-            .brand-story-grid { grid-template-columns: 1fr; gap: 50px; }
-            .brand-story-visual { max-width: 500px; margin: 0 auto; }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+            .testimonial-col.hide-lg { display: none; }
         }
 
         @media (max-width: 768px) {
-            .section-padding { padding: 80px 6vw; }
-            .nav-links { display: none; }
-            .nav-cta { display: none; }
-            .nav-toggle { display: flex; }
+            .testimonials-section { padding: 60px 20px; }
+            .testimonial-col.hide-md { display: none; }
+            .testimonial-col { width: 100%; max-width: 340px; }
+        }
 
-            .nav-links.open {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0; right: 0;
-                background: rgba(5, 5, 5, 0.97);
-                backdrop-filter: blur(20px);
-                padding: 30px 5vw;
-                gap: 24px;
-                border-bottom: 1px solid rgba(198, 165, 89, 0.1);
+        /* ─── Animations ─── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── Scroll to Top ─── */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 42px;
+            height: 42px;
+            background: var(--gold-gradient);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 50;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            box-shadow: 0 4px 20px rgba(198, 165, 89, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .scroll-top svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--black-1);
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 1024px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 20px 60px;
             }
 
-            .collections-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
-            .signature-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
-            .testimonials-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
-            .craftsmanship-grid { grid-template-columns: 1fr; max-width: 350px; margin: 0 auto; }
-            .brand-story-stats { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-            .hero-cta-group { flex-direction: column; }
-            .newsletter-form { flex-direction: column; }
-            .newsletter-form input { border-right: 1px solid rgba(198, 165, 89, 0.15); }
-            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
-            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-            .footer-legal { flex-wrap: wrap; justify-content: center; }
+            nav {
+                padding: 18px 24px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+
+            .page-header h1 {
+                font-size: 32px;
+                letter-spacing: 3px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-left, .nav-right {
+                display: none;
+            }
+
+            .menu-toggle, .cart-icon {
+                display: block;
+            }
+
+            nav {
+                padding: 16px 20px;
+            }
+
+            .logo-text {
+                font-size: 17px;
+            }
+
+            .logo img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .logo {
+                padding: 0;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 2px;
+                padding: 0 16px 40px;
+            }
+
+            .page-header {
+                padding: 36px 20px 32px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+                letter-spacing: 2px;
+            }
+
+            .filter-bar {
+                gap: 14px;
+                padding: 24px 20px;
+                flex-wrap: wrap;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            footer {
+                padding: 40px 20px 24px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .announcement-bar {
+                font-size: 8px;
+                letter-spacing: 2px;
+            }
+
+            .product-overlay {
+                display: none;
+            }
+        }
+
+        /* Mobile menu overlay */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 5, 0.97);
+            backdrop-filter: blur(20px);
+            z-index: 150;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 36px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu a {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--gold-2);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-close span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--gold-2);
+        }
+
+        .mobile-menu-close span:first-child {
+            transform: rotate(45deg) translateY(1px);
+        }
+
+        .mobile-menu-close span:last-child {
+            transform: rotate(-45deg) translateY(-1px);
         }
     </style>
 </head>
 <body>
-    <!-- Grain overlay for texture -->
+
+    <!-- Grain overlay -->
     <div class="grain-overlay"></div>
 
-    <!-- ═══════════════════════════════════════════
-         NAVIGATION
-         ═══════════════════════════════════════════ -->
-    <nav class="navbar" id="navbar">
-        <a href="#" class="nav-brand">
-            <img src="brand_assets/logo.svg" alt="Tester.io">
-            <span class="nav-brand-name">Tester.io</span>
-        </a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#collections">Collections</a></li>
-            <li><a href="#story">About</a></li>
-            <li><a href="#craftsmanship">Craftsmanship</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <a href="#collections" class="nav-cta">Get Started</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        <span>Complimentary shipping on all orders — <span class="gold-accent">Handcrafted with care</span></span>
+    </div>
 
-    <!-- ═══════════════════════════════════════════
-         HERO SECTION
-         ═══════════════════════════════════════════ -->
-    <section class="hero" id="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-geo"></div>
-        <canvas id="hero-particles"></canvas>
-
-        <div class="hero-content">
-            <p class="hero-eyebrow">Est. 2024 &mdash; Fine Jewelry House</p>
-            <h1 class="hero-title">Timeless Elegance,<br>Crafted to <em>Perfection</em></h1>
-            <p class="hero-subtitle">Where master artisans transform the world's rarest gems into heirloom pieces that transcend generations. Every creation tells a story of uncompromising beauty.</p>
-            <div class="hero-cta-group">
-                <a href="#collections" class="btn-primary">Explore Collections</a>
-                <a href="#story" class="btn-secondary">Our Story</a>
+    <!-- Navigation -->
+    <div class="nav-wrapper" id="navWrapper">
+        <nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-left">
+                <a href="shop.html" class="active">Shop</a>
+                <a href="index.html#story">About</a>
+                <a href="brand-guidelines.html">Brand</a>
             </div>
-        </div>
-
-        <div class="hero-scroll-indicator">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         FEATURED COLLECTIONS
-         ═══════════════════════════════════════════ -->
-    <section class="collections section-padding" id="collections">
-        <div class="collections-header reveal">
-            <p class="section-label">Curated for You</p>
-            <h2 class="section-title">Featured Collections</h2>
-            <div class="gold-line gold-line-center"></div>
-        </div>
-
-        <div class="collections-grid">
-            <div class="collection-card collection-rings reveal reveal-delay-1">
-                <div class="collection-card-bg"></div>
-                <div class="collection-card-content">
-                    <h3 class="collection-card-title">Rings</h3>
-                    <p class="collection-card-count">48 Pieces</p>
-                    <a href="#" class="collection-card-link">
-                        Explore
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="collection-card collection-necklaces reveal reveal-delay-2">
-                <div class="collection-card-bg"></div>
-                <div class="collection-card-content">
-                    <h3 class="collection-card-title">Necklaces</h3>
-                    <p class="collection-card-count">36 Pieces</p>
-                    <a href="#" class="collection-card-link">
-                        Explore
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="collection-card collection-bracelets reveal reveal-delay-3">
-                <div class="collection-card-bg"></div>
-                <div class="collection-card-content">
-                    <h3 class="collection-card-title">Bracelets</h3>
-                    <p class="collection-card-count">28 Pieces</p>
-                    <a href="#" class="collection-card-link">
-                        Explore
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="collection-card collection-earrings reveal reveal-delay-4">
-                <div class="collection-card-bg"></div>
-                <div class="collection-card-content">
-                    <h3 class="collection-card-title">Earrings</h3>
-                    <p class="collection-card-count">42 Pieces</p>
-                    <a href="#" class="collection-card-link">
-                        Explore
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         BRAND STORY
-         ═══════════════════════════════════════════ -->
-    <section class="brand-story section-padding" id="story">
-        <div class="brand-story-grid">
-            <div class="brand-story-visual reveal">
-                <div class="brand-story-diamond"></div>
-                <span class="brand-story-year">2024</span>
-            </div>
-            <div class="brand-story-text">
-                <p class="section-label reveal">Our Heritage</p>
-                <h3 class="reveal">A Legacy Built on <span class="gold-text">Passion</span> and Precision</h3>
-                <div class="gold-line reveal"></div>
-                <p class="reveal">Founded with a singular vision &mdash; to create jewelry that captures the essence of life's most extraordinary moments. At Tester.io, we believe every gemstone holds a universe of light, and every design should honor its brilliance.</p>
-                <p class="reveal">Our master artisans bring decades of expertise to every piece, meticulously hand-setting each stone and sculpting precious metals into forms that merge classical elegance with contemporary design.</p>
-
-                <div class="brand-story-stats reveal">
-                    <div>
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label">Unique Designs</div>
-                    </div>
-                    <div>
-                        <div class="stat-number">12K</div>
-                        <div class="stat-label">Happy Clients</div>
-                    </div>
-                    <div>
-                        <div class="stat-number">GIA</div>
-                        <div class="stat-label">Certified Gems</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         SIGNATURE PIECES
-         ═══════════════════════════════════════════ -->
-    <section class="signature section-padding" id="signature">
-        <div class="signature-header reveal">
-            <p class="section-label">Iconic Creations</p>
-            <h2 class="section-title">Signature Pieces</h2>
-            <div class="gold-line gold-line-center"></div>
-        </div>
-
-        <div class="signature-grid">
-            <div class="signature-card sig-piece-1 reveal reveal-delay-1">
-                <div class="signature-card-visual">
-                    <div class="diamond-ring"></div>
-                </div>
-                <div class="signature-card-info">
-                    <h4 class="signature-card-name">Celestial Solitaire</h4>
-                    <p class="signature-card-desc">A breathtaking 2.5ct brilliant-cut diamond cradled in 18k gold, capturing starlight in every facet.</p>
-                    <div class="signature-card-bottom">
-                        <span class="signature-price">$12,400</span>
-                        <a href="#" class="signature-view">View</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="signature-card sig-piece-2 reveal reveal-delay-2">
-                <div class="signature-card-visual">
-                    <div class="pendant"></div>
-                </div>
-                <div class="signature-card-info">
-                    <h4 class="signature-card-name">Lumière Pendant</h4>
-                    <p class="signature-card-desc">An ethereal sapphire teardrop suspended from a delicate chain of hand-linked 18k gold.</p>
-                    <div class="signature-card-bottom">
-                        <span class="signature-price">$8,600</span>
-                        <a href="#" class="signature-view">View</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="signature-card sig-piece-3 reveal reveal-delay-3">
-                <div class="signature-card-visual">
-                    <div class="bracelet-art">
-                        <div class="bracelet-gems">
-                            <span></span><span></span><span></span>
-                            <span></span><span></span><span></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="signature-card-info">
-                    <h4 class="signature-card-name">Aureate Cuff</h4>
-                    <p class="signature-card-desc">Six flawless emeralds orbit a sculpted 22k gold band &mdash; bold, refined, and unmistakably modern.</p>
-                    <div class="signature-card-bottom">
-                        <span class="signature-price">$15,800</span>
-                        <a href="#" class="signature-view">View</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         CRAFTSMANSHIP
-         ═══════════════════════════════════════════ -->
-    <section class="craftsmanship section-padding" id="craftsmanship">
-        <div class="craftsmanship-header reveal">
-            <p class="section-label">The Tester.io Promise</p>
-            <h2 class="section-title">Uncompromising Craftsmanship</h2>
-            <div class="gold-line gold-line-center"></div>
-        </div>
-
-        <div class="craftsmanship-grid">
-            <div class="craft-card reveal reveal-delay-1">
-                <div class="craft-icon">
-                    <svg viewBox="0 0 48 48"><path d="M24 4l6 12 13 2-9.5 9 2.5 13L24 34l-12 6 2.5-13L5 18l13-2z"/></svg>
-                </div>
-                <h4>Hand-Selected Gems</h4>
-                <p>Every stone is personally chosen by our gemologists for its exceptional fire, clarity, and character.</p>
-            </div>
-
-            <div class="craft-card reveal reveal-delay-2">
-                <div class="craft-icon">
-                    <svg viewBox="0 0 48 48"><path d="M12 8c0 0 4 4 12 4s12-4 12-4v10c0 12-12 22-12 22S12 30 12 18V8z"/><path d="M24 12v26"/><path d="M16 18h16"/></svg>
-                </div>
-                <h4>Master Artisans</h4>
-                <p>Our craftsmen dedicate over 200 hours to each signature piece, perfecting every microscopic detail.</p>
-            </div>
-
-            <div class="craft-card reveal reveal-delay-3">
-                <div class="craft-icon">
-                    <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M16 24l5 5 11-11"/></svg>
-                </div>
-                <h4>Certified Authenticity</h4>
-                <p>Every piece comes with GIA certification and a lifetime authenticity guarantee for your confidence.</p>
-            </div>
-
-            <div class="craft-card reveal reveal-delay-4">
-                <div class="craft-icon">
-                    <svg viewBox="0 0 48 48"><path d="M24 4v8M24 36v8M4 24h8M36 24h8M10 10l6 6M32 32l6 6M38 10l-6 6M16 32l-6 6"/><circle cx="24" cy="24" r="8"/></svg>
-                </div>
-                <h4>Lifetime Warranty</h4>
-                <p>We stand behind every creation with complimentary cleaning, inspection, and repair for life.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         TESTIMONIALS
-         ═══════════════════════════════════════════ -->
-    <section class="testimonials section-padding" id="testimonials">
-        <div class="testimonials-header reveal">
-            <p class="section-label">Client Stories</p>
-            <h2 class="section-title">Words of Adoration</h2>
-            <div class="gold-line gold-line-center"></div>
-        </div>
-
-        <div class="testimonials-grid">
-            <div class="testimonial-card reveal reveal-delay-1">
-                <div class="testimonial-stars">
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                </div>
-                <p class="testimonial-quote">The moment I opened the box, I knew this was unlike anything I'd ever owned. The craftsmanship is simply extraordinary &mdash; every detail speaks of genuine artistry.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">S.M</div>
-                    <div>
-                        <div class="testimonial-author-name">Sophia Martinez</div>
-                        <div class="testimonial-author-title">Art Collector, New York</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card reveal reveal-delay-2">
-                <div class="testimonial-stars">
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                </div>
-                <p class="testimonial-quote">I proposed with the Celestial Solitaire and she said yes before I could even finish the question. Tester.io made the most important moment of my life perfect.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">J.C</div>
-                    <div>
-                        <div class="testimonial-author-name">James Chen</div>
-                        <div class="testimonial-author-title">Architect, London</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card reveal reveal-delay-3">
-                <div class="testimonial-stars">
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.5 5.5L18 7.5l-4 4 1 6L10 15l-5 2.5 1-6-4-4 5.5-1z"/></svg>
-                </div>
-                <p class="testimonial-quote">Three generations of women in my family now wear Tester.io. The Lumière Pendant I bought for my mother is already a family heirloom. Timeless is the only word.</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">A.D</div>
-                    <div>
-                        <div class="testimonial-author-name">Amara Dubois</div>
-                        <div class="testimonial-author-title">Fashion Editor, Paris</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         NEWSLETTER
-         ═══════════════════════════════════════════ -->
-    <section class="newsletter section-padding" id="contact">
-        <div class="newsletter-bg-accent"></div>
-        <div class="newsletter-inner">
-            <p class="section-label reveal">Stay Connected</p>
-            <h3 class="reveal">Join the <span class="gold-text">Inner Circle</span></h3>
-            <p class="reveal">Be the first to discover new collections, receive exclusive invitations, and enjoy private access to our most coveted pieces.</p>
-            <form class="newsletter-form reveal" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Welcome'; this.querySelector('input').value='';">
-                <input type="email" placeholder="Enter your email address" required>
-                <button type="submit">Subscribe</button>
-            </form>
-            <p class="newsletter-privacy reveal">We respect your privacy. Unsubscribe at any time.</p>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         FOOTER
-         ═══════════════════════════════════════════ -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
+            <a href="index.html" class="logo">
                 <img src="brand_assets/logo.svg" alt="Tester.io">
-                <div class="footer-brand-name">Tester.io</div>
-                <p>Crafting extraordinary jewelry for life's most precious moments. Each piece is a testament to the timeless art of fine jewelry making.</p>
-                <div class="footer-social">
-                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-                    <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg></a>
-                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-                    <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                </div>
+                <span class="logo-text">Tester.io</span>
+            </a>
+            <div class="nav-right">
+                <a href="index.html#contact">Contact</a>
+                <a href="#">Account</a>
+                <a href="#">Cart (0)</a>
             </div>
+            <button class="cart-icon" aria-label="Cart">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            </button>
+        </nav>
+    </div>
 
-            <div class="footer-col">
-                <h5>Collections</h5>
-                <ul>
-                    <li><a href="#">Rings</a></li>
-                    <li><a href="#">Necklaces</a></li>
-                    <li><a href="#">Bracelets</a></li>
-                    <li><a href="#">Earrings</a></li>
-                    <li><a href="#">Bespoke</a></li>
-                </ul>
-            </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="menuClose">
+            <span></span>
+            <span></span>
+        </button>
+        <a href="shop.html">Shop</a>
+        <a href="index.html#story">About</a>
+        <a href="brand-guidelines.html">Brand</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="#">Account</a>
+    </div>
 
-            <div class="footer-col">
-                <h5>Company</h5>
-                <ul>
-                    <li><a href="#">Our Story</a></li>
-                    <li><a href="#">Craftsmanship</a></li>
-                    <li><a href="#">Sustainability</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Press</a></li>
-                </ul>
-            </div>
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>The <em>Collection</em></h1>
+        <p>Each piece is thoughtfully designed and meticulously crafted, blending timeless elegance with modern artistry</p>
+    </div>
 
-            <div class="footer-col">
-                <h5>Support</h5>
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Size Guide</a></li>
-                    <li><a href="#">Care Instructions</a></li>
-                    <li><a href="#">Shipping & Returns</a></li>
-                    <li><a href="#">FAQs</a></li>
-                </ul>
-            </div>
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="rings">Rings</button>
+        <button class="filter-btn" data-filter="gemstones">Gemstones</button>
+        <button class="filter-btn" data-filter="earrings">Earrings</button>
+        <button class="filter-btn" data-filter="necklaces">Necklaces</button>
+    </div>
+
+    <!-- Product Grid — Top Half -->
+    <div class="product-grid" id="productGridTop">
+        <!-- First half of products injected via JS -->
+    </div>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="testimonials-header" id="testimonialsHeader">
+            <div class="testimonials-tag">Testimonials</div>
+            <h2>What Our <em>Clients</em> Say</h2>
+            <p>Discover why discerning collectors trust Tester.io for life's most precious moments.</p>
         </div>
 
-        <div class="footer-bottom">
-            <p class="footer-copyright">&copy; 2024 Tester.io. All rights reserved.</p>
-            <div class="footer-legal">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Cookie Settings</a>
+        <div class="testimonials-columns" id="testimonialsColumns">
+            <!-- Columns injected via JS -->
+        </div>
+    </section>
+
+    <!-- Product Grid — Bottom Half -->
+    <div class="product-grid" id="productGridBottom">
+        <!-- Second half of products injected via JS -->
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-brand-logo">
+                    <img src="brand_assets/logo.svg" alt="Tester.io">
+                    <h3>Tester.io</h3>
+                </div>
+                <p>Curating rare gemstones and one-of-a-kind jewelry pieces. Each creation tells a story of nature's artistry, refined by human craft.</p>
             </div>
+            <div class="footer-col">
+                <h4>Shop</h4>
+                <a href="#">Rings</a>
+                <a href="#">Gemstones</a>
+                <a href="#">Earrings</a>
+                <a href="#">Necklaces</a>
+                <a href="#">Bracelets</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="index.html#story">About</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="#">Shipping</a>
+                <a href="#">Returns</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Pinterest">
+                        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Tester.io. All rights reserved.</p>
+            <p><a href="#">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="#">Terms of Service</a></p>
         </div>
     </footer>
 
-    <!-- ═══════════════════════════════════════════
-         JAVASCRIPT
-         ═══════════════════════════════════════════ -->
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+        <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
     <script>
-        // ── Navbar scroll effect ──
-        const navbar = document.getElementById('navbar');
-        let lastScroll = 0;
+        // Product Data
+        const products = [
+            { name: "Celestial Opal Ring", price: "2,450", category: "rings", img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&h=690&fit=crop&crop=center&q=80" },
+            { name: "Rose Quartz Pendant", price: "1,180", category: "necklaces", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&h=690&fit=crop&crop=center&q=80" },
+            { name: "Natural Blue Sapphire — 3.2ct", price: "8,900", category: "gemstones", img: "pic4.jpg", from: true },
+            { name: "Pavé Diamond Band", price: "3,200", category: "rings", img: "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=600&h=690&fit=crop&crop=center&q=80" },
+            { name: "Ruby Drop Earrings", price: "4,600", category: "earrings", img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=690&fit=crop&crop=center&q=80" },
+            { name: "Emerald Cut Tourmaline — 5.1ct", price: "6,750", category: "gemstones", img: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=600&h=690&fit=crop&crop=center&q=80", from: true },
+            { name: "Gold Sculptural Ring", price: "1,890", category: "rings", img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&h=690&fit=crop&crop=center&q=80" },
+            { name: "Pearl Cluster Earrings", price: "2,100", category: "earrings", img: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=600&h=690&fit=crop&crop=center&q=80" },
+            { name: "Unheated Pink Spinel — 2.8ct", price: "12,400", category: "gemstones", img: "https://images.unsplash.com/photo-1551122089-4e3e72477432?w=600&h=690&fit=crop&crop=center&q=80", from: true },
+            { name: "Baroque Pearl Necklace", price: "3,750", category: "necklaces", img: "pic2.jpg" },
+            { name: "Cushion Cut Aquamarine — 4.5ct", price: "3,200", category: "gemstones", img: "https://images.unsplash.com/photo-1608042314453-ae338d80c427?w=600&h=690&fit=crop&crop=center&q=80", from: true },
+            { name: "Textured Gold Hoops", price: "1,450", category: "earrings", img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600&h=690&fit=crop&crop=center&q=80" },
+            { name: "Alexandrite Solitaire Ring", price: "15,800", category: "rings", img: "pic5.jpg" },
+            { name: "Tsavorite Garnet — 1.9ct", price: "5,400", category: "gemstones", img: "https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=600&h=690&fit=crop&crop=center&q=80", from: true },
+            { name: "Diamond Constellation Studs", price: "2,800", category: "earrings", img: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=600&h=690&fit=crop&crop=center&q=80" },
+            { name: "Serpentine Chain Necklace", price: "2,250", category: "necklaces", img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&h=690&fit=crop&crop=center&q=80" },
+            { name: "Padparadscha Sapphire — 2.1ct", price: "18,500", category: "gemstones", img: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&h=690&fit=crop&crop=center&q=80", from: true },
+            { name: "Moonstone Statement Ring", price: "1,650", category: "rings", img: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=600&h=690&fit=crop&crop=center&q=80" },
+        ];
 
-        window.addEventListener('scroll', () => {
-            const scroll = window.scrollY;
-            if (scroll > 60) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+        // Testimonial Data — jewelry-focused
+        const testimonials = [
+            {
+                text: "My Celestial Opal Ring shifts between blue and violet in different light — it's like wearing a private sunset on my finger every single day.",
+                image: "https://randomuser.me/api/portraits/women/44.jpg",
+                name: "Sophia Martinez",
+                role: "Art Collector, New York"
+            },
+            {
+                text: "I chose the Pavé Diamond Band for my proposal. The moment she saw those micro-set diamonds catching the candlelight, she was speechless.",
+                image: "https://randomuser.me/api/portraits/men/32.jpg",
+                name: "James Chen",
+                role: "Architect, London"
+            },
+            {
+                text: "The Baroque Pearl Necklace I bought for my mother is already a family heirloom. Three generations of women now wear Tester.io. Truly timeless.",
+                image: "https://randomuser.me/api/portraits/women/68.jpg",
+                name: "Amara Dubois",
+                role: "Fashion Editor, Paris"
+            },
+            {
+                text: "My Rose Quartz Pendant arrived in the most exquisite packaging. The blush tone against gold is absolutely heavenly — I never take it off.",
+                image: "https://randomuser.me/api/portraits/women/17.jpg",
+                name: "Elena Rossi",
+                role: "Interior Designer, Milan"
+            },
+            {
+                text: "I collect loose gemstones. The 3.2ct Blue Sapphire I purchased has the deepest cornflower hue I've seen outside a museum. GIA-certified perfection.",
+                image: "https://randomuser.me/api/portraits/men/52.jpg",
+                name: "Richard Thornton",
+                role: "Private Collector, Geneva"
+            },
+            {
+                text: "Bought the Serpentine Chain Necklace for our anniversary. The way the gold links flow is mesmerizing — my wife says it's the most elegant piece she owns.",
+                image: "https://randomuser.me/api/portraits/men/75.jpg",
+                name: "David Park",
+                role: "Surgeon, Seoul"
+            },
+            {
+                text: "My Ruby Drop Earrings get compliments at every event. The pigeon-blood red against that gold setting — people always ask where they're from.",
+                image: "https://randomuser.me/api/portraits/women/90.jpg",
+                name: "Priya Sharma",
+                role: "CEO, Mumbai"
+            },
+            {
+                text: "The Textured Gold Hoops are my everyday luxury. They're lightweight yet substantial — that hand-hammered finish catches light beautifully.",
+                image: "https://randomuser.me/api/portraits/women/26.jpg",
+                name: "Isabella Vance",
+                role: "Brand Strategist, LA"
+            },
+            {
+                text: "I purchased the Alexandrite Solitaire and it genuinely changes from emerald green to raspberry red. An absolute showstopper at every dinner.",
+                image: "https://randomuser.me/api/portraits/men/46.jpg",
+                name: "Marcus Webb",
+                role: "Finance Director, Dubai"
             }
-            lastScroll = scroll;
-        });
+        ];
 
-        // ── Mobile nav toggle ──
-        const navToggle = document.getElementById('navToggle');
-        const navLinks = document.getElementById('navLinks');
+        const firstCol = testimonials.slice(0, 3);
+        const secondCol = testimonials.slice(3, 6);
+        const thirdCol = testimonials.slice(6, 9);
 
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            navLinks.classList.toggle('open');
-        });
+        function buildTestimonialColumn(items, className) {
+            const col = document.createElement('div');
+            col.className = 'testimonial-col' + (className ? ' ' + className : '');
+            const inner = document.createElement('div');
+            inner.className = 'testimonial-col-inner';
 
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                navLinks.classList.remove('open');
+            // Duplicate items for seamless infinite scroll
+            const allItems = [...items, ...items];
+            allItems.forEach(t => {
+                inner.innerHTML += `
+                    <div class="testimonial-card-col">
+                        <div class="t-text">${t.text}</div>
+                        <div class="t-author">
+                            <img class="t-avatar" src="${t.image}" alt="${t.name}">
+                            <div>
+                                <div class="t-name">${t.name}</div>
+                                <div class="t-role">${t.role}</div>
+                            </div>
+                        </div>
+                    </div>`;
             });
-        });
-
-        // ── Scroll reveal ──
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-        // ── Hero gold particle system ──
-        const canvas = document.getElementById('hero-particles');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let animFrame;
-
-        function resizeCanvas() {
-            const hero = document.getElementById('hero');
-            canvas.width = hero.offsetWidth;
-            canvas.height = hero.offsetHeight;
+            col.appendChild(inner);
+            return col;
         }
 
-        class Particle {
-            constructor() { this.reset(); }
+        // Render testimonial columns
+        const tCols = document.getElementById('testimonialsColumns');
+        tCols.appendChild(buildTestimonialColumn(firstCol, ''));
+        tCols.appendChild(buildTestimonialColumn(secondCol, 'hide-md'));
+        tCols.appendChild(buildTestimonialColumn(thirdCol, 'hide-lg'));
 
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.8 + 0.3;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = (Math.random() - 0.5) * 0.3;
-                this.opacity = Math.random() * 0.5 + 0.1;
-                this.fadeSpeed = Math.random() * 0.008 + 0.002;
-                this.growing = Math.random() > 0.5;
-            }
+        // Observe testimonials header for fade-in
+        const tHeader = document.getElementById('testimonialsHeader');
+        const tObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+        }, { threshold: 0.2 });
+        tObs.observe(tHeader);
 
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+        // Render products — split into two grids
+        const gridTop = document.getElementById('productGridTop');
+        const gridBottom = document.getElementById('productGridBottom');
 
-                if (this.growing) {
-                    this.opacity += this.fadeSpeed;
-                    if (this.opacity >= 0.6) this.growing = false;
+        function renderProducts(filter = 'all') {
+            gridTop.innerHTML = '';
+            gridBottom.innerHTML = '';
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+            const midpoint = Math.ceil(filtered.length / 2);
+
+            filtered.forEach((product, i) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.style.animationDelay = `${(i % midpoint) * 0.06}s`;
+                card.innerHTML = `
+                    <div class="product-image-wrapper">
+                        <img src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.classList.add('broken'); this.parentElement.insertAdjacentHTML('afterbegin', '<div class=img-fallback><svg viewBox=&quot;0 0 48 48&quot;><path d=&quot;M14 8h20l6 12-16 24L8 20z&quot;/><path d=&quot;M8 20h32&quot;/></svg></div>')">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">
+                            ${product.from ? '<span class="from">From</span>' : ''}$${product.price}
+                        </div>
+                    </div>
+                `;
+                if (i < midpoint) {
+                    gridTop.appendChild(card);
                 } else {
-                    this.opacity -= this.fadeSpeed;
-                    if (this.opacity <= 0.05) this.reset();
+                    gridBottom.appendChild(card);
                 }
+            });
 
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(212, 175, 110, ${this.opacity})`;
-                ctx.fill();
-
-                if (this.size > 1.2) {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 2.5, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(212, 175, 110, ${this.opacity * 0.15})`;
-                    ctx.fill();
-                }
-            }
+            observeCards();
         }
 
-        function initParticles() {
-            resizeCanvas();
-            const count = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 120);
-            particles = Array.from({ length: count }, () => new Particle());
+        // Intersection Observer
+        function observeCards() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+            document.querySelectorAll('#productGridTop .product-card, #productGridBottom .product-card').forEach(card => observer.observe(card));
         }
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            animFrame = requestAnimationFrame(animateParticles);
-        }
+        renderProducts();
 
-        initParticles();
-        animateParticles();
-
-        window.addEventListener('resize', () => {
-            cancelAnimationFrame(animFrame);
-            initParticles();
-            animateParticles();
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderProducts(btn.dataset.filter);
+            });
         });
 
-        // ── Smooth anchor scrolling ──
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+        // Sticky nav shadow
+        const navWrapper = document.getElementById('navWrapper');
+        window.addEventListener('scroll', () => {
+            navWrapper.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Scroll to top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 600);
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Mobile menu
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.add('open');
+        });
+        document.getElementById('menuClose').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.remove('open');
+        });
+        document.querySelectorAll('.mobile-menu a').forEach(a => {
+            a.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.remove('open');
             });
         });
     </script>
