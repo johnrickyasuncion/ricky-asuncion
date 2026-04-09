@@ -873,6 +873,105 @@
             }
         }
 
+        /* ─── Products CTA Section ─── */
+        .products-cta-section {
+            padding: 100px 48px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .products-cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(198, 165, 89, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .products-cta-inner {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .products-cta-tag {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold-1);
+            border: 1px solid rgba(198, 165, 89, 0.2);
+            padding: 9px 24px;
+            margin-bottom: 24px;
+        }
+
+        .products-cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 300;
+            color: var(--white);
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .products-cta-title em {
+            font-style: italic;
+            font-family: var(--font-accent);
+            font-weight: 400;
+            background: var(--gold-gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .products-cta-subtitle {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--gray);
+            line-height: 2;
+            max-width: 460px;
+            margin: 0 auto 36px;
+        }
+
+        .products-cta-btn {
+            display: inline-block;
+            background: var(--gold-gradient);
+            color: var(--black-1);
+            font-family: var(--font-body);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 18px 52px;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .products-cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s var(--ease-out-expo);
+        }
+
+        .products-cta-btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .products-cta-btn:hover {
+            box-shadow: 0 8px 32px rgba(198, 165, 89, 0.3), 0 0 0 1px rgba(198, 165, 89, 0.2);
+            transform: translateY(-2px);
+        }
+
         /* ─── Contact Section ─── */
         .contact-section {
             padding: 120px 40px;
@@ -1356,6 +1455,10 @@
                 padding: 80px 32px;
             }
 
+            .products-cta-section {
+                padding: 80px 32px;
+            }
+
             .footer-content {
                 gap: 40px;
             }
@@ -1415,6 +1518,10 @@
 
             .testimonials-header {
                 margin-bottom: 48px;
+            }
+
+            .products-cta-section {
+                padding: 72px 24px;
             }
 
             .contact-section {
@@ -1587,6 +1694,22 @@
                 line-height: 1.8;
             }
 
+            /* Products CTA */
+            .products-cta-section {
+                padding: 56px 20px;
+            }
+
+            .products-cta-subtitle {
+                font-size: 12px;
+                margin-bottom: 28px;
+            }
+
+            .products-cta-btn {
+                padding: 16px 40px;
+                font-size: 9px;
+                letter-spacing: 3px;
+            }
+
             /* Contact section */
             .contact-section {
                 padding: 56px 20px;
@@ -1755,6 +1878,31 @@
                 padding: 8px 12px;
                 font-size: 8px;
                 letter-spacing: 1.5px;
+            }
+
+            /* Products CTA */
+            .products-cta-section {
+                padding: 40px 16px;
+            }
+
+            .products-cta-tag {
+                font-size: 8px;
+                letter-spacing: 3px;
+                padding: 7px 18px;
+            }
+
+            .products-cta-subtitle {
+                font-size: 11px;
+                line-height: 1.7;
+            }
+
+            .products-cta-btn {
+                padding: 15px 32px;
+                font-size: 9px;
+                letter-spacing: 3px;
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
             }
 
             /* Testimonials */
@@ -2082,6 +2230,16 @@
             <!-- Columns injected via JS -->
         </div>
         <div class="edge-line bottom"></div>
+    </section>
+
+    <!-- Products CTA Section -->
+    <section class="products-cta-section">
+        <div class="products-cta-inner">
+            <span class="products-cta-tag">Products</span>
+            <h2 class="products-cta-title">Explore Our <em>Full Collection</em></h2>
+            <p class="products-cta-subtitle">Discover every piece in detail — from rare gemstones to hand-forged gold, each with its own story.</p>
+            <a href="product.html" class="products-cta-btn">View Product Details</a>
+        </div>
     </section>
 
     <!-- Product Grid — Bottom Half -->

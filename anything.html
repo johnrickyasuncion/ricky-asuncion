@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tester Labs — The Future, Visualized</title>
+    <link rel="icon" type="image/svg+xml" href="brand_assets/logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #080808;
+            --surface-2: #0f0f0f;
+            --border: #1a1a1a;
+            --text: #e8e8e8;
+            --text-dim: #888888;
+            --text-muted: #555555;
+            --neon: #a8ff00;
+            --neon-dim: rgba(168, 255, 0, 0.1);
+            --neon-glow: rgba(168, 255, 0, 0.25);
+            --neon-deep: #7acc00;
+            --font-display: 'Outfit', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 72px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--neon-deep) var(--bg);
+        }
+
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-deep); }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-display);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::selection { background: var(--neon-dim); color: var(--neon); }
+
+        /* ─── Reveal ─── */
+        .rv {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+        }
+        .rv.vis { opacity: 1; transform: translateY(0); }
+        .rv-d1 { transition-delay: 0.1s; }
+        .rv-d2 { transition-delay: 0.2s; }
+        .rv-d3 { transition-delay: 0.3s; }
+        .rv-d4 { transition-delay: 0.4s; }
+
+        /* ─── Grid Noise Background ─── */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image:
+                linear-gradient(rgba(168, 255, 0, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 255, 0, 0.3) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* ─── Nav ─── */
+        .topbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(168, 255, 0, 0.04);
+            transition: background 0.4s ease;
+        }
+
+        .topbar.scrolled { background: rgba(0,0,0,0.92); }
+
+        .topbar-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            padding: 0 40px;
+        }
+
+        .topbar-logo {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--neon);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .topbar-logo span { color: var(--text-dim); font-weight: 400; }
+
+        .topbar-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .topbar-links a {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .topbar-links a:hover { color: var(--neon); }
+
+        .topbar-links .tb-btn {
+            color: var(--bg);
+            background: var(--neon);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 700;
+            transition: all 0.3s var(--ease);
+        }
+
+        .topbar-links .tb-btn:hover {
+            background: var(--text);
+            box-shadow: 0 0 20px var(--neon-glow);
+        }
+
+        .mob-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 8px 10px;
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        .mob-toggle span {
+            display: block;
+            width: 18px;
+            height: 1.5px;
+            background: var(--neon);
+            margin: 4px 0;
+        }
+
+        /* ─── Hero ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 120px 40px 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(800px, 90vw);
+            height: min(800px, 90vw);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 255, 0, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--neon);
+            border: 1px solid rgba(168, 255, 0, 0.2);
+            padding: 8px 20px;
+            border-radius: 4px;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeIn 0.8s var(--ease) 0.2s forwards;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 7vw, 80px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeIn 1s var(--ease) 0.4s forwards;
+        }
+
+        .hero h1 .neon { color: var(--neon); }
+        .hero h1 .dim { color: var(--text-dim); font-weight: 300; }
+
+        .hero-desc {
+            font-size: 17px;
+            font-weight: 300;
+            color: var(--text-dim);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeIn 0.9s var(--ease) 0.7s forwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            opacity: 0;
+            animation: fadeIn 0.9s var(--ease) 1s forwards;
+        }
+
+        .btn-neon {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--bg);
+            background: var(--neon);
+            padding: 15px 36px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s var(--ease);
+        }
+
+        .btn-neon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--neon-glow), 0 0 0 1px var(--neon);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dim);
+            background: none;
+            padding: 15px 32px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s var(--ease);
+        }
+
+        .btn-outline:hover {
+            color: var(--neon);
+            border-color: rgba(168, 255, 0, 0.3);
+            background: rgba(168, 255, 0, 0.03);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Video Showcase Section ─── */
+        .video-showcase {
+            padding: 120px 40px;
+            position: relative;
+            background: var(--bg);
+        }
+
+        .video-showcase-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .video-showcase-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .video-showcase-header .label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--neon);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .video-showcase-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .video-showcase-header p {
+            font-size: 15px;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Video Placeholder */
+        .video-placeholder {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background: var(--surface);
+            border: 1px dashed rgba(168, 255, 0, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            overflow: hidden;
+            transition: all 0.5s var(--ease);
+        }
+
+        .video-placeholder:hover {
+            border-color: rgba(168, 255, 0, 0.3);
+            background: var(--surface-2);
+        }
+
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(168, 255, 0, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Animated scan lines */
+        .video-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon), transparent);
+            opacity: 0.4;
+            animation: scanLine 3s ease-in-out infinite;
+        }
+
+        @keyframes scanLine {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .video-placeholder .play-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 2px solid rgba(168, 255, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s var(--ease);
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-placeholder:hover .play-icon {
+            border-color: var(--neon);
+            background: rgba(168, 255, 0, 0.08);
+            box-shadow: 0 0 40px rgba(168, 255, 0, 0.15);
+            transform: scale(1.05);
+        }
+
+        .video-placeholder .play-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--neon);
+            margin-left: 3px;
+        }
+
+        .video-placeholder .placeholder-text {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-placeholder .placeholder-sub {
+            font-family: var(--font-display);
+            font-size: 13px;
+            color: var(--text-dim);
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            margin-top: -8px;
+        }
+
+        /* When video is loaded, hide placeholder content */
+        .video-placeholder.has-video {
+            border-style: solid;
+            border-color: rgba(168, 255, 0, 0.06);
+        }
+
+        .video-placeholder.has-video::after { display: none; }
+
+        .video-placeholder.has-video .play-icon,
+        .video-placeholder.has-video .placeholder-text,
+        .video-placeholder.has-video .placeholder-sub { display: none; }
+
+        .video-placeholder video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 7px;
+        }
+
+        /* API status badge */
+        .api-status {
+            text-align: center;
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .api-status .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .api-status.ready .dot { background: var(--neon); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .api-status span {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .api-status.ready span { color: var(--neon-deep); }
+
+        /* ─── Concept Cards ─── */
+        .concepts {
+            padding: 100px 40px;
+            background: var(--bg);
+        }
+
+        .concepts-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .concepts-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .concepts-header .label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--neon);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .concepts-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .concept-card {
+            background: var(--surface);
+            padding: 40px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--ease);
+            border: 1px solid transparent;
+        }
+
+        .concept-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0; right: 0;
+            height: 2px;
+            background: var(--neon);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s var(--ease);
+        }
+
+        .concept-card:hover {
+            background: var(--surface-2);
+            border-color: rgba(168, 255, 0, 0.05);
+        }
+
+        .concept-card:hover::after { transform: scaleX(1); }
+
+        .concept-num {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--neon);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .concept-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .concept-desc {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* ─── CTA ─── */
+        .bottom-cta {
+            padding: 140px 40px;
+            text-align: center;
+            position: relative;
+            background: var(--bg);
+        }
+
+        .bottom-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(500px, 80vw);
+            height: min(500px, 80vw);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 255, 0, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .bottom-cta h2 {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .bottom-cta h2 .neon { color: var(--neon); }
+
+        .bottom-cta p {
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 440px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            position: relative;
+        }
+
+        .bottom-cta .btn-neon { position: relative; }
+
+        /* ─── Footer ─── */
+        .ft {
+            padding: 40px 40px 28px;
+            border-top: 1px solid var(--border);
+            background: var(--bg);
+        }
+
+        .ft-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ft-brand {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .ft-copy {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .ft-socials {
+            display: flex;
+            gap: 8px;
+        }
+
+        .ft-socials a {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s var(--ease);
+            text-decoration: none;
+        }
+
+        .ft-socials a:hover {
+            border-color: var(--neon);
+            background: var(--neon-dim);
+        }
+
+        .ft-socials a svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--text-muted);
+            transition: fill 0.3s ease;
+        }
+
+        .ft-socials a:hover svg { fill: var(--neon); }
+
+        /* ─── Mobile Menu ─── */
+        .mob-menu {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.97);
+            backdrop-filter: blur(20px);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s var(--ease);
+        }
+
+        .mob-menu.open { opacity: 1; visibility: visible; }
+
+        .mob-menu a {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .mob-menu a:hover { color: var(--neon); }
+
+        .mob-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: none; border: none;
+            cursor: pointer;
+            padding: 14px;
+            min-width: 44px; min-height: 44px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .mob-close span {
+            display: block; width: 18px; height: 1.5px; background: var(--text);
+        }
+
+        .mob-close span:first-child { transform: rotate(45deg) translateY(1px); }
+        .mob-close span:last-child { transform: rotate(-45deg) translateY(-1px); }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 1024px) {
+            .topbar-inner { padding: 0 24px; }
+            .hero { padding: 100px 24px 64px; }
+            .video-showcase { padding: 80px 24px; }
+            .concepts { padding: 80px 24px; }
+            .concepts-grid { grid-template-columns: repeat(2, 1fr); }
+            .bottom-cta { padding: 100px 24px; }
+            .ft { padding: 32px 24px 24px; }
+        }
+
+        @media (max-width: 768px) {
+            .topbar-inner { padding: 0 20px; height: 52px; }
+            .topbar-links { display: none; }
+            .mob-toggle { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+            .hero { padding: 80px 20px 56px; min-height: auto; }
+            .hero-desc { font-size: 15px; }
+            .hero-cta { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
+            .btn-neon, .btn-outline { width: 100%; justify-content: center; }
+
+            .video-showcase { padding: 64px 20px; }
+            .video-placeholder .play-icon { width: 56px; height: 56px; }
+
+            .concepts { padding: 64px 20px; }
+            .concepts-grid { grid-template-columns: 1fr; }
+            .concept-card { padding: 32px 24px; }
+
+            .bottom-cta { padding: 80px 20px; }
+
+            .ft { padding: 28px 20px 20px; }
+            .ft-inner { flex-direction: column; gap: 16px; text-align: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { letter-spacing: -1px; }
+            .hero-badge { font-size: 9px; letter-spacing: 3px; }
+
+            .video-showcase { padding: 48px 16px; }
+            .video-showcase-header h2 { letter-spacing: -0.5px; }
+
+            .concepts { padding: 48px 16px; }
+            .concept-card { padding: 26px 20px; }
+            .concept-title { font-size: 18px; }
+            .concept-desc { font-size: 13px; }
+
+            .bottom-cta { padding: 64px 16px; }
+            .ft { padding: 24px 16px 18px; }
+
+            .mob-menu a { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Grid Background -->
+    <div class="grid-bg"></div>
+
+    <!-- Nav -->
+    <nav class="topbar" id="topbar">
+        <div class="topbar-inner">
+            <a href="anything.html" class="topbar-logo">TESTER <span>/ LABS</span></a>
+            <div class="topbar-links">
+                <a href="#video">Film</a>
+                <a href="#concepts">Concepts</a>
+                <a href="product.html">Smart Watch Pro</a>
+                <a href="index.html">Collection</a>
+                <a href="#cta" class="tb-btn">Get Access</a>
+            </div>
+            <button class="mob-toggle" id="mobToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mob-menu" id="mobMenu">
+        <button class="mob-close" id="mobClose"><span></span><span></span></button>
+        <a href="#video" class="mob-link">Film</a>
+        <a href="#concepts" class="mob-link">Concepts</a>
+        <a href="product.html" class="mob-link">Smart Watch Pro</a>
+        <a href="index.html" class="mob-link">Collection</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-badge">Tester Labs — Experimental</div>
+            <h1>The Future<br><span class="dim">is</span> <span class="neon">Generated</span></h1>
+            <p class="hero-desc">We're using AI to visualize what hasn't been built yet. Concepts rendered in motion. Ideas given form. Welcome to the lab.</p>
+            <div class="hero-cta">
+                <a href="#video" class="btn-neon">
+                    Watch the Vision
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>
+                </a>
+                <a href="product.html" class="btn-outline">
+                    Smart Watch Pro
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Showcase -->
+    <section class="video-showcase" id="video">
+        <div class="video-showcase-inner">
+            <div class="video-showcase-header rv">
+                <span class="label">AI-Generated Film</span>
+                <h2>A Vision in Motion</h2>
+                <p>This video is generated using the Kie.ai API — an AI-powered engine that turns text prompts into cinematic footage.</p>
+            </div>
+
+            <div class="video-placeholder has-video rv rv-d1" id="videoContainer">
+                <video controls autoplay muted loop playsinline>
+                    <source src="generated-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="api-status ready rv rv-d2" id="apiStatus">
+                <div class="dot"></div>
+                <span>AI Video — Generated via Kie.ai</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concept Cards -->
+    <section class="concepts" id="concepts">
+        <div class="concepts-inner">
+            <div class="concepts-header rv">
+                <span class="label">What We're Exploring</span>
+                <h2>Three Directions</h2>
+            </div>
+            <div class="concepts-grid">
+                <div class="concept-card rv">
+                    <div class="concept-num">01</div>
+                    <h3 class="concept-title">Neural Interfaces</h3>
+                    <p class="concept-desc">Wearables that read intent, not gestures. Imagine controlling your world with thought alone.</p>
+                </div>
+                <div class="concept-card rv rv-d1">
+                    <div class="concept-num">02</div>
+                    <h3 class="concept-title">Ambient Computing</h3>
+                    <p class="concept-desc">Technology that disappears into your environment. No screens. No buttons. Just intelligence, everywhere.</p>
+                </div>
+                <div class="concept-card rv rv-d2">
+                    <div class="concept-num">03</div>
+                    <h3 class="concept-title">Generative Design</h3>
+                    <p class="concept-desc">Products designed by AI, refined by humans. Every unit unique, every surface optimized for you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bottom-cta" id="cta">
+        <div class="rv">
+            <h2>Ready to See<br>What's <span class="neon">Next</span>?</h2>
+        </div>
+        <p class="rv rv-d1">Join the Tester Labs waitlist. Be the first to experience concepts before they ship.</p>
+        <div class="rv rv-d2">
+            <a href="#" class="btn-neon">
+                Join the Waitlist
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="ft">
+        <div class="ft-inner">
+            <div class="ft-brand">TESTER / LABS</div>
+            <p class="ft-copy">&copy; 2024 Tester. All rights reserved.</p>
+            <div class="ft-socials">
+                <a href="#" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+                <a href="#" aria-label="X">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="#" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+        // Nav scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('topbar').classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Mobile menu
+        document.getElementById('mobToggle').addEventListener('click', () => document.getElementById('mobMenu').classList.add('open'));
+        document.getElementById('mobClose').addEventListener('click', () => document.getElementById('mobMenu').classList.remove('open'));
+        document.querySelectorAll('.mob-link').forEach(a => a.addEventListener('click', () => document.getElementById('mobMenu').classList.remove('open')));
+
+        // Smooth scroll with nav offset
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                const t = document.querySelector(href);
+                if (t) {
+                    e.preventDefault();
+                    const top = t.getBoundingClientRect().top + window.scrollY - 68;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ─── VIDEO EMBED HELPER ───
+        // Once you have a video URL from the Kie.ai API, call this function:
+        // embedVideo('https://your-generated-video-url.mp4');
+        function embedVideo(url) {
+            const container = document.getElementById('videoContainer');
+            container.classList.add('has-video');
+            const video = document.createElement('video');
+            video.src = url;
+            video.controls = true;
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            container.appendChild(video);
+
+            // Update status
+            const status = document.getElementById('apiStatus');
+            status.classList.add('ready');
+            status.innerHTML = '<div class="dot"></div><span>Video loaded</span>';
+        }
+    </script>
+</body>
+</html>
