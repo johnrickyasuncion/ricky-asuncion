@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodboard — Tester.io</title>
+    <link rel="icon" type="image/svg+xml" href="brand_assets/logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold-1: #C6A559;
+            --gold-2: #E6B979;
+            --gold-3: #D4AF6E;
+            --gold-dark: #9A7B3C;
+            --gold-light: #F0D4A0;
+            --gold-muted: rgba(198, 165, 89, 0.08);
+            --black-1: #050505;
+            --black-2: #0a0a0a;
+            --black-3: #111111;
+            --black-4: #1a1a1a;
+            --black-5: #222222;
+            --charcoal: #2a2a2a;
+            --white: #F5F0E8;
+            --white-pure: #FFFFFF;
+            --gray: #7a7a7a;
+            --gray-light: #b0a898;
+            --gray-warm: #9e958a;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-accent: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --gold-gradient: linear-gradient(135deg, #C6A559 0%, #E6B979 40%, #D4AF6E 70%, #C6A559 100%);
+            --gold-gradient-text: linear-gradient(135deg, #D4AF6E 0%, #E6B979 30%, #F0D4A0 50%, #E6B979 70%, #C6A559 100%);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            font-family: var(--font-body);
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold-dark) var(--black-2);
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--black-1); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+
+        body {
+            background-color: var(--black-1);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: rgba(198, 165, 89, 0.35);
+            color: var(--white-pure);
+        }
+
+        .grain-overlay {
+            position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat; background-size: 256px;
+        }
+
+        .ambient-glow {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background:
+                radial-gradient(ellipse 60% 40% at 20% 10%, rgba(198, 165, 89, 0.03) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 80% 80%, rgba(198, 165, 89, 0.02) 0%, transparent 50%);
+        }
+
+        /* ─── Header ─── */
+        .mb-header {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 32px;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+            border-bottom: 1px solid rgba(198, 165, 89, 0.08);
+        }
+
+        .mb-header .logo-link {
+            font-family: var(--font-body); font-size: 11px; font-weight: 300;
+            letter-spacing: 4px; text-transform: uppercase;
+            color: var(--white); text-decoration: none; transition: color 0.3s ease;
+        }
+        .mb-header .logo-link span { color: var(--gold-1); }
+        .mb-header .logo-link:hover { color: var(--gold-2); }
+
+        .mb-header h1 {
+            font-family: var(--font-display); font-size: 22px; font-weight: 400;
+            letter-spacing: 6px; text-transform: uppercase;
+            background: var(--gold-gradient-text);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .header-actions { display: flex; gap: 12px; }
+
+        .btn-outline {
+            background: none; border: 1px solid rgba(198, 165, 89, 0.15);
+            color: var(--gray-warm); font-family: var(--font-body);
+            font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+            padding: 8px 16px; cursor: pointer; transition: all 0.3s ease;
+        }
+        .btn-outline:hover { border-color: rgba(198, 165, 89, 0.4); color: var(--gold-1); }
+
+        /* ─── Layout ─── */
+        .mb-layout { position: relative; z-index: 1; display: flex; min-height: calc(100vh - 60px); }
+
+        /* ─── Left Panel ─── */
+        .mb-panel {
+            width: 340px; min-width: 340px; padding: 28px 24px;
+            border-right: 1px solid rgba(198, 165, 89, 0.06);
+            background: rgba(10, 10, 10, 0.5);
+            display: flex; flex-direction: column; overflow-y: auto; max-height: calc(100vh - 60px);
+        }
+
+        .panel-section-title {
+            font-family: var(--font-body); font-size: 9px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase; color: var(--gold-1); margin-bottom: 20px;
+        }
+
+        .field-group { margin-bottom: 18px; }
+
+        .field-group label {
+            display: block; font-family: var(--font-body); font-size: 10px; font-weight: 500;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--gray-light); margin-bottom: 8px;
+        }
+
+        .field-group input, .field-group textarea {
+            width: 100%; background: var(--black-3); border: 1px solid rgba(198, 165, 89, 0.1);
+            color: var(--white); font-family: var(--font-body); font-size: 13px;
+            padding: 12px 14px; outline: none; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .field-group input:focus, .field-group textarea:focus {
+            border-color: rgba(198, 165, 89, 0.35); box-shadow: 0 0 0 3px rgba(198, 165, 89, 0.06);
+        }
+        .field-group input::placeholder, .field-group textarea::placeholder { color: var(--gray); font-weight: 300; }
+        .field-group textarea { resize: vertical; min-height: 80px; }
+
+        /* ─── Buttons ─── */
+        .btn-generate {
+            width: 100%; padding: 14px 24px; background: var(--gold-gradient);
+            color: var(--black-1); font-family: var(--font-body); font-size: 11px;
+            font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+            border: none; cursor: pointer; transition: all 0.4s var(--ease-out-expo);
+            position: relative; overflow: hidden; margin-bottom: 8px;
+        }
+        .btn-generate:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(198, 165, 89, 0.25); }
+        .btn-generate:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-generate.loading { animation: pulseGold 1.5s ease infinite; }
+
+        .btn-suite {
+            width: 100%; padding: 14px 24px;
+            background: transparent; border: 1px solid var(--gold-1);
+            color: var(--gold-1); font-family: var(--font-body); font-size: 10px;
+            font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+            cursor: pointer; transition: all 0.4s var(--ease-out-expo); margin-bottom: 8px;
+        }
+        .btn-suite:hover:not(:disabled) { background: rgba(198, 165, 89, 0.08); box-shadow: 0 4px 20px rgba(198, 165, 89, 0.15); }
+        .btn-suite:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-suite.loading { animation: pulseGold 1.5s ease infinite; }
+
+        @keyframes pulseGold {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(198, 165, 89, 0.3); }
+            50% { box-shadow: 0 0 0 8px rgba(198, 165, 89, 0); }
+        }
+
+        .divider-or {
+            text-align: center; margin: 16px 0; position: relative;
+            font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray);
+        }
+        .divider-or::before, .divider-or::after {
+            content: ''; position: absolute; top: 50%; width: 38%;
+            height: 1px; background: rgba(198, 165, 89, 0.08);
+        }
+        .divider-or::before { left: 0; }
+        .divider-or::after { right: 0; }
+
+        /* ─── History ─── */
+        .history-section {
+            margin-top: 28px; padding-top: 24px;
+            border-top: 1px solid rgba(198, 165, 89, 0.06); flex: 1; overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 12px 14px; margin-bottom: 6px; background: var(--black-3);
+            border: 1px solid rgba(198, 165, 89, 0.04); cursor: pointer;
+            transition: all 0.3s ease; position: relative;
+        }
+        .history-item:hover { border-color: rgba(198, 165, 89, 0.15); background: var(--black-4); }
+        .history-item.active { border-color: rgba(198, 165, 89, 0.3); background: rgba(198, 165, 89, 0.04); }
+
+        .history-item .history-idea {
+            font-size: 12px; font-weight: 500; color: var(--white); margin-bottom: 4px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 24px;
+        }
+        .history-item .history-badge {
+            display: inline-block; font-size: 8px; font-weight: 600; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--gold-1); background: rgba(198, 165, 89, 0.08);
+            padding: 2px 8px; margin-bottom: 6px;
+        }
+        .history-item .history-meta { font-size: 10px; color: var(--gray); }
+
+        .history-item .history-delete {
+            position: absolute; top: 10px; right: 10px; background: none; border: none;
+            color: var(--gray); font-size: 14px; cursor: pointer;
+            opacity: 0; transition: opacity 0.2s ease, color 0.2s ease; padding: 2px 4px;
+        }
+        .history-item:hover .history-delete { opacity: 1; }
+        .history-item .history-delete:hover { color: #e74c3c; }
+        .history-empty { font-size: 11px; color: var(--gray); text-align: center; padding: 20px 0; font-style: italic; }
+
+        /* ─── Gallery ─── */
+        .mb-gallery { flex: 1; padding: 28px; overflow-y: auto; max-height: calc(100vh - 60px); }
+
+        /* ─── Category Section ─── */
+        .category-section { margin-bottom: 48px; }
+
+        .category-header {
+            display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+            padding-bottom: 12px; border-bottom: 1px solid rgba(198, 165, 89, 0.08);
+        }
+        .category-tag {
+            font-family: var(--font-body); font-size: 8px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase; color: var(--black-1);
+            background: var(--gold-gradient); padding: 5px 14px;
+        }
+        .category-title {
+            font-family: var(--font-display); font-size: 28px; font-weight: 300;
+            letter-spacing: 3px; text-transform: uppercase; color: var(--white);
+        }
+        .category-desc {
+            font-size: 11px; color: var(--gray); margin-left: auto; max-width: 280px; text-align: right;
+        }
+
+        .concepts-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 24px;
+        }
+
+        /* ─── Concept Card ─── */
+        .concept-card {
+            background: var(--black-3); border: 1px solid rgba(198, 165, 89, 0.06);
+            overflow: hidden; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .concept-card:hover { border-color: rgba(198, 165, 89, 0.15); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3); }
+
+        .concept-header { padding: 20px 20px 0; }
+        .concept-name {
+            font-family: var(--font-accent); font-size: 20px; font-weight: 500;
+            color: var(--white); margin-bottom: 6px;
+        }
+        .concept-desc { font-size: 11px; color: var(--gray-light); line-height: 1.6; margin-bottom: 16px; }
+
+        .concept-images { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+
+        .concept-img-slot { position: relative; }
+        .concept-img-label {
+            position: absolute; top: 8px; left: 8px; z-index: 2;
+            font-family: var(--font-body); font-size: 8px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            color: var(--white); background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px); padding: 4px 10px;
+        }
+
+        .concept-img-slot .card-image {
+            width: 100%; aspect-ratio: 16 / 10; overflow: hidden;
+            position: relative; background: var(--black-2);
+        }
+        .concept-img-slot .card-image img {
+            width: 100%; height: 100%; object-fit: cover; cursor: pointer;
+            transition: transform 0.6s var(--ease-out-expo);
+        }
+        .concept-img-slot .card-image:hover img { transform: scale(1.05); }
+
+        .concept-img-slot .card-image.loading {
+            background: linear-gradient(110deg, var(--black-3) 30%, var(--black-4) 50%, var(--black-3) 70%);
+            background-size: 200% 100%; animation: shimmer 1.5s ease infinite;
+        }
+
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        .loading-text {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 10px;
+        }
+        .loading-spinner {
+            width: 24px; height: 24px; border: 2px solid rgba(198, 165, 89, 0.1);
+            border-top-color: var(--gold-1); border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text span { font-size: 9px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+
+        .concept-footer {
+            padding: 12px 20px; display: flex; gap: 8px; justify-content: flex-end;
+            border-top: 1px solid rgba(198, 165, 89, 0.04);
+        }
+        .concept-footer button {
+            background: none; border: 1px solid rgba(198, 165, 89, 0.1);
+            color: var(--gray); font-family: var(--font-body); font-size: 9px;
+            font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+            padding: 6px 12px; cursor: pointer; transition: all 0.3s ease;
+        }
+        .concept-footer button:hover { border-color: rgba(198, 165, 89, 0.3); color: var(--gold-1); }
+
+        .card-error {
+            aspect-ratio: 16 / 10; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 10px; background: var(--black-2);
+        }
+        .card-error span { font-size: 9px; color: #e74c3c; letter-spacing: 1px; }
+        .card-error button {
+            background: none; border: 1px solid rgba(231, 76, 60, 0.3); color: #e74c3c;
+            font-family: var(--font-body); font-size: 9px; font-weight: 500;
+            letter-spacing: 2px; text-transform: uppercase; padding: 5px 12px; cursor: pointer;
+        }
+
+        /* ─── Simple Gallery Grid (for non-suite sessions) ─── */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
+        }
+
+        .image-card {
+            background: var(--black-3); border: 1px solid rgba(198, 165, 89, 0.06);
+            overflow: hidden; transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s var(--ease-out-expo);
+        }
+        .image-card:hover { border-color: rgba(198, 165, 89, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); transform: translateY(-2px); }
+        .image-card .card-image { width: 100%; aspect-ratio: 16 / 10; overflow: hidden; position: relative; background: var(--black-2); }
+        .image-card .card-image img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: transform 0.6s var(--ease-out-expo); }
+        .image-card:hover .card-image img { transform: scale(1.03); }
+        .image-card .card-image.loading {
+            background: linear-gradient(110deg, var(--black-3) 30%, var(--black-4) 50%, var(--black-3) 70%);
+            background-size: 200% 100%; animation: shimmer 1.5s ease infinite;
+        }
+        .card-info { padding: 16px; }
+        .card-label { font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold-1); margin-bottom: 8px; }
+        .card-prompt {
+            font-size: 12px; color: var(--gray-light); line-height: 1.7;
+            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .card-actions { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(198, 165, 89, 0.04); }
+        .card-actions button {
+            background: none; border: 1px solid rgba(198, 165, 89, 0.1); color: var(--gray);
+            font-family: var(--font-body); font-size: 9px; font-weight: 500;
+            letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .card-actions button:hover { border-color: rgba(198, 165, 89, 0.3); color: var(--gold-1); }
+
+        /* ─── Empty State ─── */
+        .empty-state {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 60vh; text-align: center;
+        }
+        .empty-state svg { width: 80px; height: 80px; margin-bottom: 24px; opacity: 0.15; }
+        .empty-state p {
+            font-family: var(--font-display); font-size: 20px; color: var(--gray);
+            font-weight: 300; max-width: 320px; line-height: 1.5;
+        }
+
+        /* ─── Modal ─── */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(8px);
+            align-items: center; justify-content: center; padding: 40px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content { max-width: 900px; width: 100%; position: relative; }
+        .modal-content img { width: 100%; border: 1px solid rgba(198, 165, 89, 0.1); }
+        .modal-info { margin-top: 16px; }
+        .modal-label { font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold-1); margin-bottom: 8px; }
+        .modal-prompt { font-size: 13px; color: var(--gray-light); line-height: 1.7; }
+        .modal-actions { display: flex; gap: 12px; margin-top: 16px; }
+        .modal-actions button {
+            background: none; border: 1px solid rgba(198, 165, 89, 0.2); color: var(--gray-warm);
+            font-family: var(--font-body); font-size: 10px; font-weight: 500;
+            letter-spacing: 2px; text-transform: uppercase; padding: 10px 20px;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .modal-actions button:hover { border-color: var(--gold-1); color: var(--gold-1); }
+        .modal-close {
+            position: absolute; top: -40px; right: 0; background: none; border: none;
+            color: var(--gray); font-size: 28px; cursor: pointer; transition: color 0.2s ease; line-height: 1;
+        }
+        .modal-close:hover { color: var(--white); }
+
+        /* ─── Progress Bar ─── */
+        .suite-progress {
+            margin-bottom: 24px; padding: 16px 20px;
+            background: var(--black-3); border: 1px solid rgba(198, 165, 89, 0.06);
+        }
+        .suite-progress .progress-label {
+            font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--gray-light); margin-bottom: 10px; display: flex; justify-content: space-between;
+        }
+        .progress-bar { height: 3px; background: var(--black-5); overflow: hidden; }
+        .progress-bar-fill {
+            height: 100%; background: var(--gold-gradient); transition: width 0.5s var(--ease-out-expo);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.5s var(--ease-out-expo) forwards; }
+
+        /* ─── Mode Tabs ─── */
+        .mode-tabs {
+            display: flex; gap: 2px; margin-bottom: 24px; background: var(--black-2); padding: 3px;
+        }
+        .mode-tab {
+            flex: 1; padding: 10px 8px; background: none; border: none;
+            font-family: var(--font-body); font-size: 9px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--gray);
+            cursor: pointer; transition: all 0.3s ease; text-align: center;
+        }
+        .mode-tab:hover { color: var(--gray-light); }
+        .mode-tab.active {
+            background: rgba(198, 165, 89, 0.08); color: var(--gold-1);
+            box-shadow: inset 0 -2px 0 var(--gold-1);
+        }
+
+        .mode-panel { display: none; }
+        .mode-panel.active { display: block; }
+
+        /* ─── HTML Preview Area ─── */
+        .html-preview-area { display: none; flex-direction: column; height: 100%; }
+        .html-preview-area.active { display: flex; }
+
+        .preview-toolbar {
+            display: flex; align-items: center; gap: 12px; padding: 12px 0; margin-bottom: 12px;
+            border-bottom: 1px solid rgba(198, 165, 89, 0.06); flex-wrap: wrap;
+        }
+        .preview-toolbar .design-name {
+            font-family: var(--font-accent); font-size: 18px; font-weight: 500; color: var(--white);
+            flex: 1; min-width: 120px;
+        }
+        .preview-toolbar .device-toggles { display: flex; gap: 4px; }
+        .device-toggle {
+            background: var(--black-3); border: 1px solid rgba(198, 165, 89, 0.08);
+            color: var(--gray); font-family: var(--font-body); font-size: 9px; font-weight: 500;
+            letter-spacing: 1px; text-transform: uppercase; padding: 6px 12px;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .device-toggle:hover { border-color: rgba(198, 165, 89, 0.2); color: var(--gray-light); }
+        .device-toggle.active { border-color: var(--gold-1); color: var(--gold-1); background: rgba(198, 165, 89, 0.06); }
+
+        .preview-frame-wrap {
+            flex: 1; display: flex; justify-content: center; background: var(--black-2);
+            border: 1px solid rgba(198, 165, 89, 0.06); overflow: hidden; min-height: 400px;
+        }
+        .preview-frame-wrap iframe {
+            width: 100%; height: 100%; border: none; background: #fff;
+            transition: max-width 0.4s var(--ease-out-expo);
+        }
+
+        /* ─── HTML Designs Grid ─── */
+        .html-designs-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;
+        }
+        .html-design-card {
+            background: var(--black-3); border: 1px solid rgba(198, 165, 89, 0.06);
+            overflow: hidden; cursor: pointer; transition: all 0.3s ease;
+        }
+        .html-design-card:hover { border-color: rgba(198, 165, 89, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .html-design-card .card-thumb {
+            width: 100%; height: 200px; overflow: hidden; position: relative; background: #fff;
+        }
+        .html-design-card .card-thumb iframe {
+            width: 400%; height: 400%; border: none; pointer-events: none;
+            transform: scale(0.25); transform-origin: top left;
+        }
+        .html-design-card .card-body { padding: 14px 16px; }
+        .html-design-card .card-body h4 {
+            font-family: var(--font-accent); font-size: 16px; font-weight: 500;
+            color: var(--white); margin-bottom: 4px;
+        }
+        .html-design-card .card-body .meta {
+            font-size: 10px; color: var(--gray); margin-bottom: 10px;
+        }
+        .html-design-card .card-body .card-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+        /* ─── Prompt Modal ─── */
+        .prompt-modal {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(8px);
+            align-items: center; justify-content: center; padding: 40px;
+        }
+        .prompt-modal.active { display: flex; }
+        .prompt-modal-content {
+            max-width: 700px; width: 100%; max-height: 80vh;
+            background: var(--black-3); border: 1px solid rgba(198, 165, 89, 0.1); padding: 28px;
+        }
+        .prompt-modal-content h3 {
+            font-family: var(--font-body); font-size: 9px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase; color: var(--gold-1); margin-bottom: 16px;
+        }
+        .prompt-modal-content .prompt-text {
+            font-family: var(--font-body); font-size: 13px; color: var(--gray-light);
+            line-height: 1.8; white-space: pre-wrap; max-height: 50vh; overflow-y: auto;
+            padding: 16px; background: var(--black-2); margin-bottom: 16px;
+        }
+        .prompt-modal-content .prompt-actions { display: flex; gap: 12px; justify-content: flex-end; }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 1024px) {
+            .mb-layout { flex-direction: column; }
+            .mb-panel { width: 100%; min-width: 100%; max-height: none; border-right: none; border-bottom: 1px solid rgba(198, 165, 89, 0.06); }
+            .history-section { max-height: 200px; }
+            .mb-gallery { max-height: none; }
+            .concepts-grid { grid-template-columns: 1fr; }
+            .category-desc { display: none; }
+        }
+
+        @media (max-width: 680px) {
+            .mb-header { padding: 14px 16px; }
+            .mb-header h1 { font-size: 16px; letter-spacing: 4px; }
+            .mb-panel { padding: 20px 16px; }
+            .mb-gallery { padding: 20px 16px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .concepts-grid { grid-template-columns: 1fr; }
+            .concept-images { grid-template-columns: 1fr; }
+            .category-title { font-size: 20px; }
+            .modal-overlay { padding: 16px; }
+            .prompt-modal { padding: 16px; }
+            .html-designs-grid { grid-template-columns: 1fr; }
+            .preview-toolbar .design-name { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+    <div class="ambient-glow"></div>
+
+    <header class="mb-header">
+        <a href="index.html" class="logo-link">Tester<span>.io</span></a>
+        <h1>Moodboard</h1>
+        <div class="header-actions">
+            <button class="btn-outline" id="clearAllBtn">Clear All</button>
+        </div>
+    </header>
+
+    <main class="mb-layout">
+        <aside class="mb-panel">
+            <!-- Mode Tabs -->
+            <div class="mode-tabs">
+                <button class="mode-tab active" data-mode="moodboard">Image Moodboard</button>
+                <button class="mode-tab" data-mode="website">Website Generator</button>
+            </div>
+
+            <!-- Image Moodboard Panel -->
+            <div class="mode-panel active" id="moodboardPanel">
+                <p class="panel-section-title">Design Suite</p>
+                <button class="btn-suite" id="suiteBtn">Generate 6 Concepts</button>
+                <p style="font-size: 10px; color: var(--gray); text-align: center; margin-bottom: 4px; line-height: 1.5;">
+                    2 Minimalist &middot; 2 Contemporary &middot; 2 Dynamic<br>
+                    12 images total (front + back per concept)
+                </p>
+
+                <div class="divider-or">or</div>
+
+                <p class="panel-section-title">Custom Generate</p>
+                <form id="moodboardForm">
+                    <div class="field-group">
+                        <label for="inputIdea">Idea</label>
+                        <textarea id="inputIdea" placeholder="Describe your homepage concept..." rows="3"></textarea>
+                    </div>
+                    <div class="field-group">
+                        <label for="inputTheme">Theme</label>
+                        <input type="text" id="inputTheme" placeholder="e.g., Minimalist, Dark luxury, Neon tech...">
+                    </div>
+                    <div class="field-group">
+                        <label for="inputProducts">Products</label>
+                        <input type="text" id="inputProducts" placeholder="e.g., Smart watches, Jewelry, SaaS...">
+                    </div>
+                    <button type="submit" class="btn-generate" id="generateBtn">Generate Now</button>
+                </form>
+            </div>
+
+            <!-- Website Generator Panel -->
+            <div class="mode-panel" id="websitePanel">
+                <p class="panel-section-title">Design Prompt</p>
+                <div class="field-group">
+                    <label for="htmlNameInput">Design Name</label>
+                    <input type="text" id="htmlNameInput" placeholder="e.g., Obsidian, Prism, Aurora...">
+                </div>
+                <div class="field-group">
+                    <label for="htmlPromptInput">Description</label>
+                    <textarea id="htmlPromptInput" rows="8" placeholder="Describe the full website design — colors, layout, typography, sections, mood, brand identity..."></textarea>
+                </div>
+                <button class="btn-generate" id="htmlGenerateBtn">Generate Website</button>
+                <p style="font-size: 10px; color: var(--gray); text-align: center; margin-top: 6px; line-height: 1.5;">
+                    Generates a full-page HTML homepage<br>
+                    Preview in browser &middot; Download as .html
+                </p>
+            </div>
+
+            <!-- History (shared) -->
+            <div class="history-section">
+                <p class="panel-section-title">History</p>
+                <div id="historyList"></div>
+            </div>
+        </aside>
+
+        <section class="mb-gallery">
+            <!-- Image Moodboard Gallery -->
+            <div id="moodboardGallery">
+                <div id="galleryEmpty" class="empty-state">
+                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="12" width="64" height="48" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="24" cy="32" r="6" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M8 48 L28 36 L44 46 L56 38 L72 48" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <line x1="40" y1="4" x2="40" y2="12" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="36" y1="6" x2="40" y2="2" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="44" y1="6" x2="40" y2="2" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <p>Generate your first design suite or enter a custom concept</p>
+                </div>
+                <div id="galleryContent"></div>
+            </div>
+
+            <!-- Website Generator Gallery -->
+            <div id="websiteGallery" style="display: none;">
+                <!-- Preview Area -->
+                <div class="html-preview-area" id="htmlPreviewArea">
+                    <div class="preview-toolbar">
+                        <span class="design-name" id="previewDesignName"></span>
+                        <div class="device-toggles">
+                            <button class="device-toggle active" data-width="100%">Desktop</button>
+                            <button class="device-toggle" data-width="768px">Tablet</button>
+                            <button class="device-toggle" data-width="375px">Mobile</button>
+                        </div>
+                        <button class="btn-outline" id="viewPromptBtn">View Prompt</button>
+                        <button class="btn-outline" id="downloadHtmlBtn" style="border-color: var(--gold-1); color: var(--gold-1);">Download HTML</button>
+                    </div>
+                    <div class="preview-frame-wrap">
+                        <iframe id="htmlPreviewFrame" sandbox="allow-scripts allow-same-origin"></iframe>
+                    </div>
+                </div>
+
+                <!-- Saved Designs Grid (when no preview active) -->
+                <div id="htmlDesignsEmpty" class="empty-state">
+                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="8" width="30" height="22" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                        <rect x="46" y="8" width="30" height="22" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                        <rect x="4" y="42" width="30" height="22" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                        <rect x="46" y="42" width="30" height="22" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="12" y1="16" x2="26" y2="16" stroke="currentColor" stroke-width="1"/>
+                        <line x1="12" y1="20" x2="22" y2="20" stroke="currentColor" stroke-width="1"/>
+                    </svg>
+                    <p>Describe a website design and generate a full HTML homepage</p>
+                </div>
+                <div id="htmlDesignsGrid" class="html-designs-grid"></div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <img id="modalImg" src="" alt="Moodboard preview">
+            <div class="modal-info">
+                <p class="modal-label" id="modalLabel"></p>
+                <p class="modal-prompt" id="modalPrompt"></p>
+                <div class="modal-actions">
+                    <button id="modalDownload">Download</button>
+                    <button id="modalCopy">Copy Prompt</button>
+                    <button id="modalCloseBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prompt Viewer Modal -->
+    <div class="prompt-modal" id="promptModal">
+        <div class="prompt-modal-content">
+            <h3>Design Prompt</h3>
+            <div class="prompt-text" id="promptModalText"></div>
+            <div class="prompt-actions">
+                <button class="btn-outline" id="promptCopyBtn">Copy Prompt</button>
+                <button class="btn-outline" id="promptCloseBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ════════════════════════════════════════════════════════════════
+    // DESIGN CONCEPTS — 6 concepts, 12 image prompts
+    // ════════════════════════════════════════════════════════════════
+
+    const SHARED_INPUTS = {
+        idea: 'Premium direct-to-consumer tech lifestyle brand — where precision engineering meets everyday elegance',
+        theme: 'Sophisticated, premium, the intersection of technology and artisanal craftsmanship',
+        products: 'Smart watches, wellness trackers, premium audio accessories'
+    };
+
+    const CATEGORY_META = {
+        'Minimalist': { desc: 'Clean, whitespace-forward, restrained palette' },
+        'Contemporary': { desc: 'Modern design trends, expressive but professional' },
+        'Dynamic': { desc: 'High contrast, bold typography, visually striking layouts' }
+    };
+
+    const DESIGN_CONCEPTS = [
+        // ── MINIMALIST ──
+        {
+            category: 'Minimalist',
+            name: 'Whisper',
+            description: 'Ultra-clean whitespace with thin typography. A single hero product floats in vast negative space. The design breathes — every element earns its place through restraint and precision.',
+            front: {
+                label: 'Front — Homepage',
+                prompt: 'A pristine minimalist homepage design for a premium tech lifestyle brand, vast white space dominating the canvas, a single smart watch product centered in the frame casting a soft diffused shadow, thin geometric sans-serif typography in charcoal gray for the headline, ultra-thin navigation as a barely visible line at the top, one muted gold call-to-action button, the composition breathes with intentional emptiness, Swiss design influence with mathematical precision in spacing, subtle warm off-white background tint, no decorative elements whatsoever, studio-quality product photography'
+            },
+            back: {
+                label: 'Back — Inner Sections',
+                prompt: 'Inner page sections for a minimalist tech brand website, generous white padding between content blocks, a two-column layout showing product specifications against clean white, thin hairline horizontal rules dividing sections, small monochrome product photography of smart watches and audio accessories, restrained use of a single warm gray accent color, typography set in a geometric sans-serif at large sizes with ample leading, a full-width feature image strip with desaturated tones, architectural precision in every measurement'
+            }
+        },
+        {
+            category: 'Minimalist',
+            name: 'Void',
+            description: 'Near-monochrome with an architectural grid. Content suspended in structured emptiness. Every pixel of negative space is deliberate — the absence is the design.',
+            front: {
+                label: 'Front — Homepage',
+                prompt: 'A homepage layout dominated by structured negative space for a premium wearable tech brand, off-white background with a subtle warm ivory tint, asymmetric grid with a large smart watch product image placed in the lower right third of the frame, uppercase micro-text navigation aligned to the top left corner, a single word headline in extra-light 100 weight font spanning the width, absolutely no decorative elements, pure Swiss International Style influence, precise golden ratio proportions, barely visible grid lines suggesting underlying structure, monochromatic color palette with one hint of brushed gold'
+            },
+            back: {
+                label: 'Back — Inner Sections',
+                prompt: 'Supporting sections for a minimalist tech lifestyle website, a strict three-column grid on white background, each column containing a small circular product image with minimal caption text below in 10px type, hairline borders separating each section with mathematical precision, a full-width banner section with edge-to-edge lifestyle photography of hands wearing a smart watch in desaturated muted tones, typographic hierarchy using only weight variations of a single typeface, no color except occasional warm gray, architectural blueprint precision in spacing and alignment'
+            }
+        },
+
+        // ── CONTEMPORARY ──
+        {
+            category: 'Contemporary',
+            name: 'Flux',
+            description: 'Soft gradients meet rounded corners and glassmorphism. Playful but refined — current design trends executed with premium restraint. Approachable luxury.',
+            front: {
+                label: 'Front — Homepage',
+                prompt: 'A modern contemporary homepage design for a premium tech lifestyle brand, soft gradient background transitioning from pale lavender to warm peach to light coral, rounded card components with subtle drop shadows floating over the gradient, a hero section featuring a floating smart watch render with ambient color spill and soft light reflections, pill-shaped buttons with subtle glass effect, contemporary sans-serif typography with medium weight, glassmorphism navigation bar with frosted blur effect, bento-style feature cards below the fold, friendly but premium aesthetic, soft ambient lighting, warm and inviting color temperature'
+            },
+            back: {
+                label: 'Back — Inner Sections',
+                prompt: 'Interior sections of a contemporary tech brand website with bento-grid layout, rounded corner cards of varying sizes containing product details for smart watches and audio accessories, testimonial blocks in soft speech bubble shapes with gentle shadows, a dark slate section with luminous product photography featuring rim lighting on wellness trackers, micro-interaction cues suggested through subtle motion blur on floating elements, cohesive warm pastel palette of lavender coral and cream, glass-morphism overlays on feature comparison cards, modern and approachable premium design'
+            }
+        },
+        {
+            category: 'Contemporary',
+            name: 'Meridian',
+            description: 'Editorial layout with magazine-inspired composition. Mixed media collage aesthetic with overlapping frames — curated like a high-end publication spread.',
+            front: {
+                label: 'Front — Homepage',
+                prompt: 'An editorial-style homepage design for a premium tech lifestyle brand, overlapping image frames at different scales creating visual depth and collage effect, a large serif headline in Didone style breaking across two asymmetric columns, mixed photography styles showing studio product shots of smart watches alongside lifestyle imagery of people wearing them, intentional overlap of text and image elements creating sophisticated layering, color palette of deep navy cream and warm copper accents, asymmetric composition that feels curated like a Vogue or Kinfolk magazine spread, fine typographic details with drop caps and pull quotes'
+            },
+            back: {
+                label: 'Back — Inner Sections',
+                prompt: 'Inner sections styled like premium magazine pages for a tech lifestyle brand, pull quotes in large italic serif typography about craftsmanship, a masonry gallery of product and lifestyle images with varied aspect ratios showing smart watches wellness trackers and audio accessories, text columns wrapping around circular product cutouts, subtle cream paper texture overlay adding warmth, a credits-style footer section with small elegant type, editorial border treatments with thin copper lines, the overall feel of a curated editorial lookbook rather than a typical website'
+            }
+        },
+
+        // ── DYNAMIC ──
+        {
+            category: 'Dynamic',
+            name: 'Voltage',
+            description: 'Electric high-contrast energy on jet black. Neon accents and extreme typography scale create arresting visual impact — brutalist meets luxury tech.',
+            front: {
+                label: 'Front — Homepage',
+                prompt: 'A high-contrast dynamic homepage design for a premium tech brand on a jet black background, a massive bold condensed sans-serif headline in pure white that fills 60 percent of the viewport reading PRECISION, a hero smart watch product image lit with electric blue and neon cyan rim lighting creating dramatic edge glow, sharp geometric accent shapes in fluorescent green cutting across the composition, a single horizontal neon line dividing the hero from content below, brutalist-inspired raw typographic energy with extreme scale contrast between headline and body text, the overall feel is arresting and bold like a Nike or Beats campaign'
+            },
+            back: {
+                label: 'Back — Inner Sections',
+                prompt: 'Supporting visuals for a dynamic tech brand website with alternating jet black and pure white sections creating stark visual rhythm, products shot with dramatic directional side lighting against deep darkness showing smart watches and audio accessories, oversized numbers as section markers in outlined stroke typography with neon cyan fill, a specifications grid with electric blue accent highlights on key data points, full-bleed product photography with extreme contrast grading, angular geometric shapes as decorative elements, bold condensed type at massive scale for section headers, raw energy and visual tension throughout'
+            }
+        },
+        {
+            category: 'Dynamic',
+            name: 'Tectonic',
+            description: 'Layered depth with dramatic angles and cinematic scale. Overlapping translucent planes create a sense of movement — transformation captured in a frozen frame.',
+            front: {
+                label: 'Front — Homepage',
+                prompt: 'A cinematic dynamic homepage design for a premium tech lifestyle brand with dramatic diagonal composition, overlapping translucent dark layers creating parallax depth effect, a massive hero smart watch image shot from a low dramatic angle with cinematic three-point lighting, bold slab-serif headline in heavy weight reading ENGINEERED FOR LIFE with letters slightly rotated, dark charcoal base palette with warm amber and burnt orange accent color, layered geometric planes at 15-degree angles suggesting movement and transformation, deep shadows and volumetric lighting creating theatrical atmosphere, the composition suggesting kinetic energy frozen in time'
+            },
+            back: {
+                label: 'Back — Inner Sections',
+                prompt: 'Inner sections for a cinematic tech brand website with split-screen diagonal divisions cutting across the layout at dramatic angles, product comparison layouts using overlapping frames with heavy drop shadows showing wellness trackers and smart watches, a dark textured concrete background with floating product cards tilted at slight angles catching amber light, dramatic full-width lifestyle photography with heavy contrast and warm cinematic color grading in teal and orange, bold numbered section headers in outlined display type at extreme scale, architectural grid with intentionally broken alignment creating visual tension and dynamism throughout'
+            }
+        }
+    ];
+
+    // ════════════════════════════════════════════════════════════════
+    // STATE & CONFIG
+    // ════════════════════════════════════════════════════════════════
+
+    const STORAGE_KEY = 'moodboard_sessions';
+    const MAX_SESSIONS = 50;
+    const POLL_FAST = 3000;
+    const POLL_SLOW = 6000;
+    const POLL_TIMEOUT = 300000;
+
+    let sessions = [];
+    let activeSessionId = null;
+    let pollingTimers = {};
+
+    // ════════════════════════════════════════════════════════════════
+    // DOM REFS
+    // ════════════════════════════════════════════════════════════════
+
+    const form = document.getElementById('moodboardForm');
+    const generateBtn = document.getElementById('generateBtn');
+    const suiteBtn = document.getElementById('suiteBtn');
+    const galleryContent = document.getElementById('galleryContent');
+    const galleryEmpty = document.getElementById('galleryEmpty');
+    const historyList = document.getElementById('historyList');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalLabel = document.getElementById('modalLabel');
+    const modalPrompt = document.getElementById('modalPrompt');
+    const modalClose = document.getElementById('modalClose');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalDownload = document.getElementById('modalDownload');
+    const modalCopy = document.getElementById('modalCopy');
+
+    // ════════════════════════════════════════════════════════════════
+    // LOCALSTORAGE
+    // ════════════════════════════════════════════════════════════════
+
+    function loadSessions() {
+        try { sessions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+        catch { sessions = []; }
+    }
+
+    function saveSessions() {
+        if (sessions.length > MAX_SESSIONS) sessions = sessions.slice(-MAX_SESSIONS);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // DESIGN SUITE GENERATION
+    // ════════════════════════════════════════════════════════════════
+
+    suiteBtn.addEventListener('click', generateDesignSuite);
+
+    async function generateDesignSuite() {
+        suiteBtn.disabled = true;
+        suiteBtn.classList.add('loading');
+        suiteBtn.textContent = 'Submitting 12 prompts...';
+
+        // Flatten all prompts
+        const allPrompts = DESIGN_CONCEPTS.flatMap(c => [
+            { prompt: c.front.prompt, label: `${c.name} — Front` },
+            { prompt: c.back.prompt, label: `${c.name} — Back` }
+        ]);
+
+        try {
+            const res = await fetch('/api/moodboard/submit-prompts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompts: allPrompts })
+            });
+
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.detail || err.error || 'Submission failed');
+            }
+
+            const data = await res.json();
+
+            // Build session with concepts structure
+            const session = {
+                id: 'suite_' + Date.now(),
+                timestamp: new Date().toISOString(),
+                type: 'design-suite',
+                inputs: SHARED_INPUTS,
+                concepts: DESIGN_CONCEPTS.map((concept, i) => ({
+                    category: concept.category,
+                    name: concept.name,
+                    description: concept.description,
+                    front: {
+                        label: concept.front.label,
+                        prompt: concept.front.prompt,
+                        taskId: data.tasks[i * 2]?.taskId,
+                        status: 'processing',
+                        imageUrl: null,
+                        completedAt: null
+                    },
+                    back: {
+                        label: concept.back.label,
+                        prompt: concept.back.prompt,
+                        taskId: data.tasks[i * 2 + 1]?.taskId,
+                        status: 'processing',
+                        imageUrl: null,
+                        completedAt: null
+                    }
+                }))
+            };
+
+            sessions.push(session);
+            saveSessions();
+            activeSessionId = session.id;
+
+            renderHistory();
+            renderSession(session);
+
+            suiteBtn.textContent = 'Creating 12 images...';
+
+            // Start polling for every image
+            session.concepts.forEach((concept, cIdx) => {
+                if (concept.front.taskId) pollConceptImage(session.id, cIdx, 'front', concept.front.taskId);
+                if (concept.back.taskId) pollConceptImage(session.id, cIdx, 'back', concept.back.taskId);
+            });
+
+        } catch (err) {
+            console.error('Suite generation error:', err);
+            alert('Failed to generate design suite: ' + err.message);
+        } finally {
+            suiteBtn.disabled = false;
+            suiteBtn.classList.remove('loading');
+            suiteBtn.textContent = 'Generate 6 Concepts';
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // CUSTOM SINGLE GENERATION (unchanged from original)
+    // ════════════════════════════════════════════════════════════════
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const idea = document.getElementById('inputIdea').value.trim();
+        const theme = document.getElementById('inputTheme').value.trim();
+        const products = document.getElementById('inputProducts').value.trim();
+        if (!idea) { document.getElementById('inputIdea').focus(); return; }
+
+        generateBtn.disabled = true;
+        generateBtn.classList.add('loading');
+        generateBtn.textContent = 'Crafting prompts...';
+
+        try {
+            const res = await fetch('/api/moodboard/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idea, theme, products })
+            });
+            if (!res.ok) { const err = await res.json(); throw new Error(err.detail || err.error); }
+            const data = await res.json();
+
+            const session = {
+                id: 'session_' + Date.now(),
+                timestamp: new Date().toISOString(),
+                type: 'custom',
+                inputs: { idea, theme, products },
+                images: data.tasks.map(t => ({
+                    taskId: t.taskId, label: t.label, prompt: t.prompt,
+                    status: 'processing', imageUrl: null, completedAt: null
+                }))
+            };
+
+            sessions.push(session);
+            saveSessions();
+            activeSessionId = session.id;
+            renderHistory();
+            renderSession(session);
+
+            generateBtn.textContent = 'Creating images...';
+            session.images.forEach((img, idx) => {
+                if (img.taskId) pollSimpleImage(session.id, idx, img.taskId);
+            });
+
+            document.getElementById('inputIdea').value = '';
+            document.getElementById('inputTheme').value = '';
+            document.getElementById('inputProducts').value = '';
+        } catch (err) {
+            console.error('Generation error:', err);
+            alert('Failed to generate: ' + err.message);
+        } finally {
+            generateBtn.disabled = false;
+            generateBtn.classList.remove('loading');
+            generateBtn.textContent = 'Generate Now';
+        }
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    // POLLING
+    // ════════════════════════════════════════════════════════════════
+
+    function pollConceptImage(sessionId, conceptIdx, side, taskId) {
+        const start = Date.now();
+        const key = `${sessionId}_c${conceptIdx}_${side}`;
+
+        function tick() {
+            if (Date.now() - start > POLL_TIMEOUT) {
+                updateConceptImage(sessionId, conceptIdx, side, 'failed');
+                return;
+            }
+            fetch(`/api/moodboard/status/${taskId}`)
+                .then(r => r.json())
+                .then(data => {
+                    const parsed = parseKieStatus(data);
+                    if (parsed.state === 'completed' && parsed.imageUrl) {
+                        updateConceptImage(sessionId, conceptIdx, side, 'completed', parsed.imageUrl);
+                    } else if (parsed.state === 'failed') {
+                        updateConceptImage(sessionId, conceptIdx, side, 'failed');
+                    } else {
+                        const interval = (Date.now() - start < 30000) ? POLL_FAST : POLL_SLOW;
+                        pollingTimers[key] = setTimeout(tick, interval);
+                    }
+                })
+                .catch(() => {
+                    const interval = (Date.now() - start < 30000) ? POLL_FAST : POLL_SLOW;
+                    pollingTimers[key] = setTimeout(tick, interval);
+                });
+        }
+        tick();
+    }
+
+    function updateConceptImage(sessionId, conceptIdx, side, status, url) {
+        const session = sessions.find(s => s.id === sessionId);
+        if (!session || !session.concepts || !session.concepts[conceptIdx]) return;
+        const img = session.concepts[conceptIdx][side];
+        img.status = status;
+        if (url) { img.imageUrl = url; img.completedAt = new Date().toISOString(); }
+        saveSessions();
+        if (activeSessionId === sessionId) renderSession(session);
+    }
+
+    function pollSimpleImage(sessionId, imageIdx, taskId) {
+        const start = Date.now();
+        const key = `${sessionId}_${imageIdx}`;
+
+        function tick() {
+            if (Date.now() - start > POLL_TIMEOUT) {
+                updateSimpleImage(sessionId, imageIdx, 'failed');
+                return;
+            }
+            fetch(`/api/moodboard/status/${taskId}`)
+                .then(r => r.json())
+                .then(data => {
+                    const parsed = parseKieStatus(data);
+                    if (parsed.state === 'completed' && parsed.imageUrl) {
+                        updateSimpleImage(sessionId, imageIdx, 'completed', parsed.imageUrl);
+                    } else if (parsed.state === 'failed') {
+                        updateSimpleImage(sessionId, imageIdx, 'failed');
+                    } else {
+                        const interval = (Date.now() - start < 30000) ? POLL_FAST : POLL_SLOW;
+                        pollingTimers[key] = setTimeout(tick, interval);
+                    }
+                })
+                .catch(() => {
+                    const interval = (Date.now() - start < 30000) ? POLL_FAST : POLL_SLOW;
+                    pollingTimers[key] = setTimeout(tick, interval);
+                });
+        }
+        tick();
+    }
+
+    // Parse Kie.ai status response into { state, imageUrl }
+    // Kie.ai response: { data: { state: "success"|"waiting"|"failed", resultJson: '{"resultUrls":["url"]}' } }
+    function parseKieStatus(data) {
+        const d = data.data || data;
+        const state = d.state || d.status || '';
+        let imageUrl = null;
+
+        // Kie.ai returns resultJson as a JSON string with resultUrls array
+        if (d.resultJson) {
+            try {
+                const result = typeof d.resultJson === 'string' ? JSON.parse(d.resultJson) : d.resultJson;
+                imageUrl = (Array.isArray(result.resultUrls) && result.resultUrls[0])
+                    || result.url || result.image_url
+                    || (Array.isArray(result.images) ? result.images[0] : null);
+            } catch { imageUrl = null; }
+        }
+
+        // Map Kie.ai states
+        let mapped = 'processing';
+        if (state === 'success' || state === 'completed') mapped = 'completed';
+        else if (state === 'failed' || state === 'error') mapped = 'failed';
+
+        return { state: mapped, imageUrl };
+    }
+
+    function updateSimpleImage(sessionId, imageIdx, status, url) {
+        const session = sessions.find(s => s.id === sessionId);
+        if (!session || !session.images || !session.images[imageIdx]) return;
+        session.images[imageIdx].status = status;
+        if (url) { session.images[imageIdx].imageUrl = url; session.images[imageIdx].completedAt = new Date().toISOString(); }
+        saveSessions();
+        if (activeSessionId === sessionId) renderSession(session);
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // RENDERING
+    // ════════════════════════════════════════════════════════════════
+
+    function renderSession(session) {
+        if (!session) {
+            galleryContent.innerHTML = '';
+            galleryEmpty.style.display = 'flex';
+            return;
+        }
+        galleryEmpty.style.display = 'none';
+
+        if (session.type === 'design-suite') {
+            renderSuiteGallery(session);
+        } else {
+            renderSimpleGallery(session);
+        }
+    }
+
+    function renderSuiteGallery(session) {
+        const concepts = session.concepts;
+        const total = concepts.length * 2;
+        const completed = concepts.reduce((n, c) =>
+            n + (c.front.status === 'completed' ? 1 : 0) + (c.back.status === 'completed' ? 1 : 0), 0);
+
+        let html = '';
+
+        // Progress bar
+        if (completed < total) {
+            html += `
+                <div class="suite-progress fade-in">
+                    <div class="progress-label">
+                        <span>Generating design suite</span>
+                        <span>${completed} / ${total} images</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: ${(completed / total) * 100}%"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Group by category
+        const categories = ['Minimalist', 'Contemporary', 'Dynamic'];
+        categories.forEach(cat => {
+            const catConcepts = concepts.filter(c => c.category === cat);
+            if (catConcepts.length === 0) return;
+
+            html += `
+                <div class="category-section fade-in">
+                    <div class="category-header">
+                        <span class="category-tag">${esc(cat)}</span>
+                        <span class="category-title">${esc(cat)}</span>
+                        <span class="category-desc">${esc(CATEGORY_META[cat]?.desc || '')}</span>
+                    </div>
+                    <div class="concepts-grid">
+            `;
+
+            catConcepts.forEach(concept => {
+                html += buildConceptCard(concept);
+            });
+
+            html += `</div></div>`;
+        });
+
+        galleryContent.innerHTML = html;
+    }
+
+    function buildConceptCard(concept) {
+        return `
+            <div class="concept-card">
+                <div class="concept-header">
+                    <p class="concept-name">${esc(concept.name)}</p>
+                    <p class="concept-desc">${esc(concept.description)}</p>
+                </div>
+                <div class="concept-images">
+                    <div class="concept-img-slot">
+                        <span class="concept-img-label">Front</span>
+                        ${buildImageSlot(concept.front)}
+                    </div>
+                    <div class="concept-img-slot">
+                        <span class="concept-img-label">Back</span>
+                        ${buildImageSlot(concept.back)}
+                    </div>
+                </div>
+                <div class="concept-footer">
+                    <button onclick="copyText(\`${esc(concept.front.prompt)}\`)">Copy Front Prompt</button>
+                    <button onclick="copyText(\`${esc(concept.back.prompt)}\`)">Copy Back Prompt</button>
+                </div>
+            </div>
+        `;
+    }
+
+    function buildImageSlot(img) {
+        if (img.status === 'completed' && img.imageUrl) {
+            return `<div class="card-image"><img src="${img.imageUrl}" alt="${esc(img.label)}" onclick="openModal('${img.imageUrl}', \`${esc(img.prompt)}\`, '${esc(img.label)}')"></div>`;
+        } else if (img.status === 'failed') {
+            return `<div class="card-error"><span>Failed</span></div>`;
+        } else {
+            return `<div class="card-image loading"><div class="loading-text"><div class="loading-spinner"></div><span>Creating...</span></div></div>`;
+        }
+    }
+
+    function renderSimpleGallery(session) {
+        let html = '<div class="gallery-grid">';
+        session.images.forEach((img, idx) => {
+            html += `<div class="image-card fade-in" style="animation-delay:${idx * 0.1}s">`;
+
+            if (img.status === 'completed' && img.imageUrl) {
+                html += `
+                    <div class="card-image"><img src="${img.imageUrl}" alt="${esc(img.label)}" onclick="openModal('${img.imageUrl}', \`${esc(img.prompt)}\`, '${esc(img.label)}')"></div>
+                    <div class="card-info">
+                        <p class="card-label">${esc(img.label)}</p>
+                        <p class="card-prompt">${esc(img.prompt)}</p>
+                        <div class="card-actions">
+                            <button onclick="downloadImage('${img.imageUrl}', '${esc(img.label)}')">Download</button>
+                            <button onclick="copyText(\`${esc(img.prompt)}\`)">Copy Prompt</button>
+                        </div>
+                    </div>`;
+            } else if (img.status === 'failed') {
+                html += `
+                    <div class="card-error"><span>Generation failed</span></div>
+                    <div class="card-info">
+                        <p class="card-label">${esc(img.label)}</p>
+                        <p class="card-prompt">${esc(img.prompt)}</p>
+                    </div>`;
+            } else {
+                html += `
+                    <div class="card-image loading"><div class="loading-text"><div class="loading-spinner"></div><span>Creating image...</span></div></div>
+                    <div class="card-info">
+                        <p class="card-label">${esc(img.label)}</p>
+                        <p class="card-prompt">${esc(img.prompt)}</p>
+                    </div>`;
+            }
+
+            html += `</div>`;
+        });
+        html += '</div>';
+        galleryContent.innerHTML = html;
+    }
+
+    // ─── History ───
+    function renderHistory() {
+        historyList.innerHTML = '';
+
+        if (currentMode === 'website') {
+            // Show HTML design history
+            if (htmlDesigns.length === 0) {
+                historyList.innerHTML = '<p class="history-empty">No designs yet</p>';
+                return;
+            }
+            [...htmlDesigns].reverse().forEach(design => {
+                const item = document.createElement('div');
+                item.className = 'history-item' + (design.id === activeHtmlDesignId ? ' active' : '');
+
+                const date = new Date(design.timestamp);
+                const timeStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' +
+                    date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+                item.innerHTML = `
+                    <span class="history-badge">HTML Design</span>
+                    <p class="history-idea">${esc(design.name)}</p>
+                    <p class="history-meta">${timeStr}</p>
+                    <button class="history-delete" onclick="event.stopPropagation(); deleteHtmlDesign('${design.id}')">&times;</button>
+                `;
+
+                item.addEventListener('click', () => {
+                    activeHtmlDesignId = design.id;
+                    showHtmlPreview(design);
+                    renderHistory();
+                });
+
+                historyList.appendChild(item);
+            });
+        } else {
+            // Show moodboard session history
+            if (sessions.length === 0) {
+                historyList.innerHTML = '<p class="history-empty">No sessions yet</p>';
+                return;
+            }
+
+            [...sessions].reverse().forEach(session => {
+                const item = document.createElement('div');
+                item.className = 'history-item' + (session.id === activeSessionId ? ' active' : '');
+
+                const date = new Date(session.timestamp);
+                const timeStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' +
+                    date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+                const isSuite = session.type === 'design-suite';
+                const imageCount = isSuite
+                    ? session.concepts.reduce((n, c) => n + (c.front.status === 'completed' ? 1 : 0) + (c.back.status === 'completed' ? 1 : 0), 0)
+                    : (session.images || []).filter(i => i.status === 'completed').length;
+                const totalCount = isSuite ? session.concepts.length * 2 : (session.images || []).length;
+
+                item.innerHTML = `
+                    ${isSuite ? '<span class="history-badge">Design Suite</span>' : ''}
+                    <p class="history-idea">${esc(session.inputs.idea)}</p>
+                    <p class="history-meta">${timeStr} &middot; ${imageCount}/${totalCount} images</p>
+                    <button class="history-delete" onclick="event.stopPropagation(); deleteSession('${session.id}')">&times;</button>
+                `;
+
+                item.addEventListener('click', () => {
+                    activeSessionId = session.id;
+                    renderHistory();
+                    renderSession(session);
+                });
+
+                historyList.appendChild(item);
+            });
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // MODAL
+    // ════════════════════════════════════════════════════════════════
+
+    let currentModalData = {};
+
+    function openModal(imageUrl, prompt, label) {
+        modalImg.src = imageUrl;
+        modalLabel.textContent = label;
+        modalPrompt.textContent = prompt;
+        currentModalData = { imageUrl, prompt, label };
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModalFn() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModalFn);
+    modalCloseBtn.addEventListener('click', closeModalFn);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModalFn(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModalFn(); });
+
+    modalDownload.addEventListener('click', () => {
+        downloadImage(currentModalData.imageUrl, currentModalData.label);
+    });
+
+    modalCopy.addEventListener('click', () => {
+        copyText(currentModalData.prompt);
+        modalCopy.textContent = 'Copied!';
+        setTimeout(() => { modalCopy.textContent = 'Copy Prompt'; }, 1500);
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    // ACTIONS
+    // ════════════════════════════════════════════════════════════════
+
+    function downloadImage(url, label) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `moodboard-${(label || 'image').toLowerCase().replace(/[^a-z0-9]+/g, '-')}.png`;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    function copyText(text) {
+        navigator.clipboard.writeText(text).catch(() => {});
+    }
+
+    function deleteSession(sessionId) {
+        sessions = sessions.filter(s => s.id !== sessionId);
+        saveSessions();
+        Object.keys(pollingTimers).forEach(key => {
+            if (key.startsWith(sessionId)) { clearTimeout(pollingTimers[key]); delete pollingTimers[key]; }
+        });
+        if (activeSessionId === sessionId) {
+            activeSessionId = sessions.length > 0 ? sessions[sessions.length - 1].id : null;
+            const active = sessions.find(s => s.id === activeSessionId);
+            renderSession(active || null);
+        }
+        renderHistory();
+    }
+
+    clearAllBtn.addEventListener('click', () => {
+        if (!confirm('Clear all moodboard history? This cannot be undone.')) return;
+        Object.values(pollingTimers).forEach(t => clearTimeout(t));
+        pollingTimers = {};
+        sessions = [];
+        activeSessionId = null;
+        saveSessions();
+        renderHistory();
+        renderSession(null);
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    // UTILITIES
+    // ════════════════════════════════════════════════════════════════
+
+    function esc(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;').replace(/'/g, '&#039;').replace(/`/g, '&#096;');
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // WEBSITE GENERATOR — HTML Design Mode
+    // ════════════════════════════════════════════════════════════════
+
+    const HTML_STORAGE_KEY = 'html_designs';
+    const MAX_HTML_DESIGNS = 20;
+    let htmlDesigns = [];
+    let activeHtmlDesignId = null;
+    let currentMode = 'moodboard';
+    let currentHtmlDesign = null;
+
+    // DOM refs — website generator
+    const htmlPromptInput = document.getElementById('htmlPromptInput');
+    const htmlNameInput = document.getElementById('htmlNameInput');
+    const htmlGenerateBtn = document.getElementById('htmlGenerateBtn');
+    const htmlPreviewFrame = document.getElementById('htmlPreviewFrame');
+    const htmlPreviewArea = document.getElementById('htmlPreviewArea');
+    const htmlDesignsGrid = document.getElementById('htmlDesignsGrid');
+    const htmlDesignsEmpty = document.getElementById('htmlDesignsEmpty');
+    const moodboardGallery = document.getElementById('moodboardGallery');
+    const websiteGallery = document.getElementById('websiteGallery');
+    const previewDesignName = document.getElementById('previewDesignName');
+    const viewPromptBtn = document.getElementById('viewPromptBtn');
+    const downloadHtmlBtn = document.getElementById('downloadHtmlBtn');
+    const promptModal = document.getElementById('promptModal');
+    const promptModalText = document.getElementById('promptModalText');
+    const promptCopyBtn = document.getElementById('promptCopyBtn');
+    const promptCloseBtn = document.getElementById('promptCloseBtn');
+
+    // localStorage for HTML designs
+    function loadHtmlDesigns() {
+        try { htmlDesigns = JSON.parse(localStorage.getItem(HTML_STORAGE_KEY)) || []; }
+        catch { htmlDesigns = []; }
+    }
+    function saveHtmlDesigns() {
+        if (htmlDesigns.length > MAX_HTML_DESIGNS) htmlDesigns = htmlDesigns.slice(-MAX_HTML_DESIGNS);
+        localStorage.setItem(HTML_STORAGE_KEY, JSON.stringify(htmlDesigns));
+    }
+
+    // ── Mode Switching ──
+    document.querySelectorAll('.mode-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            const mode = tab.dataset.mode;
+            if (mode === currentMode) return;
+            currentMode = mode;
+
+            document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            document.getElementById('moodboardPanel').classList.toggle('active', mode === 'moodboard');
+            document.getElementById('websitePanel').classList.toggle('active', mode === 'website');
+
+            moodboardGallery.style.display = mode === 'moodboard' ? '' : 'none';
+            websiteGallery.style.display = mode === 'website' ? '' : 'none';
+
+            if (mode === 'website') {
+                renderWebsiteView();
+            }
+            renderHistory();
+        });
+    });
+
+    // ── Generate HTML Design ──
+    htmlGenerateBtn.addEventListener('click', async () => {
+        const prompt = htmlPromptInput.value.trim();
+        const name = htmlNameInput.value.trim() || 'Untitled Design';
+        if (!prompt) { htmlPromptInput.focus(); return; }
+
+        htmlGenerateBtn.disabled = true;
+        htmlGenerateBtn.classList.add('loading');
+        htmlGenerateBtn.textContent = 'Generating website...';
+
+        try {
+            const res = await fetch('/api/website/generate-html', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt, name })
+            });
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.detail || err.error || 'Generation failed');
+            }
+            const data = await res.json();
+
+            const design = {
+                id: 'htmldesign_' + Date.now(),
+                timestamp: new Date().toISOString(),
+                name: data.name,
+                prompt: data.prompt,
+                html: data.html
+            };
+
+            htmlDesigns.push(design);
+            saveHtmlDesigns();
+            activeHtmlDesignId = design.id;
+            showHtmlPreview(design);
+            renderHistory();
+
+            htmlPromptInput.value = '';
+            htmlNameInput.value = '';
+        } catch (err) {
+            console.error('HTML generation error:', err);
+            alert('Failed to generate website: ' + err.message);
+        } finally {
+            htmlGenerateBtn.disabled = false;
+            htmlGenerateBtn.classList.remove('loading');
+            htmlGenerateBtn.textContent = 'Generate Website';
+        }
+    });
+
+    // ── Preview ──
+    function showHtmlPreview(design) {
+        currentHtmlDesign = design;
+        activeHtmlDesignId = design.id;
+
+        htmlPreviewArea.classList.add('active');
+        htmlDesignsGrid.style.display = 'none';
+        htmlDesignsEmpty.style.display = 'none';
+
+        previewDesignName.textContent = design.name;
+        htmlPreviewFrame.srcdoc = design.html;
+
+        // Reset device toggle to desktop
+        document.querySelectorAll('.device-toggle').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('.device-toggle[data-width="100%"]').classList.add('active');
+        htmlPreviewFrame.style.maxWidth = '100%';
+    }
+
+    function renderWebsiteView() {
+        if (activeHtmlDesignId) {
+            const design = htmlDesigns.find(d => d.id === activeHtmlDesignId);
+            if (design) { showHtmlPreview(design); return; }
+        }
+        // No active design — show grid or empty state
+        htmlPreviewArea.classList.remove('active');
+
+        if (htmlDesigns.length === 0) {
+            htmlDesignsGrid.style.display = 'none';
+            htmlDesignsEmpty.style.display = 'flex';
+        } else {
+            htmlDesignsEmpty.style.display = 'none';
+            htmlDesignsGrid.style.display = '';
+            renderHtmlDesignsGrid();
+        }
+    }
+
+    function renderHtmlDesignsGrid() {
+        htmlDesignsGrid.innerHTML = '';
+        [...htmlDesigns].reverse().forEach(design => {
+            const date = new Date(design.timestamp);
+            const timeStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' +
+                date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+            const card = document.createElement('div');
+            card.className = 'html-design-card fade-in';
+            card.innerHTML = `
+                <div class="card-thumb"><iframe srcdoc="${esc(design.html)}" sandbox="allow-same-origin"></iframe></div>
+                <div class="card-body">
+                    <h4>${esc(design.name)}</h4>
+                    <p class="meta">${timeStr}</p>
+                    <div class="card-actions">
+                        <button class="btn-outline" onclick="event.stopPropagation(); downloadHtmlFile('${design.id}')">Download</button>
+                        <button class="btn-outline" onclick="event.stopPropagation(); showPromptModal('${design.id}')">Prompt</button>
+                        <button class="btn-outline" onclick="event.stopPropagation(); deleteHtmlDesign('${design.id}')" style="color: #e74c3c; border-color: rgba(231,76,60,0.2);">&times;</button>
+                    </div>
+                </div>
+            `;
+            card.addEventListener('click', () => {
+                activeHtmlDesignId = design.id;
+                showHtmlPreview(design);
+                renderHistory();
+            });
+            htmlDesignsGrid.appendChild(card);
+        });
+    }
+
+    // ── Device Width Toggles ──
+    document.querySelectorAll('.device-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.device-toggle').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const width = btn.dataset.width;
+            htmlPreviewFrame.style.maxWidth = width;
+            htmlPreviewFrame.style.margin = width === '100%' ? '0' : '0 auto';
+        });
+    });
+
+    // ── Download ──
+    downloadHtmlBtn.addEventListener('click', () => {
+        if (currentHtmlDesign) downloadHtmlFile(currentHtmlDesign.id);
+    });
+
+    function downloadHtmlFile(designId) {
+        const design = htmlDesigns.find(d => d.id === designId);
+        if (!design) return;
+        const blob = new Blob([design.html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = (design.name || 'website').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // ── Prompt Modal ──
+    viewPromptBtn.addEventListener('click', () => {
+        if (currentHtmlDesign) showPromptModal(currentHtmlDesign.id);
+    });
+
+    function showPromptModal(designId) {
+        const design = htmlDesigns.find(d => d.id === designId);
+        if (!design) return;
+        promptModalText.textContent = design.prompt;
+        promptModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePromptModal() {
+        promptModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    promptCloseBtn.addEventListener('click', closePromptModal);
+    promptModal.addEventListener('click', (e) => { if (e.target === promptModal) closePromptModal(); });
+    promptCopyBtn.addEventListener('click', () => {
+        copyText(promptModalText.textContent);
+        promptCopyBtn.textContent = 'Copied!';
+        setTimeout(() => { promptCopyBtn.textContent = 'Copy Prompt'; }, 1500);
+    });
+
+    // ── Delete HTML Design ──
+    function deleteHtmlDesign(designId) {
+        htmlDesigns = htmlDesigns.filter(d => d.id !== designId);
+        saveHtmlDesigns();
+        if (activeHtmlDesignId === designId) {
+            activeHtmlDesignId = htmlDesigns.length > 0 ? htmlDesigns[htmlDesigns.length - 1].id : null;
+        }
+        renderWebsiteView();
+        renderHistory();
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // RESUME POLLING ON LOAD
+    // ════════════════════════════════════════════════════════════════
+
+    function resumePolling() {
+        sessions.forEach(session => {
+            if (session.type === 'design-suite' && session.concepts) {
+                session.concepts.forEach((concept, cIdx) => {
+                    if (concept.front.status === 'processing' && concept.front.taskId)
+                        pollConceptImage(session.id, cIdx, 'front', concept.front.taskId);
+                    if (concept.back.status === 'processing' && concept.back.taskId)
+                        pollConceptImage(session.id, cIdx, 'back', concept.back.taskId);
+                });
+            } else if (session.images) {
+                session.images.forEach((img, idx) => {
+                    if (img.status === 'processing' && img.taskId)
+                        pollSimpleImage(session.id, idx, img.taskId);
+                });
+            }
+        });
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // INIT
+    // ════════════════════════════════════════════════════════════════
+
+    loadSessions();
+    loadHtmlDesigns();
+    renderHistory();
+
+    if (sessions.length > 0) {
+        const last = sessions[sessions.length - 1];
+        activeSessionId = last.id;
+        renderHistory();
+        renderSession(last);
+        resumePolling();
+    } else {
+        renderSession(null);
+    }
+    </script>
+</body>
+</html>

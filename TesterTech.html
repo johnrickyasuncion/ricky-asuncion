@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tester Tech — Smart Devices Ecosystem</title>
+    <link rel="icon" type="image/svg+xml" href="brand_assets/logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #000000;
+            --surface: #070707;
+            --surface-2: #0d0d0d;
+            --surface-3: #141414;
+            --border: #1a1a1a;
+            --border-light: #252525;
+            --white: #ffffff;
+            --white-off: #e8e8e8;
+            --white-dim: #999999;
+            --white-muted: #5a5a5a;
+            --cyan: #00D4FF;
+            --cyan-dim: rgba(0, 212, 255, 0.1);
+            --cyan-glow: rgba(0, 212, 255, 0.25);
+            --cyan-deep: #0099bb;
+            --magenta: #ff3d8e;
+            --magenta-dim: rgba(255, 61, 142, 0.1);
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 72px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--cyan-deep) var(--black);
+        }
+
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: var(--black); }
+        ::-webkit-scrollbar-thumb { background: var(--cyan-deep); }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::selection { background: var(--cyan-dim); color: var(--cyan); }
+
+        /* ─── Scroll Reveal ─── */
+        .rv { opacity: 0; transform: translateY(50px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+        .rv.vis { opacity: 1; transform: translateY(0); }
+        .rv-d1 { transition-delay: 0.1s; }
+        .rv-d2 { transition-delay: 0.2s; }
+        .rv-d3 { transition-delay: 0.3s; }
+        .rv-d4 { transition-delay: 0.4s; }
+        .rv-d5 { transition-delay: 0.5s; }
+
+        /* ─── Navigation ─── */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(40px) saturate(1.4);
+            -webkit-backdrop-filter: blur(40px) saturate(1.4);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: background 0.5s var(--ease);
+        }
+
+        .nav.scrolled { background: rgba(0,0,0,0.92); }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            padding: 0 48px;
+        }
+
+        .nav-brand {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-brand .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        .nav-brand span { color: var(--white-dim); font-weight: 400; font-size: 14px; }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--white-dim);
+            text-decoration: none;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-links .nav-cta {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--black);
+            background: var(--cyan);
+            padding: 10px 24px;
+            border-radius: 100px;
+            transition: all 0.4s var(--ease);
+        }
+
+        .nav-links .nav-cta:hover {
+            background: var(--white);
+            box-shadow: 0 0 20px var(--cyan-glow);
+            transform: translateY(-1px);
+        }
+
+        .mob-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        .mob-toggle span {
+            display: block;
+            width: 20px;
+            height: 1.5px;
+            background: var(--white);
+            margin: 5px auto;
+        }
+
+        /* ─── Hero ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 140px 48px 100px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.25;
+            filter: brightness(0.8) contrast(1.1);
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.4) 70%, #000 100%),
+                linear-gradient(90deg, #000 0%, transparent 30%, transparent 70%, #000 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%; right: -10%;
+            width: 800px; height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%; left: -15%;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 61, 142, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content { max-width: 600px; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 100px;
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeIn 0.8s var(--ease) 0.2s forwards;
+        }
+
+        .hero-badge .pulse {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--cyan);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(44px, 5.5vw, 72px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeIn 1s var(--ease) 0.4s forwards;
+        }
+
+        .hero h1 .cyan { color: var(--cyan); }
+
+        .hero-desc {
+            font-size: 17px;
+            font-weight: 300;
+            color: var(--white-dim);
+            line-height: 1.8;
+            margin-bottom: 36px;
+            max-width: 460px;
+            opacity: 0;
+            animation: fadeIn 0.9s var(--ease) 0.7s forwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            opacity: 0;
+            animation: fadeIn 0.9s var(--ease) 1s forwards;
+        }
+
+        .btn-fill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--black);
+            background: var(--cyan);
+            padding: 16px 36px;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-fill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--cyan-glow);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--white-dim);
+            background: none;
+            padding: 16px 32px;
+            border: 1px solid var(--border-light);
+            border-radius: 100px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s var(--ease);
+        }
+
+        .btn-outline:hover {
+            color: var(--white);
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.03);
+        }
+
+        /* Hero Visual — Floating Device Grid */
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            opacity: 0;
+            animation: fadeIn 1.2s var(--ease) 0.5s forwards;
+        }
+
+        .device-float {
+            position: absolute;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.6s var(--ease);
+            cursor: default;
+        }
+
+        .device-float:hover {
+            border-color: rgba(0, 212, 255, 0.15);
+            background: var(--surface-2);
+            transform: translateY(-8px) !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(0, 212, 255, 0.06);
+        }
+
+        .device-float svg {
+            stroke: var(--cyan);
+            fill: none;
+            stroke-width: 1.5;
+            transition: all 0.4s ease;
+        }
+
+        .device-float:hover svg { stroke: var(--white); filter: drop-shadow(0 0 8px var(--cyan-glow)); }
+
+        .device-float .d-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--white-muted);
+            transition: color 0.3s ease;
+        }
+
+        .device-float:hover .d-label { color: var(--cyan); }
+
+        .df-watch { width: 160px; height: 180px; top: 10%; left: 5%; animation: float1 6s ease-in-out infinite; }
+        .df-glasses { width: 200px; height: 160px; top: 5%; right: 0; animation: float2 7s ease-in-out infinite; }
+        .df-speaker { width: 170px; height: 190px; bottom: 15%; left: 15%; animation: float3 5.5s ease-in-out infinite; }
+        .df-hub { width: 180px; height: 160px; bottom: 10%; right: 5%; animation: float1 6.5s ease-in-out infinite reverse; }
+
+        @keyframes float1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes float2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+        @keyframes float3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Category Grid ─── */
+        .categories {
+            padding: 120px 48px;
+            background: var(--black);
+            position: relative;
+        }
+
+        .categories::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 1px; height: 60px;
+            background: linear-gradient(180deg, var(--border), transparent);
+        }
+
+        .section-tag {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            text-align: center;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .section-heading {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 4.5vw, 52px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-align: center;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .section-sub {
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--white-muted);
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto 72px;
+            line-height: 1.8;
+        }
+
+        .cat-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+        }
+
+        .cat-card {
+            background: var(--surface);
+            padding: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--ease);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .cat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--cyan);
+            transform: scaleX(0);
+            transition: transform 0.5s var(--ease);
+            z-index: 2;
+        }
+
+        .cat-card:hover { background: var(--surface-2); border-color: rgba(0,212,255,0.05); }
+        .cat-card:hover::before { transform: scaleX(1); }
+
+        .cat-thumb {
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cat-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s var(--ease);
+            filter: brightness(0.7);
+        }
+
+        .cat-card:hover .cat-thumb img {
+            transform: scale(1.08);
+            filter: brightness(0.9);
+        }
+
+        .cat-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 30%, var(--surface) 100%);
+            pointer-events: none;
+        }
+
+        .cat-body { padding: 28px 24px 32px; }
+
+        .cat-icon {
+            width: 56px; height: 56px;
+            margin: 0 auto 24px;
+            border-radius: 16px;
+            background: var(--cyan-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s var(--ease);
+        }
+
+        .cat-card:hover .cat-icon {
+            background: var(--cyan);
+            box-shadow: 0 0 30px var(--cyan-glow);
+        }
+
+        .cat-icon svg {
+            width: 24px; height: 24px;
+            stroke: var(--cyan);
+            fill: none;
+            stroke-width: 1.8;
+            transition: stroke 0.3s ease;
+        }
+
+        .cat-card:hover .cat-icon svg { stroke: var(--black); }
+
+        .cat-name {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .cat-count {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--white-muted);
+            letter-spacing: 1px;
+        }
+
+        /* ─── Featured Devices ─── */
+        .featured {
+            padding: 120px 48px;
+            background: var(--black);
+        }
+
+        .featured-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .device-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.5s var(--ease);
+            position: relative;
+        }
+
+        .device-card:hover {
+            border-color: rgba(0,212,255,0.1);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,212,255,0.06);
+        }
+
+        .device-card:nth-child(1) { grid-row: span 2; }
+
+        .device-img {
+            height: 240px;
+            background: var(--surface-2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .device-card:nth-child(1) .device-img { height: 100%; min-height: 320px; }
+
+        .device-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s var(--ease), filter 0.5s ease;
+            will-change: transform;
+        }
+
+        .device-card:hover .device-img img {
+            transform: scale(1.06);
+            filter: brightness(1.1);
+        }
+
+        .device-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, var(--surface) 100%);
+            pointer-events: none;
+        }
+
+        .device-body {
+            padding: 28px 24px;
+        }
+
+        .device-tag {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 10px;
+        }
+
+        .device-name {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .device-desc {
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--white-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .device-price {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .device-price .currency {
+            font-size: 14px;
+            color: var(--cyan);
+            font-weight: 500;
+        }
+
+        .card-btn {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--cyan);
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 16px;
+            padding: 10px 24px;
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 100px;
+            transition: all 0.4s var(--ease);
+        }
+
+        .card-btn:hover {
+            color: var(--black);
+            background: var(--cyan);
+            border-color: var(--cyan);
+            box-shadow: 0 4px 20px var(--cyan-glow);
+            transform: translateY(-1px);
+        }
+
+        /* ─── Specs Comparison ─── */
+        .specs {
+            padding: 120px 48px;
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .specs-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .specs-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.08;
+            filter: brightness(0.6);
+        }
+
+        .specs-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0.7) 70%, #000 100%);
+        }
+
+        .specs > * { position: relative; z-index: 1; }
+
+        .specs-table-wrap {
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-body);
+        }
+
+        .specs-table thead th {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--white);
+            text-align: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-light);
+            letter-spacing: -0.2px;
+        }
+
+        .specs-table thead th:first-child {
+            text-align: left;
+            color: var(--white-muted);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .specs-table tbody tr {
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: background 0.3s ease;
+        }
+
+        .specs-table tbody tr:hover { background: var(--surface); }
+
+        .specs-table tbody td {
+            padding: 18px 24px;
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--white-dim);
+            text-align: center;
+            letter-spacing: 0.2px;
+        }
+
+        .specs-table tbody td:first-child {
+            text-align: left;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--white-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .specs-table .highlight {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        .specs-table .check {
+            color: var(--cyan);
+            font-size: 16px;
+        }
+
+        .specs-table .dash {
+            color: var(--white-muted);
+            opacity: 0.4;
+        }
+
+        /* ─── Star Rating ─── */
+        .stars { display: inline-flex; gap: 2px; margin-bottom: 6px; }
+        .stars svg { width: 14px; height: 14px; fill: #ffb800; }
+        .rating-text { font-family: var(--font-mono); font-size: 10px; color: var(--white-muted); letter-spacing: 1px; }
+
+        /* ─── Trust Bar ─── */
+        .trust-bar {
+            padding: 48px 48px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: var(--black);
+        }
+
+        .trust-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .trust-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trust-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            background: var(--cyan-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trust-icon svg {
+            width: 20px; height: 20px;
+            stroke: var(--cyan);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .trust-label {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white-off);
+            letter-spacing: -0.2px;
+        }
+
+        .trust-sub {
+            font-size: 11px;
+            color: var(--white-muted);
+            margin-top: -6px;
+        }
+
+        /* ─── Reviews Section ─── */
+        .reviews {
+            padding: 120px 48px;
+            background: var(--black);
+        }
+
+        .reviews-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .review-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px 28px;
+            transition: all 0.4s var(--ease);
+        }
+
+        .review-card:hover {
+            border-color: rgba(0,212,255,0.08);
+            background: var(--surface-2);
+        }
+
+        .review-text {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--white-dim);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .review-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--surface-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--cyan);
+        }
+
+        .review-name {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--white-off);
+        }
+
+        .review-role {
+            font-size: 11px;
+            color: var(--white-muted);
+        }
+
+        .review-device {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            background: var(--cyan-dim);
+            padding: 4px 10px;
+            border-radius: 100px;
+            margin-top: 12px;
+            display: inline-block;
+        }
+
+        /* ─── Bundle Section ─── */
+        .bundles {
+            padding: 120px 48px;
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bundles-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .bundles-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.06;
+            filter: brightness(0.5);
+        }
+
+        .bundles-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, #000 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.6) 70%, #000 100%);
+        }
+
+        .bundles > * { position: relative; z-index: 1; }
+
+        .bundle-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .bundle-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 36px 28px;
+            text-align: center;
+            position: relative;
+            transition: all 0.5s var(--ease);
+        }
+
+        .bundle-card:hover {
+            border-color: rgba(0,212,255,0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+        }
+
+        .bundle-card.popular {
+            border-color: rgba(0,212,255,0.2);
+        }
+
+        .bundle-card.popular::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -1px; left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+            background: var(--cyan);
+            padding: 5px 16px;
+            border-radius: 100px;
+        }
+
+        .bundle-name {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .bundle-desc {
+            font-size: 13px;
+            color: var(--white-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .bundle-price {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .bundle-price .currency { font-size: 18px; color: var(--cyan); }
+
+        .bundle-original {
+            font-size: 13px;
+            color: var(--white-muted);
+            text-decoration: line-through;
+            margin-bottom: 20px;
+        }
+
+        .bundle-save {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #a8ff00;
+            margin-bottom: 24px;
+        }
+
+        .bundle-items {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 28px;
+        }
+
+        .bundle-items li {
+            font-size: 13px;
+            color: var(--white-dim);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bundle-items li::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--cyan);
+            flex-shrink: 0;
+        }
+
+        .bundle-btn {
+            display: block;
+            width: 100%;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--cyan);
+            background: none;
+            border: 1px solid rgba(0,212,255,0.25);
+            border-radius: 100px;
+            padding: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.4s var(--ease);
+        }
+
+        .bundle-btn:hover {
+            color: var(--black);
+            background: var(--cyan);
+            border-color: var(--cyan);
+        }
+
+        .bundle-card.popular .bundle-btn {
+            color: var(--black);
+            background: var(--cyan);
+            border-color: var(--cyan);
+        }
+
+        .bundle-card.popular .bundle-btn:hover {
+            background: var(--white);
+            border-color: var(--white);
+            box-shadow: 0 4px 20px var(--cyan-glow);
+        }
+
+        /* ─── Newsletter ─── */
+        .newsletter {
+            padding: 80px 48px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .newsletter-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter h3 {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .newsletter p {
+            font-size: 14px;
+            color: var(--white-muted);
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 8px;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            background: var(--black);
+            border: 1px solid var(--border-light);
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 14px;
+            padding: 14px 20px;
+            border-radius: 100px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter-form input::placeholder { color: var(--white-muted); }
+        .newsletter-form input:focus { border-color: rgba(0,212,255,0.3); }
+
+        .newsletter-form button {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--black);
+            background: var(--cyan);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 100px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s var(--ease);
+        }
+
+        .newsletter-form button:hover {
+            background: var(--white);
+            box-shadow: 0 4px 16px var(--cyan-glow);
+        }
+
+        /* ─── Ecosystem Banner ─── */
+        .ecosystem {
+            padding: 140px 48px;
+            text-align: center;
+            position: relative;
+            background: var(--black);
+            overflow: hidden;
+        }
+
+        .ecosystem::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(700px, 90vw);
+            height: min(700px, 90vw);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        .eco-inner { position: relative; z-index: 1; }
+
+        .eco-title {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .eco-title .cyan { color: var(--cyan); }
+
+        .eco-desc {
+            font-size: 17px;
+            font-weight: 300;
+            color: var(--white-muted);
+            max-width: 500px;
+            margin: 0 auto 44px;
+            line-height: 1.8;
+        }
+
+        .btn-glow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--black);
+            background: var(--cyan);
+            padding: 20px 52px;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s var(--ease);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 48px var(--cyan-glow), 0 0 0 2px var(--cyan);
+            animation: none;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 4px 24px var(--cyan-glow); }
+            50% { box-shadow: 0 8px 40px var(--cyan-glow), 0 0 60px rgba(0,212,255,0.08); }
+        }
+
+        /* ─── Footer ─── */
+        .footer {
+            padding: 48px 48px 32px;
+            border-top: 1px solid var(--border);
+            background: var(--black);
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white-muted);
+        }
+
+        .footer-brand .dot {
+            display: inline-block;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--cyan);
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        .footer-copy { font-size: 12px; color: var(--white-muted); }
+
+        .footer-links { display: flex; gap: 8px; }
+
+        .footer-links a {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s var(--ease);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            border-color: var(--cyan);
+            background: var(--cyan-dim);
+            transform: translateY(-2px);
+        }
+
+        .footer-links a svg { width: 15px; height: 15px; fill: var(--white-muted); transition: fill 0.3s ease; }
+        .footer-links a:hover svg { fill: var(--cyan); }
+
+        /* ─── Mobile Menu ─── */
+        .mob-menu {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.97);
+            backdrop-filter: blur(20px);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s var(--ease);
+        }
+
+        .mob-menu.open { opacity: 1; visibility: visible; }
+
+        .mob-menu a {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .mob-menu a:hover { color: var(--cyan); }
+
+        .mob-close {
+            position: absolute; top: 16px; right: 16px;
+            background: none; border: none; cursor: pointer;
+            padding: 14px; min-width: 44px; min-height: 44px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .mob-close span { display: block; width: 20px; height: 1.5px; background: var(--white); }
+        .mob-close span:first-child { transform: rotate(45deg) translateY(1px); }
+        .mob-close span:last-child { transform: rotate(-45deg) translateY(-1px); }
+
+        /* ═══ RESPONSIVE ═══ */
+        @media (max-width: 1024px) {
+            .nav-inner { padding: 0 24px; }
+            .hero { padding: 120px 24px 80px; }
+            .hero-inner { gap: 48px; }
+            .categories { padding: 80px 24px; }
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .featured { padding: 80px 24px; }
+            .featured-grid { grid-template-columns: repeat(2, 1fr); }
+            .device-card:nth-child(1) { grid-row: auto; }
+            .device-card:nth-child(1) .device-img { min-height: 200px; }
+            .cat-thumb { height: 140px; }
+            .specs { padding: 80px 24px; }
+            .trust-bar { padding: 40px 24px; }
+            .reviews { padding: 80px 24px; }
+            .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+            .bundles { padding: 80px 24px; }
+            .bundle-grid { grid-template-columns: repeat(3, 1fr); }
+            .newsletter { padding: 64px 24px; }
+            .ecosystem { padding: 100px 24px; }
+            .footer { padding: 40px 24px 28px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-inner { padding: 0 20px; height: 56px; }
+            .nav-links { display: none; }
+            .mob-toggle { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+            .hero { padding: 100px 20px 64px; min-height: auto; }
+            .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+            .hero-visual { height: 320px; }
+            .df-watch { width: 120px; height: 140px; left: 0; }
+            .df-glasses { width: 150px; height: 120px; }
+            .df-speaker { width: 130px; height: 150px; left: 5%; }
+            .df-hub { width: 140px; height: 120px; }
+            .hero-buttons { flex-direction: column; width: 100%; max-width: 320px; }
+            .btn-fill, .btn-outline { width: 100%; justify-content: center; }
+
+            .categories { padding: 64px 20px; }
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .cat-card { padding: 36px 24px; }
+            .section-sub { margin-bottom: 48px; font-size: 14px; }
+
+            .featured { padding: 64px 20px; }
+            .featured-grid { grid-template-columns: 1fr; }
+            .device-img { height: 200px; }
+            .device-card:nth-child(1) .device-img { min-height: 200px; }
+            .cat-thumb { height: 120px; }
+
+            .specs { padding: 64px 20px; }
+            .specs-table thead th { font-size: 13px; padding: 16px 14px; }
+            .specs-table tbody td { font-size: 12px; padding: 14px; }
+
+            .trust-inner { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .trust-bar { padding: 36px 20px; }
+            .reviews { padding: 64px 20px; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .review-card { padding: 24px 22px; }
+            .bundles { padding: 64px 20px; }
+            .bundle-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+            .bundle-card.popular { order: -1; }
+            .newsletter { padding: 48px 20px; }
+            .newsletter-form { flex-direction: column; }
+            .newsletter-form button { width: 100%; }
+
+            .ecosystem { padding: 80px 20px; }
+            .eco-desc { font-size: 15px; }
+
+            .footer { padding: 32px 20px 24px; }
+            .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 80px 16px 48px; }
+            .hero h1 { letter-spacing: -1px; }
+            .hero-desc { font-size: 15px; }
+            .hero-visual { height: 260px; }
+            .df-watch { width: 100px; height: 120px; }
+            .df-glasses { width: 130px; height: 100px; }
+            .df-speaker { width: 110px; height: 130px; }
+            .df-hub { width: 120px; height: 100px; }
+
+            .categories { padding: 48px 16px; }
+            .cat-grid { grid-template-columns: 1fr; }
+            .cat-body { padding: 20px 16px 24px; }
+            .cat-icon { width: 44px; height: 44px; border-radius: 12px; }
+            .cat-thumb { height: 100px; }
+
+            .featured { padding: 48px 16px; }
+            .device-body { padding: 22px 18px; }
+            .device-name { font-size: 19px; }
+
+            .specs { padding: 48px 16px; }
+            .ecosystem { padding: 64px 16px; }
+            .trust-inner { gap: 16px; }
+            .trust-label { font-size: 12px; }
+            .reviews { padding: 48px 16px; }
+            .bundles { padding: 48px 16px; }
+            .bundle-price { font-size: 30px; }
+            .newsletter { padding: 40px 16px; }
+            .newsletter h3 { font-size: 22px; }
+            .btn-glow { padding: 18px 40px; font-size: 14px; }
+
+            .footer { padding: 24px 16px 18px; }
+            .mob-menu a { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="TesterTech.html" class="nav-brand">
+                <span class="dot"></span> Tester <span>/ Tech</span>
+            </a>
+            <div class="nav-links">
+                <a href="#categories">Products</a>
+                <a href="#featured">Featured</a>
+                <a href="#specs">Compare</a>
+                <a href="#bundles">Bundles</a>
+                <a href="product.html">Smart Watch Pro</a>
+                <a href="index.html">Collection</a>
+                <a href="#ecosystem" class="nav-cta">Shop Now</a>
+            </div>
+            <button class="mob-toggle" id="mobToggle" aria-label="Menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mob-menu" id="mobMenu">
+        <button class="mob-close" id="mobClose"><span></span><span></span></button>
+        <a href="#categories" class="mlink">Products</a>
+        <a href="#featured" class="mlink">Featured</a>
+        <a href="#specs" class="mlink">Compare</a>
+        <a href="#bundles" class="mlink">Bundles</a>
+        <a href="product.html" class="mlink">Smart Watch Pro</a>
+        <a href="index.html" class="mlink">Collection</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="nano-banana-hero.jpg" alt="Tester Tech Smart Watch — AI Generated by Nano Banana">
+        </div>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-badge"><span class="pulse"></span> Tester Ecosystem 2024</div>
+                <h1>Smart Devices.<br>One <span class="cyan">Ecosystem.</span></h1>
+                <p class="hero-desc">From your wrist to your home. Every Tester device works together seamlessly — intelligent, connected, and designed for the way you live.</p>
+                <div class="hero-buttons">
+                    <a href="#featured" class="btn-fill">
+                        Explore Devices
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="product.html" class="btn-outline">Smart Watch Pro</a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="device-float df-watch">
+                    <svg width="36" height="36" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><line x1="12" y1="18" x2="12.01" y2="18"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span class="d-label">Watch</span>
+                </div>
+                <div class="device-float df-glasses">
+                    <svg width="40" height="40" viewBox="0 0 24 24"><circle cx="6" cy="12" r="4"/><circle cx="18" cy="12" r="4"/><path d="M10 12h4"/><path d="M2 12h0"/><path d="M22 12h0"/></svg>
+                    <span class="d-label">Glasses</span>
+                </div>
+                <div class="device-float df-speaker">
+                    <svg width="36" height="36" viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                    <span class="d-label">Assistant</span>
+                </div>
+                <div class="device-float df-hub">
+                    <svg width="36" height="36" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>
+                    <span class="d-label">Hub</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories" id="categories">
+        <span class="section-tag rv">Product Categories</span>
+        <h2 class="section-heading rv rv-d1">Choose Your <span style="color:var(--cyan)">Device</span></h2>
+        <p class="section-sub rv rv-d2">Four categories. One connected world.</p>
+
+        <div class="cat-grid">
+            <div class="cat-card rv">
+                <div class="cat-thumb">
+                    <img src="nb-cat-watch.jpg" alt="Smartwatches" loading="lazy">
+                </div>
+                <div class="cat-body">
+                    <div class="cat-icon">
+                        <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><circle cx="12" cy="10" r="3"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    </div>
+                    <h3 class="cat-name">Smartwatches</h3>
+                    <p class="cat-count">3 devices</p>
+                </div>
+            </div>
+            <div class="cat-card rv rv-d1">
+                <div class="cat-thumb">
+                    <img src="nb-cat-glasses.jpg" alt="Smart Glasses" loading="lazy">
+                </div>
+                <div class="cat-body">
+                    <div class="cat-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="4"/><circle cx="18" cy="12" r="4"/><path d="M10 12h4"/></svg>
+                    </div>
+                    <h3 class="cat-name">Smart Glasses</h3>
+                    <p class="cat-count">2 devices</p>
+                </div>
+            </div>
+            <div class="cat-card rv rv-d2">
+                <div class="cat-thumb">
+                    <img src="nb-cat-assistant.jpg" alt="Smart Assistants" loading="lazy">
+                </div>
+                <div class="cat-body">
+                    <div class="cat-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+                    </div>
+                    <h3 class="cat-name">Smart Assistants</h3>
+                    <p class="cat-count">2 devices</p>
+                </div>
+            </div>
+            <div class="cat-card rv rv-d3">
+                <div class="cat-thumb">
+                    <img src="nb-cat-hub.jpg" alt="Smart Hubs" loading="lazy">
+                </div>
+                <div class="cat-body">
+                    <div class="cat-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>
+                    </div>
+                    <h3 class="cat-name">Smart Hubs</h3>
+                    <p class="cat-count">2 devices</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+        <div class="trust-inner">
+            <div class="trust-item rv">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                </div>
+                <span class="trust-label">Free Shipping</span>
+                <span class="trust-sub">On all orders over $99</span>
+            </div>
+            <div class="trust-item rv rv-d1">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <span class="trust-label">2-Year Warranty</span>
+                <span class="trust-sub">Full coverage, no questions</span>
+            </div>
+            <div class="trust-item rv rv-d2">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                </div>
+                <span class="trust-label">30-Day Returns</span>
+                <span class="trust-sub">Try risk-free at home</span>
+            </div>
+            <div class="trust-item rv rv-d3">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                </div>
+                <span class="trust-label">Secure Checkout</span>
+                <span class="trust-sub">SSL encrypted payments</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Devices -->
+    <section class="featured" id="featured">
+        <span class="section-tag rv">Flagship Lineup</span>
+        <h2 class="section-heading rv rv-d1">Featured <span style="color:var(--cyan)">Devices</span></h2>
+        <p class="section-sub rv rv-d2">The best of Tester Tech. Handpicked for you.</p>
+
+        <div class="featured-grid">
+            <div class="device-card rv">
+                <div class="device-img">
+                    <img src="nb-watch-pro.jpg" alt="Tester Watch Pro" loading="lazy">
+                </div>
+                <div class="device-body">
+                    <div class="device-tag">Smartwatch</div>
+                    <h3 class="device-name">Tester Watch Pro</h3>
+                    <p class="device-desc">72h battery, titanium build, 1.9" AMOLED. The most advanced wearable we've ever made.</p>
+                    <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                    <span class="rating-text">4.9 (2,847 reviews)</span>
+                    <div class="device-price"><span class="currency">$</span>399</div>
+                    <a href="product.html" class="card-btn">View Details</a>
+                </div>
+            </div>
+            <div class="device-card rv rv-d1">
+                <div class="device-img">
+                    <img src="nb-vision-x.jpg" alt="Tester Vision X" loading="lazy">
+                </div>
+                <div class="device-body">
+                    <div class="device-tag">Smart Glasses</div>
+                    <h3 class="device-name">Tester Vision X</h3>
+                    <p class="device-desc">AR overlay, spatial audio, all-day comfort. See the world differently.</p>
+                    <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                    <span class="rating-text">4.7 (1,203 reviews)</span>
+                    <div class="device-price"><span class="currency">$</span>599</div>
+                    <a href="#" class="card-btn">View Details</a>
+                </div>
+            </div>
+            <div class="device-card rv rv-d2">
+                <div class="device-img">
+                    <img src="nb-home-ai.jpg" alt="Tester Home AI" loading="lazy">
+                </div>
+                <div class="device-body">
+                    <div class="device-tag">Smart Assistant</div>
+                    <h3 class="device-name">Tester Home AI</h3>
+                    <p class="device-desc">Voice control, multi-room audio, smart home hub. Your home, your way.</p>
+                    <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                    <span class="rating-text">4.8 (3,461 reviews)</span>
+                    <div class="device-price"><span class="currency">$</span>199</div>
+                    <a href="#" class="card-btn">View Details</a>
+                </div>
+            </div>
+            <div class="device-card rv rv-d1">
+                <div class="device-img">
+                    <img src="nb-nexus.jpg" alt="Tester Nexus" loading="lazy">
+                </div>
+                <div class="device-body">
+                    <div class="device-tag">Smart Hub</div>
+                    <h3 class="device-name">Tester Nexus</h3>
+                    <p class="device-desc">Central command for every Tester device. 10" display, Zigbee, Thread, and Matter.</p>
+                    <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                    <span class="rating-text">4.6 (987 reviews)</span>
+                    <div class="device-price"><span class="currency">$</span>349</div>
+                    <a href="#" class="card-btn">View Details</a>
+                </div>
+            </div>
+            <div class="device-card rv rv-d2">
+                <div class="device-img">
+                    <img src="nb-watch-se.jpg" alt="Tester Watch SE" loading="lazy">
+                </div>
+                <div class="device-body">
+                    <div class="device-tag">Smartwatch</div>
+                    <h3 class="device-name">Tester Watch SE</h3>
+                    <p class="device-desc">Essential health tracking, 48h battery. Premium experience, accessible price.</p>
+                    <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                    <span class="rating-text">4.8 (1,654 reviews)</span>
+                    <div class="device-price"><span class="currency">$</span>249</div>
+                    <a href="#" class="card-btn">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="reviews">
+        <span class="section-tag rv">What People Say</span>
+        <h2 class="section-heading rv rv-d1">Real <span style="color:var(--cyan)">Reviews</span></h2>
+        <p class="section-sub rv rv-d2">Trusted by 10,000+ customers worldwide.</p>
+
+        <div class="reviews-grid">
+            <div class="review-card rv">
+                <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <p class="review-text">"The Watch Pro battery genuinely lasts three days. I'm a marathon runner and the health tracking is more accurate than devices twice the price."</p>
+                <div class="review-author">
+                    <div class="review-avatar">M</div>
+                    <div>
+                        <div class="review-name">Marcus Rivera</div>
+                        <div class="review-role">Software Engineer, Austin</div>
+                    </div>
+                </div>
+                <span class="review-device">Watch Pro</span>
+            </div>
+            <div class="review-card rv rv-d1">
+                <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <p class="review-text">"Home AI replaced three devices in my house. The voice recognition is incredibly natural and it controls everything from lights to my thermostat."</p>
+                <div class="review-author">
+                    <div class="review-avatar">S</div>
+                    <div>
+                        <div class="review-name">Sarah Chen</div>
+                        <div class="review-role">Product Designer, Seattle</div>
+                    </div>
+                </div>
+                <span class="review-device">Home AI</span>
+            </div>
+            <div class="review-card rv rv-d2">
+                <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <p class="review-text">"Got the Nexus Hub and Watch Pro together. The way they sync is seamless — glance at my wrist and my hub updates in real time. This is the future."</p>
+                <div class="review-author">
+                    <div class="review-avatar">J</div>
+                    <div>
+                        <div class="review-name">James Okafor</div>
+                        <div class="review-role">Architect, London</div>
+                    </div>
+                </div>
+                <span class="review-device">Nexus + Watch Pro</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specs Comparison -->
+    <section class="specs" id="specs">
+        <div class="specs-bg"><img src="nb-specs-bg.jpg" alt="" loading="lazy"></div>
+        <span class="section-tag rv">Side by Side</span>
+        <h2 class="section-heading rv rv-d1">Compare <span style="color:var(--cyan)">Specs</span></h2>
+        <p class="section-sub rv rv-d2">Find the device that fits your life.</p>
+
+        <div class="specs-table-wrap rv rv-d3">
+            <table class="specs-table">
+                <thead>
+                    <tr>
+                        <th>Spec</th>
+                        <th>Watch Pro</th>
+                        <th>Vision X</th>
+                        <th>Home AI</th>
+                        <th>Nexus Hub</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Display</td>
+                        <td class="highlight">1.9" AMOLED</td>
+                        <td>AR Overlay</td>
+                        <td class="dash">—</td>
+                        <td>10" LCD</td>
+                    </tr>
+                    <tr>
+                        <td>Battery</td>
+                        <td class="highlight">72 hours</td>
+                        <td>8 hours</td>
+                        <td>Plugged in</td>
+                        <td>Plugged in</td>
+                    </tr>
+                    <tr>
+                        <td>Voice AI</td>
+                        <td class="check">&#10003;</td>
+                        <td class="check">&#10003;</td>
+                        <td class="check">&#10003;</td>
+                        <td class="check">&#10003;</td>
+                    </tr>
+                    <tr>
+                        <td>Health Sensors</td>
+                        <td class="check">&#10003;</td>
+                        <td class="dash">—</td>
+                        <td class="dash">—</td>
+                        <td class="dash">—</td>
+                    </tr>
+                    <tr>
+                        <td>Spatial Audio</td>
+                        <td class="dash">—</td>
+                        <td class="check">&#10003;</td>
+                        <td class="check">&#10003;</td>
+                        <td class="check">&#10003;</td>
+                    </tr>
+                    <tr>
+                        <td>Smart Home</td>
+                        <td>Control</td>
+                        <td>View</td>
+                        <td class="highlight">Full Hub</td>
+                        <td class="highlight">Full Hub</td>
+                    </tr>
+                    <tr>
+                        <td>Connectivity</td>
+                        <td>BT 5.3, Wi-Fi</td>
+                        <td>BT 5.3, Wi-Fi</td>
+                        <td>Wi-Fi 6E</td>
+                        <td class="highlight">Thread, Matter, Zigbee</td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>$399</td>
+                        <td>$599</td>
+                        <td>$199</td>
+                        <td>$349</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Bundle Deals -->
+    <section class="bundles" id="bundles">
+        <div class="bundles-bg"><img src="nb-bundle-hero.jpg" alt="" loading="lazy"></div>
+        <span class="section-tag rv">Save More Together</span>
+        <h2 class="section-heading rv rv-d1">Ecosystem <span style="color:var(--cyan)">Bundles</span></h2>
+        <p class="section-sub rv rv-d2">Buy together, save together. Devices that work better as a set.</p>
+
+        <div class="bundle-grid">
+            <div class="bundle-card rv">
+                <h3 class="bundle-name">Starter</h3>
+                <p class="bundle-desc">Begin your smart life</p>
+                <div class="bundle-price"><span class="currency">$</span>549</div>
+                <div class="bundle-original">$648 separately</div>
+                <div class="bundle-save">SAVE $99</div>
+                <ul class="bundle-items">
+                    <li>Tester Watch SE</li>
+                    <li>Tester Home AI</li>
+                    <li>Free charging dock</li>
+                </ul>
+                <a href="#" class="bundle-btn">Get Starter Bundle</a>
+            </div>
+            <div class="bundle-card popular rv rv-d1">
+                <h3 class="bundle-name">Complete</h3>
+                <p class="bundle-desc">The full connected experience</p>
+                <div class="bundle-price"><span class="currency">$</span>899</div>
+                <div class="bundle-original">$1,147 separately</div>
+                <div class="bundle-save">SAVE $248</div>
+                <ul class="bundle-items">
+                    <li>Tester Watch Pro</li>
+                    <li>Tester Home AI</li>
+                    <li>Tester Nexus Hub</li>
+                    <li>Priority support for 1 year</li>
+                </ul>
+                <a href="#" class="bundle-btn">Get Complete Bundle</a>
+            </div>
+            <div class="bundle-card rv rv-d2">
+                <h3 class="bundle-name">Visionary</h3>
+                <p class="bundle-desc">Everything, including AR</p>
+                <div class="bundle-price"><span class="currency">$</span>1,299</div>
+                <div class="bundle-original">$1,746 separately</div>
+                <div class="bundle-save">SAVE $447</div>
+                <ul class="bundle-items">
+                    <li>Tester Watch Pro</li>
+                    <li>Tester Vision X</li>
+                    <li>Tester Home AI</li>
+                    <li>Tester Nexus Hub</li>
+                    <li>Extended 3-year warranty</li>
+                </ul>
+                <a href="#" class="bundle-btn">Get Visionary Bundle</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="newsletter-inner rv">
+            <h3>Stay in the Loop</h3>
+            <p>Get early access to new devices, exclusive deals, and ecosystem updates. No spam, ever.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed!'; this.querySelector('input').value='';">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Ecosystem CTA -->
+    <section class="ecosystem" id="ecosystem">
+        <div class="eco-inner">
+            <span class="section-tag rv">The Full Ecosystem</span>
+            <h2 class="eco-title rv rv-d1">Better Together.<br>Built to <span class="cyan">Connect.</span></h2>
+            <p class="eco-desc rv rv-d2">Every device in the Tester ecosystem talks to each other — seamlessly, securely, instantly.</p>
+            <div class="rv rv-d3">
+                <a href="product.html" class="btn-glow">
+                    Start with Watch Pro
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand"><span class="dot"></span> Tester Tech</div>
+            <p class="footer-copy">&copy; 2024 Tester. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+                <a href="#" aria-label="Twitter">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="#" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+        // Nav scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Mobile menu
+        document.getElementById('mobToggle').addEventListener('click', () => document.getElementById('mobMenu').classList.add('open'));
+        document.getElementById('mobClose').addEventListener('click', () => document.getElementById('mobMenu').classList.remove('open'));
+        document.querySelectorAll('.mlink').forEach(a => a.addEventListener('click', () => document.getElementById('mobMenu').classList.remove('open')));
+
+        // Smooth scroll with nav offset
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                const t = document.querySelector(href);
+                if (t) {
+                    e.preventDefault();
+                    const top = t.getBoundingClientRect().top + window.scrollY - 72;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

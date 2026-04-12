@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JRH Engineering — Fixed Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;color:#212529;background:#fff}
+a{text-decoration:none;color:inherit}
+
+/* ─── NAV (Fix 17: Clean mega-menu replacing 10+ broken items) ─── */
+.nav{background:#0B2545;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem}
+.logo{color:#fff;font-weight:700;font-size:1.2rem;padding:1rem 0}
+.logo span{color:#D4A843}
+.menu{display:flex;list-style:none;align-items:center;gap:0}
+.menu>li{position:relative}
+.menu>li>a,.menu>li>button{background:none;border:none;color:rgba(255,255,255,.85);font-family:inherit;font-size:.88rem;font-weight:500;padding:1.1rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.3rem;transition:.15s}
+.menu>li>a:hover,.menu>li>button:hover,.menu>li>button.open{background:rgba(255,255,255,.08);color:#D4A843}
+.arrow{font-size:.55rem;transition:transform .2s}
+.open .arrow{transform:rotate(180deg)}
+.cta-btn{background:#D4A843!important;color:#0B2545!important;border-radius:50px!important;padding:.65rem 1.3rem!important;font-weight:700!important;margin-left:.5rem}
+.cta-btn:hover{background:#c49a38!important}
+
+/* Dropdowns */
+.drop{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:0 0 10px 10px;box-shadow:0 12px 40px rgba(0,0,0,.15);min-width:220px;padding:.5rem 0;z-index:50}
+.drop.show{display:block;animation:fadeIn .15s ease}
+.drop a{display:block;padding:.6rem 1.2rem;color:#333;font-size:.85rem;transition:.1s}
+.drop a:hover{background:#f0f4f8;color:#13497B}
+
+/* Mega dropdown for Service Areas */
+.mega{min-width:520px;padding:1.5rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
+.mega h4{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#6c757d;margin-bottom:.4rem;padding-bottom:.3rem;border-bottom:2px solid #D4A843}
+.mega a{padding:.35rem 0}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── HERO ─── */
+.hero{background:linear-gradient(135deg,#0B2545,#13497B);color:#fff;padding:5rem 1.5rem;text-align:center}
+.hero h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:700;max-width:850px;margin:0 auto 1rem;line-height:1.15}
+.hero h1 span{color:#D4A843}
+.hero p{font-size:1.05rem;opacity:.8;max-width:600px;margin:0 auto 2rem}
+.hero-btn{display:inline-block;background:#D4A843;color:#0B2545;padding:.9rem 2.2rem;border-radius:50px;font-weight:700;font-size:1rem;transition:.2s}
+.hero-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(212,168,67,.4)}
+
+/* ─── SECTION ─── */
+.section{padding:4.5rem 1.5rem}
+.section-alt{background:#f5f7fa}
+.container{max-width:1200px;margin:0 auto}
+.section-title{text-align:center;margin-bottom:2.5rem}
+.section-title h2{font-size:2rem;color:#0B2545;margin-bottom:.4rem}
+.section-title p{color:#6c757d;font-size:.95rem}
+
+/* ─── REVIEW CARDS (Fix 14: Replacing QR codes) ─── */
+.review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+.review-card{background:#fff;border:1px solid #e0e5ec;border-radius:12px;padding:1.8rem;text-align:center;transition:.2s}
+.review-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.1);border-color:#D4A843}
+.stars{color:#F4B400;font-size:1.4rem;letter-spacing:.12rem;margin-bottom:.6rem}
+.review-card h3{font-size:1.05rem;color:#0B2545;margin-bottom:.15rem}
+.review-card .loc{font-size:.78rem;color:#6c757d;margin-bottom:1.1rem}
+.rev-btn{display:inline-flex;align-items:center;gap:.4rem;background:#13497B;color:#fff;padding:.6rem 1.4rem;border-radius:50px;font-size:.82rem;font-weight:600;transition:.15s}
+.rev-btn:hover{background:#0B2545}
+.rev-btn svg{width:16px;height:16px;fill:currentColor}
+
+/* ─── BEFORE/AFTER BANNER ─── */
+.fix-banner{background:#0B2545;color:#fff;padding:1rem 1.5rem;text-align:center;font-size:.8rem;letter-spacing:.04em}
+.fix-banner strong{color:#D4A843}
+
+/* ─── FOOTER ─── */
+footer{background:#0B2545;color:rgba(255,255,255,.6);padding:2.5rem 1.5rem 1.5rem;font-size:.82rem}
+.footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem}
+.footer-grid h4{color:#fff;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem}
+.footer-grid a{display:block;color:rgba(255,255,255,.55);padding:.2rem 0;transition:.15s}
+.footer-grid a:hover{color:#D4A843}
+.footer-bottom{text-align:center;margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1);font-size:.75rem}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px){
+  .menu{display:none}
+  .hero h1{font-size:1.8rem}
+  .mega{grid-template-columns:1fr;min-width:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- Fix banner -->
+<div class="fix-banner"><strong>MOCKUP</strong> — Showing Fix 17 (Navigation Mega-Menu) &amp; Fix 14 (Review CTA Cards replacing QR codes)</div>
+
+<!-- ═══ FIX 17: NAVIGATION MEGA-MENU ═══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">JRH <span>Engineering</span></a>
+    <ul class="menu">
+      <li>
+        <button onclick="toggle(this)" aria-expanded="false" aria-haspopup="true">Services <span class="arrow">&#9662;</span></button>
+        <div class="drop">
+          <a href="#">Civil Engineering</a>
+          <a href="#">Structural Engineering</a>
+          <a href="#">Environmental Engineering</a>
+          <a href="#">Land Development</a>
+        </div>
+      </li>
+      <li>
+        <button onclick="toggle(this)" aria-expanded="false" aria-haspopup="true">Service Areas <span class="arrow">&#9662;</span></button>
+        <div class="drop mega">
+          <div><h4>Texas</h4><a href="#">Houston Area</a><a href="#">Dallas–Fort Worth</a><a href="#">San Antonio</a><a href="#">Manvel &amp; Pearland</a></div>
+          <div><h4>North Carolina</h4><a href="#">Charlotte</a><a href="#">Raleigh</a><a href="#">Fayetteville</a><a href="#">Lumberton</a></div>
+          <div><h4>Florida</h4><a href="#">Orlando</a><a href="#">Tampa</a><a href="#">Jacksonville</a><a href="#">Miami</a></div>
+        </div>
+      </li>
+      <li>
+        <button onclick="toggle(this)" aria-expanded="false" aria-haspopup="true">Resources <span class="arrow">&#9662;</span></button>
+        <div class="drop">
+          <a href="#">Reference Guides</a>
+          <a href="#">Detention Pond Calculator</a>
+          <a href="#">Blog</a>
+        </div>
+      </li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#" class="cta-btn">Contact Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>JRH Engineering — <span>Civil &amp; Structural Engineering Firm</span> in TX, NC &amp; FL</h1>
+  <p>WBE-certified engineers. Done quickly. Done right. And for the best value.</p>
+  <a href="#" class="hero-btn">Get a Free Consultation →</a>
+</section>
+
+<!-- ═══ FIX 14: REVIEW CTA CARDS (replacing QR codes) ═══ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-title">
+      <h2>Leave Us a Google Review</h2>
+      <p>Your feedback helps us improve. Select your nearest office below.</p>
+    </div>
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <h3>Orlando, FL Office</h3>
+        <p class="loc">Central Florida Region</p>
+        <a href="https://g.page/r/CTnRl9V8OcELEAE/review" target="_blank" rel="noopener" class="rev-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Leave a Google Review
+        </a>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <h3>Houston, TX Office</h3>
+        <p class="loc">Greater Houston Area</p>
+        <a href="https://g.page/r/Cam4hE9S8idHEAE/review" target="_blank" rel="noopener" class="rev-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Leave a Google Review
+        </a>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <h3>Manvel, TX Office</h3>
+        <p class="loc">Brazoria County &amp; Pearland</p>
+        <a href="https://g.page/r/CVK4PbSA6uq7EAE/review" target="_blank" rel="noopener" class="rev-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Leave a Google Review
+        </a>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <h3>Charlotte, NC Office</h3>
+        <p class="loc">Piedmont Region</p>
+        <a href="https://g.page/r/CTeF-BEYiZq9EAE/review" target="_blank" rel="noopener" class="rev-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Leave a Google Review
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div><h4>Services</h4><a href="#">Civil Engineering</a><a href="#">Structural Engineering</a><a href="#">Environmental Engineering</a><a href="#">Land Development</a></div>
+    <div><h4>Resources</h4><a href="#">Reference Guides</a><a href="#">Detention Pond Calculator</a><a href="#">Blog</a></div>
+    <div><h4>Company</h4><a href="#">About Us</a><a href="#">Projects</a><a href="#">Our Team</a><a href="#">Contact</a></div>
+    <div><h4>Contact</h4><a href="#">1-800-227-9635</a><a href="#">admin@jrhengineering.net</a><p style="margin-top:.4rem;font-size:.75rem">WBE-Certified | TX, NC &amp; FL</p></div>
+  </div>
+  <div class="footer-bottom">© 2026 JRH Engineering &amp; Environmental Services</div>
+</footer>
+
+<script>
+function toggle(btn){
+  var wasOpen=btn.classList.contains('open');
+  document.querySelectorAll('.menu button').forEach(function(b){b.classList.remove('open');b.setAttribute('aria-expanded','false');b.nextElementSibling.classList.remove('show')});
+  if(!wasOpen){btn.classList.add('open');btn.setAttribute('aria-expanded','true');btn.nextElementSibling.classList.add('show')}
+}
+document.addEventListener('click',function(e){if(!e.target.closest('.menu')){document.querySelectorAll('.menu button').forEach(function(b){b.classList.remove('open');b.setAttribute('aria-expanded','false');b.nextElementSibling.classList.remove('show')})}});
+</script>
+</body>
+</html>

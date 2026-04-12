@@ -14,14 +14,18 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.88.0",
     "@supabase/supabase-js": "^2.102.1",
     "cors": "^2.8.6",
+    "dotenv": "^17.4.1",
     "express": "^4.22.1",
     "googleapis": "^144.0.0",
     "node-cron": "^4.2.1",
+    "puppeteer-core": "^24.40.0",
     "resend": "^6.10.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.59.1"
+    "@playwright/test": "^1.59.1",
+    "http-server": "^14.1.1"
   }
 }
