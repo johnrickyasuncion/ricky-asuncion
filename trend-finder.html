@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tester.io — Trend Finder</title>
+    <link rel="icon" type="image/svg+xml" href="brand_assets/logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold-1: #C6A559;
+            --gold-2: #E6B979;
+            --gold-3: #D4AF6E;
+            --gold-dark: #9A7B3C;
+            --gold-light: #F0D4A0;
+            --gold-muted: rgba(198, 165, 89, 0.08);
+            --black-1: #050505;
+            --black-2: #0a0a0a;
+            --black-3: #111111;
+            --black-4: #1a1a1a;
+            --black-5: #222222;
+            --charcoal: #2a2a2a;
+            --white: #F5F0E8;
+            --white-pure: #FFFFFF;
+            --gray: #7a7a7a;
+            --gray-light: #b0a898;
+            --gray-warm: #9e958a;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-accent: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --gold-gradient: linear-gradient(135deg, #C6A559 0%, #E6B979 40%, #D4AF6E 70%, #C6A559 100%);
+            --gold-gradient-h: linear-gradient(90deg, transparent, #C6A559 20%, #E6B979 50%, #C6A559 80%, transparent);
+            --gold-gradient-text: linear-gradient(135deg, #D4AF6E 0%, #E6B979 30%, #F0D4A0 50%, #E6B979 70%, #C6A559 100%);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            font-family: var(--font-body);
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold-dark) var(--black-2);
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--black-1); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+
+        body {
+            background-color: var(--black-1);
+            font-family: var(--font-body);
+            flex-flow: column;
+            min-height: 100vh;
+            font-size: 10px;
+            line-height: 15px;
+            display: flex;
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        ::selection { background: rgba(198, 165, 89, 0.35); color: var(--white-pure); }
+
+        .grain-overlay {
+            position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat; background-size: 256px;
+        }
+
+        .ambient-glow {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background:
+                radial-gradient(ellipse 60% 40% at 20% 10%, rgba(198, 165, 89, 0.03) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 80% 80%, rgba(198, 165, 89, 0.02) 0%, transparent 50%);
+        }
+
+        /* ─── Nav ─── */
+        .nav-wrapper {
+            position: sticky; top: 0; z-index: 100;
+            background-color: rgba(5, 5, 5, 0.88);
+            backdrop-filter: blur(30px) saturate(1.2);
+            -webkit-backdrop-filter: blur(30px) saturate(1.2);
+            border-bottom: 1px solid rgba(198, 165, 89, 0.04);
+            transition: all 0.4s var(--ease-out-expo);
+        }
+        .nav-wrapper.scrolled {
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(198, 165, 89, 0.08);
+            background-color: rgba(5, 5, 5, 0.95);
+        }
+        nav {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 48px; max-width: 1440px; margin: 0 auto;
+        }
+        .nav-left, .nav-right { display: flex; gap: 36px; flex: 1; }
+        .nav-right { justify-content: flex-end; }
+        .nav-left a, .nav-right a {
+            font-family: var(--font-body); font-size: 10px; font-weight: 500;
+            letter-spacing: 2.5px; text-transform: uppercase; text-decoration: none;
+            color: var(--gray-warm); position: relative; padding-bottom: 4px;
+            transition: color 0.4s var(--ease-out-expo);
+        }
+        .nav-left a::after, .nav-right a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+            background: var(--gold-gradient); transition: width 0.5s var(--ease-out-expo);
+        }
+        .nav-left a:hover::after, .nav-right a:hover::after { width: 100%; }
+        .nav-left a:hover, .nav-right a:hover { color: var(--gold-2); }
+        .nav-left a.active { color: var(--gold-1); }
+        .nav-left a.active::after { width: 100%; background: var(--gold-gradient); }
+        .logo {
+            display: flex; align-items: center; gap: 12px;
+            text-decoration: none; padding: 0 24px;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+        .logo:hover { transform: scale(1.02); }
+        .logo img { width: 36px; height: 36px; border-radius: 8px; }
+        .logo-text {
+            font-family: var(--font-body); font-size: 18px; font-weight: 700;
+            background: var(--gold-gradient-text);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            letter-spacing: 1.5px;
+        }
+        .menu-toggle {
+            display: none; background: none; border: none; cursor: pointer;
+            padding: 12px; min-width: 44px; min-height: 44px;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .menu-toggle span {
+            display: block; width: 22px; height: 1.5px;
+            background: var(--gold-2); margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        .cart-icon {
+            display: none; background: none; border: none; cursor: pointer;
+            padding: 12px; min-width: 44px; min-height: 44px;
+        }
+        .cart-icon svg { width: 20px; height: 20px; stroke: var(--gold-1); fill: none; stroke-width: 1.5; }
+
+        /* ─── Mobile Menu ─── */
+        .mobile-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 5, 0.97); backdrop-filter: blur(30px); z-index: 150;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px;
+            opacity: 0; visibility: hidden; transition: all 0.5s var(--ease-out-expo);
+        }
+        .mobile-menu.open { opacity: 1; visibility: visible; }
+        .mobile-menu a {
+            font-family: var(--font-display); font-size: 32px; font-weight: 300;
+            letter-spacing: 6px; text-transform: uppercase; text-decoration: none;
+            color: var(--white); transition: all 0.4s var(--ease-out-expo); position: relative;
+        }
+        .mobile-menu a::after {
+            content: ''; position: absolute; bottom: -4px; left: 50%; width: 0; height: 1px;
+            background: var(--gold-gradient); transition: all 0.4s var(--ease-out-expo); transform: translateX(-50%);
+        }
+        .mobile-menu a:hover { color: var(--gold-2); }
+        .mobile-menu a:hover::after { width: 100%; }
+        .mobile-menu-close {
+            position: absolute; top: 16px; right: 16px; background: none; border: none;
+            cursor: pointer; padding: 14px; min-width: 44px; min-height: 44px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .mobile-menu-close span { display: block; width: 22px; height: 1.5px; background: var(--gold-2); }
+        .mobile-menu-close span:first-child { transform: rotate(45deg) translateY(1px); }
+        .mobile-menu-close span:last-child { transform: rotate(-45deg) translateY(-1px); }
+
+        /* ─── Page Header ─── */
+        .page-header {
+            text-align: center; padding: 80px 20px 48px;
+            opacity: 0; animation: heroReveal 1.2s var(--ease-out-expo) forwards;
+            position: relative; overflow: hidden;
+        }
+        .page-header::before {
+            content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+            width: min(600px, 100vw); height: 400px;
+            background: radial-gradient(ellipse, rgba(198, 165, 89, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .page-header .header-tag {
+            display: inline-block; font-family: var(--font-body);
+            font-size: 9px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase;
+            color: var(--gold-1); margin-bottom: 24px;
+            opacity: 0; animation: fadeUp 0.8s var(--ease-out-expo) 0.3s forwards;
+            position: relative;
+        }
+        .page-header .header-tag::before,
+        .page-header .header-tag::after {
+            content: ''; position: absolute; top: 50%; width: 30px; height: 1px;
+            background: rgba(198, 165, 89, 0.3);
+        }
+        .page-header .header-tag::before { right: calc(100% + 14px); }
+        .page-header .header-tag::after { left: calc(100% + 14px); }
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 6vw, 72px); font-weight: 300;
+            letter-spacing: 6px; color: var(--white); margin-bottom: 20px; line-height: 1.1;
+            opacity: 0; animation: fadeUp 1s var(--ease-out-expo) 0.5s forwards;
+        }
+        .page-header h1 em {
+            font-style: italic; font-family: var(--font-accent); font-weight: 400;
+            background: var(--gold-gradient-text);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .page-header p {
+            font-family: var(--font-body); font-size: 13px; font-weight: 300;
+            letter-spacing: 0.8px; color: var(--gray); max-width: 480px;
+            margin: 0 auto 28px; line-height: 2;
+            opacity: 0; animation: fadeUp 1s var(--ease-out-expo) 0.7s forwards;
+        }
+
+        /* ─── Search Section ─── */
+        .search-section {
+            max-width: 680px; margin: 0 auto 48px; padding: 0 24px;
+            opacity: 0; animation: fadeUp 1s var(--ease-out-expo) 0.9s forwards;
+        }
+        .search-box {
+            display: flex; align-items: center; gap: 12px;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(17, 17, 17, 0.9));
+            border: 1px solid rgba(198, 165, 89, 0.1);
+            padding: 16px 24px; transition: all 0.4s var(--ease-out-expo);
+        }
+        .search-box:focus-within {
+            border-color: rgba(198, 165, 89, 0.3);
+            box-shadow: 0 4px 32px rgba(198, 165, 89, 0.06);
+        }
+        .search-box svg {
+            width: 18px; height: 18px; stroke: var(--gold-1); fill: none;
+            stroke-width: 2; flex-shrink: 0;
+        }
+        .search-box input {
+            flex: 1; background: none; border: none; outline: none;
+            font-family: var(--font-body); font-size: 13px; font-weight: 300;
+            color: var(--white); letter-spacing: 0.5px;
+        }
+        .search-box input::placeholder { color: var(--gray); }
+        .search-box button {
+            background: var(--gold-gradient); border: none; cursor: pointer;
+            padding: 10px 24px; font-family: var(--font-body); font-size: 9px;
+            font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+            color: var(--black-1); transition: all 0.3s var(--ease-out-expo);
+        }
+        .search-box button:hover {
+            box-shadow: 0 4px 20px rgba(198, 165, 89, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* ─── Results Area ─── */
+        .results-area {
+            max-width: 900px; margin: 0 auto; padding: 0 48px 80px;
+        }
+        .results-status {
+            text-align: center; padding: 48px 20px;
+            font-family: var(--font-body); font-size: 13px; font-weight: 300;
+            color: var(--gray); letter-spacing: 0.5px; line-height: 2;
+        }
+        .results-status .status-icon {
+            display: block; margin: 0 auto 20px;
+            width: 48px; height: 48px; stroke: rgba(198, 165, 89, 0.25);
+            fill: none; stroke-width: 1.5;
+        }
+
+        /* Spinner */
+        .spinner {
+            width: 36px; height: 36px; border: 2px solid rgba(198, 165, 89, 0.1);
+            border-top-color: var(--gold-1); border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin: 0 auto 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Result Cards */
+        .result-card {
+            display: flex; gap: 24px; align-items: center;
+            background: linear-gradient(135deg, rgba(17, 17, 17, 0.8), rgba(10, 10, 10, 0.9));
+            border: 1px solid rgba(198, 165, 89, 0.06);
+            padding: 20px 24px; margin-bottom: 16px;
+            transition: all 0.5s var(--ease-out-expo);
+            opacity: 0; animation: cardReveal 0.6s var(--ease-out-expo) forwards;
+        }
+        .result-card:nth-child(1) { animation-delay: 0.1s; }
+        .result-card:nth-child(2) { animation-delay: 0.2s; }
+        .result-card:nth-child(3) { animation-delay: 0.3s; }
+        .result-card:nth-child(4) { animation-delay: 0.4s; }
+        .result-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .result-card:hover {
+            border-color: rgba(198, 165, 89, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+        }
+        .result-rank {
+            font-family: var(--font-display); font-size: 32px; font-weight: 300;
+            background: var(--gold-gradient-text);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            flex-shrink: 0; width: 40px; text-align: center;
+        }
+        .result-img-wrap {
+            width: 80px; height: 80px; flex-shrink: 0; overflow: hidden;
+            background: var(--black-4); border: 1px solid rgba(198, 165, 89, 0.08);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .result-img-wrap img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .result-img-placeholder {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .result-img-placeholder svg {
+            width: 28px; height: 28px; stroke: rgba(198, 165, 89, 0.2);
+            fill: none; stroke-width: 1.5;
+        }
+        .result-body { flex: 1; min-width: 0; }
+        .result-name {
+            font-family: var(--font-display); font-size: 20px; font-weight: 400;
+            color: var(--white); margin-bottom: 6px; letter-spacing: 0.5px;
+            line-height: 1.3; overflow: hidden; text-overflow: ellipsis;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+        }
+        .result-meta {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+        }
+        .result-price {
+            font-family: var(--font-body); font-size: 13px; font-weight: 600;
+            color: var(--gold-2); letter-spacing: 0.5px;
+        }
+        .result-source {
+            font-family: var(--font-body); font-size: 10px; font-weight: 500;
+            letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray);
+        }
+        .result-link {
+            flex-shrink: 0;
+        }
+        .result-link a {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--gold-gradient); border: none; cursor: pointer;
+            padding: 10px 20px; font-family: var(--font-body); font-size: 9px;
+            font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--black-1); text-decoration: none;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+        .result-link a:hover {
+            box-shadow: 0 4px 20px rgba(198, 165, 89, 0.3);
+            transform: translateY(-1px);
+        }
+        .result-link a svg {
+            width: 12px; height: 12px; stroke: var(--black-1);
+            fill: none; stroke-width: 2.5;
+        }
+
+        .error-msg {
+            text-align: center; padding: 32px 20px;
+            color: #e07a5f; font-family: var(--font-body);
+            font-size: 13px; font-weight: 400;
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            margin-top: auto;
+            background: linear-gradient(180deg, var(--black-2) 0%, rgba(8, 8, 8, 1) 100%);
+            color: var(--white); padding: 80px 48px 36px;
+            border-top: 1px solid rgba(198, 165, 89, 0.06); position: relative;
+        }
+        footer::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(198, 165, 89, 0.1), transparent);
+        }
+        .footer-content {
+            max-width: 1440px; margin: 0 auto;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px; margin-bottom: 60px;
+        }
+        .footer-brand { display: flex; flex-direction: column; gap: 14px; }
+        .footer-brand-logo { display: flex; align-items: center; gap: 12px; }
+        .footer-brand-logo img { width: 36px; height: 36px; border-radius: 8px; }
+        .footer-brand h3 {
+            font-family: var(--font-body); font-size: 18px; font-weight: 700;
+            background: var(--gold-gradient-text);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .footer-brand p {
+            font-family: var(--font-body); font-size: 13px; font-weight: 300;
+            line-height: 2; color: var(--gray); max-width: 300px;
+        }
+        .footer-col h4 {
+            font-family: var(--font-body); font-size: 9px; font-weight: 700;
+            letter-spacing: 3.5px; text-transform: uppercase;
+            margin-bottom: 24px; color: var(--gold-1);
+        }
+        .footer-col a {
+            display: block; font-family: var(--font-body); font-size: 13px; font-weight: 400;
+            color: var(--gray); text-decoration: none; margin-bottom: 14px;
+            transition: all 0.3s var(--ease-out-expo); position: relative; width: fit-content;
+        }
+        .footer-col a:hover { color: var(--gold-2); transform: translateX(4px); }
+        .social-links { display: flex; gap: 12px; margin-top: 8px; }
+        .social-links a {
+            display: flex; align-items: center; justify-content: center;
+            width: 38px; height: 38px; border: 1px solid rgba(198, 165, 89, 0.12);
+            transition: all 0.4s var(--ease-out-expo); margin-bottom: 0;
+        }
+        .social-links a:hover {
+            border-color: var(--gold-1); background: rgba(198, 165, 89, 0.08);
+            transform: translateY(-3px) translateX(0) !important;
+            box-shadow: 0 4px 16px rgba(198, 165, 89, 0.12);
+        }
+        .social-links a svg { width: 14px; height: 14px; fill: var(--gold-1); transition: fill 0.3s ease; }
+        .social-links a:hover svg { fill: var(--gold-2); }
+        .footer-bottom {
+            border-top: 1px solid rgba(198, 165, 89, 0.06); padding-top: 28px;
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1440px; margin: 0 auto;
+        }
+        .footer-bottom p {
+            font-family: var(--font-body); font-size: 11px; font-weight: 400;
+            color: var(--gray); letter-spacing: 0.5px;
+        }
+        .footer-bottom a { color: var(--gray); text-decoration: none; transition: color 0.3s; }
+        .footer-bottom a:hover { color: var(--gold-2); }
+
+        /* ─── Animations ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes heroReveal {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes cardReveal {
+            from { opacity: 0; transform: translateY(40px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ─── Scroll to Top ─── */
+        .scroll-top {
+            position: fixed; bottom: 32px; right: 32px; width: 44px; height: 44px;
+            background: var(--gold-gradient); border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.5s var(--ease-out-expo); z-index: 50;
+        }
+        .scroll-top.visible { opacity: 1; visibility: visible; }
+        .scroll-top:hover { box-shadow: 0 8px 24px rgba(198, 165, 89, 0.35); transform: translateY(-3px); }
+        .scroll-top svg { width: 15px; height: 15px; stroke: var(--black-1); fill: none; stroke-width: 2.5; }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 1200px) {
+            nav { padding: 18px 32px; }
+            .nav-left, .nav-right { gap: 28px; }
+            .results-area { padding: 0 32px 80px; }
+            .footer-content { gap: 40px; }
+            footer { padding: 60px 32px 32px; }
+        }
+
+        @media (max-width: 1024px) {
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-left, .nav-right { display: none; }
+            .menu-toggle, .cart-icon { display: block; }
+            nav { padding: 14px 20px; }
+            .logo { padding: 0; gap: 10px; }
+            .logo-text { font-size: 17px; letter-spacing: 1px; }
+            .logo img { width: 30px; height: 30px; border-radius: 6px; }
+            .page-header { padding: 56px 20px 36px; }
+            .results-area { padding: 0 20px 60px; }
+            .result-card { flex-wrap: wrap; gap: 16px; padding: 18px; }
+            .result-img-wrap { width: 64px; height: 64px; }
+            .result-link { width: 100%; }
+            .result-link a { width: 100%; justify-content: center; }
+            .footer-content { grid-template-columns: 1fr; gap: 36px; }
+            footer { padding: 48px 20px 28px; }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+            .search-box { flex-direction: column; gap: 12px; }
+            .search-box button { width: 100%; padding: 12px; }
+        }
+
+        @media (max-width: 420px) {
+            nav { padding: 12px 16px; }
+            .logo-text { font-size: 15px; }
+            .logo img { width: 28px; height: 28px; }
+            .mobile-menu a { font-size: 24px; letter-spacing: 4px; }
+            .mobile-menu { gap: 32px; }
+            .result-rank { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+    <div class="ambient-glow"></div>
+
+    <!-- Navigation -->
+    <div class="nav-wrapper" id="navWrapper">
+        <nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-left">
+                <a href="index.html">Shop</a>
+                <a href="about.html">About</a>
+                <a href="trend-finder.html" class="active">Trend Finder</a>
+            </div>
+            <a href="index.html" class="logo">
+                <img src="brand_assets/logo.svg" alt="Tester.io">
+                <span class="logo-text">Tester.io</span>
+            </a>
+            <div class="nav-right">
+                <a href="index.html#contact">Contact</a>
+                <a href="index.html#contact" id="accountLink">Account</a>
+                <a href="index.html#productGridTop" id="cartLink">Cart (0)</a>
+            </div>
+            <button class="cart-icon" aria-label="Cart">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="menuClose"><span></span><span></span></button>
+        <a href="index.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="trend-finder.html">Trend Finder</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#contact">Account</a>
+    </div>
+
+    <!-- Hero -->
+    <div class="page-header">
+        <div class="header-tag">Discover What's Next</div>
+        <h1>Trend <em>Finder</em></h1>
+        <p>Search any topic and instantly discover what's trending across Google News, Reddit, and Hacker News — all in one place.</p>
+    </div>
+
+    <!-- Search -->
+    <div class="search-section">
+        <div class="search-box">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="Search trends, materials, styles...">
+            <button onclick="filterTrends()">Search</button>
+        </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-area" id="resultsArea">
+        <div class="results-status" id="defaultStatus">
+            <svg class="status-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Search any topic to discover the top 5 trending items from across the web.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-brand-logo">
+                    <img src="brand_assets/logo.svg" alt="Tester.io">
+                    <h3>Tester.io</h3>
+                </div>
+                <p>Curating rare gemstones and one-of-a-kind jewelry pieces. Each creation tells a story of nature's artistry, refined by human craft.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Shop</h4>
+                <a href="index.html#productGridTop">Rings</a>
+                <a href="index.html#productGridTop">Gemstones</a>
+                <a href="index.html#productGridTop">Earrings</a>
+                <a href="index.html#productGridTop">Necklaces</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="about.html">About</a>
+                <a href="trend-finder.html">Trend Finder</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="index.html#contact">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.182-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.425 1.808-2.425.853 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.177-4.068-2.845 0-4.515 2.135-4.515 4.34 0 .859.331 1.781.745 2.282a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.222-.335.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.965-.527-2.291-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+                    </a>
+                    <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Tester.io. All rights reserved.</p>
+            <p><a href="index.html#contact">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="index.html#contact">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+        <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <script>
+        const API_URL = 'http://localhost:3002/api/trending';
+        const area = document.getElementById('resultsArea');
+        const input = document.getElementById('searchInput');
+
+        function escapeHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        function showLoading(query) {
+            area.innerHTML = `
+                <div class="results-status">
+                    <div class="spinner"></div>
+                    Searching for trending <strong>${escapeHtml(query)}</strong> articles...
+                </div>`;
+        }
+
+        function showError(msg) {
+            area.innerHTML = `<div class="error-msg">${escapeHtml(msg)}</div>`;
+        }
+
+        function renderResults(results, query) {
+            if (!results.length) {
+                area.innerHTML = `
+                    <div class="results-status">
+                        <svg class="status-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        No trending results found for <strong>${escapeHtml(query)}</strong>. Try a different search term.
+                    </div>`;
+                return;
+            }
+
+            area.innerHTML = results.map((r, i) => {
+                const proxiedThumb = r.thumbnail
+                    ? `http://localhost:3002/api/image-proxy?url=${encodeURIComponent(r.thumbnail)}`
+                    : '';
+                const imgHtml = proxiedThumb
+                    ? `<img src="${escapeHtml(proxiedThumb)}" alt="${escapeHtml(r.title)}" onerror="this.parentElement.innerHTML='<div class=\\'result-img-placeholder\\'><svg viewBox=\\'0 0 24 24\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'">`
+                    : `<div class="result-img-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
+
+                const sourceHtml = r.source ? `<span class="result-source">${escapeHtml(r.source)}</span>` : '';
+                const linkHtml = r.link
+                    ? `<div class="result-link"><a href="${escapeHtml(r.link)}" target="_blank" rel="noopener noreferrer">Read<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>`
+                    : '';
+
+                return `
+                    <div class="result-card">
+                        <div class="result-rank">${i + 1}</div>
+                        <div class="result-img-wrap">${imgHtml}</div>
+                        <div class="result-body">
+                            <div class="result-name">${escapeHtml(r.title)}</div>
+                            <div class="result-meta">${sourceHtml}</div>
+                        </div>
+                        ${linkHtml}
+                    </div>`;
+            }).join('');
+        }
+
+        async function searchTrends() {
+            const query = input.value.trim();
+            if (!query) return;
+
+            showLoading(query);
+
+            try {
+                const resp = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
+                if (!resp.ok) throw new Error(`Server responded with ${resp.status}`);
+                const data = await resp.json();
+                if (data.error) throw new Error(data.error);
+                renderResults(data.results, query);
+            } catch (err) {
+                showError(`Could not fetch results. Make sure both servers are running (node serve.mjs + python server.py). Error: ${err.message}`);
+            }
+        }
+
+        // Wire up search
+        document.querySelector('.search-box button').addEventListener('click', searchTrends);
+        input.addEventListener('keyup', (e) => { if (e.key === 'Enter') searchTrends(); });
+
+        // Nav scroll effect
+        const navWrapper = document.getElementById('navWrapper');
+        window.addEventListener('scroll', () => {
+            navWrapper.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Mobile menu
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.add('open');
+        });
+        document.getElementById('menuClose').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.remove('open');
+        });
+        document.querySelectorAll('.mobile-menu a').forEach(a => {
+            a.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.remove('open');
+            });
+        });
+
+        // Scroll to top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
