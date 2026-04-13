@@ -1,7 +1,9 @@
 {
-  "buildCommand": "",
-  "outputDirectory": ".",
+  "version": 2,
   "framework": null,
+  "installCommand": "echo skip",
+  "buildCommand": "echo skip",
+  "outputDirectory": ".",
   "functions": {
     "api/**/*.js": {
       "maxDuration": 60
