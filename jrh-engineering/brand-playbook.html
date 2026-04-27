@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JRH Engineering — Brand Playbook 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────────── */
+:root {
+  --g-deep:   #1A3A2B;
+  --g-mid:    #2C6B4F;
+  --g-light:  #52B788;
+  --g-tint:   #EBF5EE;
+  --terra:    #B8521A;
+  --terra-lt: #E8A87C;
+  --terra-tint:#FDF0E8;
+  --charcoal: #1A1A1A;
+  --gray-mid: #6B6B6B;
+  --gray-lt:  #D4D4CC;
+  --offwhite: #F7F6F2;
+  --white:    #FFFFFF;
+  --border:   #E2E0D8;
+}
+
+/* ── RESET ───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--charcoal);background:var(--white);line-height:1.6;font-size:16px}
+
+/* ── EDIT TOOLBAR ────────────────────────────────────── */
+#toolbar{
+  position:fixed;top:18px;right:18px;z-index:9999;
+  display:flex;gap:8px;
+}
+#toolbar button{
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:.5px;border:none;border-radius:6px;
+  padding:9px 16px;cursor:pointer;transition:all .2s;
+}
+#btn-edit{background:var(--g-deep);color:#fff}
+#btn-edit:hover{background:var(--g-mid)}
+#btn-edit.active{background:var(--terra)}
+#btn-print{background:var(--offwhite);color:var(--charcoal);border:1px solid var(--border)}
+#btn-print:hover{background:var(--border)}
+#btn-reset{background:transparent;color:var(--gray-mid);border:1px solid var(--border);display:none}
+#btn-reset.visible{display:block}
+
+body.editing [data-edit]{
+  outline:2px dashed var(--terra);
+  outline-offset:3px;
+  min-height:1em;
+  border-radius:2px;
+}
+
+/* ── LAYOUT PRIMITIVES ───────────────────────────────── */
+.page-section{padding:96px 0}
+.page-section--dark{background:var(--g-deep);color:var(--white)}
+.page-section--tint{background:var(--offwhite)}
+.page-section--terra{background:var(--terra);color:var(--white)}
+.container{max-width:1100px;margin:0 auto;padding:0 48px}
+
+/* ── COVER ───────────────────────────────────────────── */
+#cover{
+  min-height:100vh;background:var(--g-deep);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:64px;position:relative;overflow:hidden;
+}
+#cover::before{
+  content:'';position:absolute;
+  right:-200px;top:-200px;
+  width:600px;height:600px;
+  border-radius:50%;
+  border:120px solid rgba(255,255,255,.04);
+}
+#cover::after{
+  content:'';position:absolute;
+  left:-100px;bottom:-100px;
+  width:400px;height:400px;
+  border-radius:50%;
+  border:80px solid rgba(255,255,255,.03);
+}
+.cover-eyebrow{
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:var(--g-light);
+  margin-bottom:8px;
+}
+.cover-logo-area{
+  display:flex;align-items:center;gap:20px;
+  margin-bottom:auto;
+}
+.cover-logo-circle{
+  width:100px;height:100px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  background:#fff;
+  flex-shrink:0;
+}
+.cover-logo-circle img{width:100%;height:100%;object-fit:cover}
+.cover-logo-placeholder{
+  font-family:'Montserrat',sans-serif;
+  font-size:18px;font-weight:800;color:#fff;letter-spacing:1px;
+}
+.cover-company{
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;font-weight:500;color:rgba(255,255,255,.7);
+  text-transform:uppercase;letter-spacing:2px;
+}
+.cover-main{margin:auto 0}
+.cover-title{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(52px,7vw,88px);
+  font-weight:800;line-height:1.0;
+  color:#fff;letter-spacing:-2px;
+  margin-bottom:24px;
+}
+.cover-title span{color:var(--terra-lt)}
+.cover-subtitle{
+  font-size:18px;color:rgba(255,255,255,.65);
+  max-width:480px;line-height:1.7;
+}
+.cover-footer{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;padding-top:48px;
+  border-top:1px solid rgba(255,255,255,.1);
+  margin-top:48px;
+}
+.cover-footer-left{
+  font-size:12px;color:rgba(255,255,255,.4);
+  letter-spacing:.5px;
+}
+.cover-version{
+  font-family:'Montserrat',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:2px;
+  color:var(--terra-lt);text-transform:uppercase;
+}
+
+/* ── TOC ─────────────────────────────────────────────── */
+.toc-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;margin-top:48px;
+}
+.toc-item{
+  display:flex;align-items:center;gap:20px;
+  padding:24px 28px;background:var(--offwhite);
+  text-decoration:none;color:inherit;
+  transition:background .2s;
+}
+.toc-item:hover{background:var(--g-tint)}
+.toc-num{
+  font-family:'Montserrat',sans-serif;
+  font-size:32px;font-weight:800;
+  color:var(--g-light);opacity:.5;
+  min-width:52px;
+}
+.toc-label{
+  font-family:'Montserrat',sans-serif;
+  font-size:15px;font-weight:700;
+  color:var(--g-deep);
+}
+.toc-sub{font-size:12px;color:var(--gray-mid);margin-top:2px}
+
+/* ── SECTION HEADER ──────────────────────────────────── */
+.section-header{margin-bottom:64px}
+.section-part{
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:var(--terra);
+  margin-bottom:12px;display:block;
+}
+.section-num{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(72px,10vw,120px);font-weight:900;
+  line-height:.9;letter-spacing:-4px;
+  color:var(--g-light);opacity:.15;
+  display:block;margin-bottom:-20px;
+}
+.section-title{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(36px,4vw,52px);font-weight:800;
+  line-height:1.1;letter-spacing:-1.5px;
+  color:var(--g-deep);
+}
+.section-title--white{color:#fff}
+.section-desc{
+  font-size:17px;color:var(--gray-mid);
+  max-width:560px;margin-top:16px;line-height:1.7;
+}
+.divider{width:48px;height:4px;background:var(--terra);margin:28px 0;border-radius:2px}
+
+/* ── SUBSECTION ──────────────────────────────────────── */
+.sub-label{
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:var(--terra);
+  margin-bottom:8px;display:block;
+}
+.sub-title{
+  font-family:'Montserrat',sans-serif;
+  font-size:26px;font-weight:800;
+  letter-spacing:-.5px;color:var(--g-deep);
+  margin-bottom:16px;
+}
+.sub-title--white{color:#fff}
+.body-text{
+  font-size:16px;line-height:1.75;
+  color:var(--gray-mid);max-width:640px;
+}
+.body-text--white{color:rgba(255,255,255,.75)}
+
+/* ── CARDS ───────────────────────────────────────────── */
+.card-grid{display:grid;gap:2px}
+.card-grid--2{grid-template-columns:1fr 1fr}
+.card-grid--3{grid-template-columns:1fr 1fr 1fr}
+.card-grid--4{grid-template-columns:1fr 1fr 1fr 1fr}
+.card{background:var(--offwhite);padding:32px;transition:background .2s}
+.card:hover{background:var(--g-tint)}
+.card-icon{font-size:28px;margin-bottom:16px;display:block}
+.card-title{
+  font-family:'Montserrat',sans-serif;
+  font-size:15px;font-weight:700;color:var(--g-deep);
+  margin-bottom:8px;
+}
+.card-body{font-size:14px;color:var(--gray-mid);line-height:1.6}
+.card--dark{background:rgba(255,255,255,.06);color:#fff}
+.card--dark .card-title{color:#fff}
+.card--dark .card-body{color:rgba(255,255,255,.65)}
+
+/* ── COLOR SWATCHES ──────────────────────────────────── */
+.swatch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:32px}
+.swatch{overflow:hidden}
+.swatch-color{height:140px}
+.swatch-info{padding:20px;background:var(--offwhite)}
+.swatch-name{
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;font-weight:700;color:var(--g-deep);
+  margin-bottom:8px;
+}
+.swatch-vals{font-size:11px;color:var(--gray-mid);line-height:1.8;font-family:'Inter',monospace}
+
+/* ── TYPOGRAPHY SPECIMENS ────────────────────────────── */
+.type-specimen{padding:40px;background:var(--offwhite);margin-bottom:2px}
+.type-specimen--dark{background:var(--g-deep)}
+.font-label{
+  font-size:11px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:var(--terra);margin-bottom:16px;
+}
+.type-scale-row{
+  display:flex;align-items:baseline;gap:24px;
+  padding:16px 0;border-bottom:1px solid var(--border);
+}
+.type-scale-row:last-child{border-bottom:none}
+.type-tag{
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gray-mid);
+  min-width:60px;
+}
+.type-sample-h1{font-family:'Montserrat',sans-serif;font-size:64px;font-weight:800;letter-spacing:-2px;line-height:1;color:var(--g-deep)}
+.type-sample-h2{font-family:'Montserrat',sans-serif;font-size:48px;font-weight:700;letter-spacing:-1.5px;line-height:1;color:var(--g-deep)}
+.type-sample-h3{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:700;letter-spacing:-1px;color:var(--g-deep)}
+.type-sample-h4{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:700;color:var(--g-deep)}
+.type-sample-h5{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:600;color:var(--g-deep)}
+.type-sample-h6{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--g-deep)}
+.type-sample-body-lg{font-family:'Inter',sans-serif;font-size:18px;font-weight:400;color:var(--charcoal)}
+.type-sample-body{font-family:'Inter',sans-serif;font-size:16px;font-weight:400;color:var(--charcoal)}
+.type-sample-body-sm{font-family:'Inter',sans-serif;font-size:14px;font-weight:400;color:var(--gray-mid)}
+.type-sample-caption{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:.5px;color:var(--gray-mid)}
+
+/* ── LOGO USAGE GRID ─────────────────────────────────── */
+.logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:32px}
+.logo-box{
+  padding:48px 32px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:16px;text-align:center;
+}
+.logo-box--light{background:var(--offwhite)}
+.logo-box--dark{background:var(--g-deep)}
+.logo-box--white{background:var(--white);border:1px solid var(--border)}
+.logo-placeholder{
+  width:100px;height:100px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;
+}
+.logo-placeholder--color{background:var(--g-deep);color:#fff}
+.logo-placeholder--white{background:transparent;color:#fff;border:2px solid #fff}
+.logo-placeholder--mono{background:transparent;color:var(--charcoal);border:2px solid var(--charcoal)}
+.logo-box-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-mid)}
+.logo-box--dark .logo-box-label{color:rgba(255,255,255,.5)}
+
+/* ── DO / DON'T ──────────────────────────────────────── */
+.dos-donts{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:32px}
+.do-card{background:var(--g-tint);padding:32px;border-top:4px solid var(--g-mid)}
+.dont-card{background:#FFF0EC;padding:32px;border-top:4px solid var(--terra)}
+.dd-badge{
+  display:inline-block;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;padding:4px 10px;border-radius:2px;
+  margin-bottom:16px;
+}
+.do-badge{background:var(--g-mid);color:#fff}
+.dont-badge{background:var(--terra);color:#fff}
+.dd-example{
+  font-size:15px;line-height:1.7;color:var(--charcoal);
+  padding:16px;background:rgba(255,255,255,.6);border-radius:4px;
+  font-family:'Inter',sans-serif;
+}
+.dd-note{font-size:12px;color:var(--gray-mid);margin-top:12px;font-style:italic}
+
+/* ── VOICE TRAIT CARDS ───────────────────────────────── */
+.trait-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:32px}
+.trait-card{padding:36px;background:var(--offwhite)}
+.trait-name{
+  font-family:'Montserrat',sans-serif;
+  font-size:20px;font-weight:800;color:var(--g-deep);
+  margin-bottom:4px;
+}
+.trait-not{
+  font-size:12px;font-weight:600;color:var(--terra);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;
+}
+.trait-desc{font-size:14px;color:var(--gray-mid);line-height:1.6}
+
+/* ── TONE TABLE ──────────────────────────────────────── */
+.tone-table{width:100%;border-collapse:collapse;margin-top:32px;font-size:14px}
+.tone-table th{
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:var(--g-deep);
+  padding:14px 20px;background:var(--offwhite);text-align:left;
+}
+.tone-table td{
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  vertical-align:top;line-height:1.6;
+}
+.tone-table tr:last-child td{border-bottom:none}
+.tone-channel{
+  font-family:'Montserrat',sans-serif;font-weight:700;
+  color:var(--g-deep);font-size:13px;
+}
+
+/* ── KEY MESSAGES ────────────────────────────────────── */
+.msg-item{
+  display:flex;gap:24px;padding:32px;
+  background:var(--offwhite);margin-bottom:2px;
+  align-items:flex-start;
+}
+.msg-num{
+  font-family:'Montserrat',sans-serif;font-size:40px;
+  font-weight:900;color:var(--g-light);opacity:.4;
+  line-height:1;min-width:44px;
+}
+.msg-text{
+  font-family:'Montserrat',sans-serif;font-size:18px;
+  font-weight:700;color:var(--g-deep);line-height:1.5;
+  margin-bottom:8px;
+}
+.msg-note{font-size:13px;color:var(--gray-mid);line-height:1.6}
+
+/* ── SOCIAL MEDIA ────────────────────────────────────── */
+.social-card{background:var(--offwhite);padding:40px;margin-bottom:2px}
+.social-header{
+  display:flex;align-items:center;gap:16px;margin-bottom:32px;
+  padding-bottom:24px;border-bottom:2px solid var(--border);
+}
+.social-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+}
+.social-icon--li{background:#0077B5;color:#fff}
+.social-icon--fb{background:#1877F2;color:#fff}
+.social-icon--ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+.social-platform{
+  font-family:'Montserrat',sans-serif;
+  font-size:20px;font-weight:800;color:var(--g-deep);
+}
+.social-handle{font-size:13px;color:var(--gray-mid)}
+.social-specs{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+}
+.spec-box{padding:20px;background:var(--white)}
+.spec-label{
+  font-size:10px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--terra);margin-bottom:6px;
+}
+.spec-val{
+  font-family:'Montserrat',sans-serif;
+  font-size:15px;font-weight:700;color:var(--g-deep);
+}
+.spec-note{font-size:11px;color:var(--gray-mid);margin-top:2px}
+.post-types{
+  margin-top:24px;display:grid;
+  grid-template-columns:1fr 1fr;gap:12px;
+}
+.post-type{
+  display:flex;gap:12px;padding:16px;
+  background:var(--white);align-items:flex-start;
+}
+.pt-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--terra);margin-top:5px;flex-shrink:0;
+}
+.pt-label{font-size:13px;font-weight:600;color:var(--g-deep);margin-bottom:2px}
+.pt-note{font-size:12px;color:var(--gray-mid)}
+
+/* ── EMAIL SIGNATURE ─────────────────────────────────── */
+.sig-preview{
+  background:var(--white);border:1px solid var(--border);
+  padding:32px;font-family:'Inter',sans-serif;
+  max-width:480px;
+}
+.sig-name{
+  font-family:'Montserrat',sans-serif;
+  font-size:17px;font-weight:800;color:var(--g-deep);
+  letter-spacing:-.3px;
+}
+.sig-title{font-size:13px;color:var(--terra);font-weight:600;margin-top:2px}
+.sig-divider{width:100%;height:2px;background:var(--g-deep);margin:12px 0}
+.sig-company{font-size:13px;font-weight:600;color:var(--g-deep)}
+.sig-detail{font-size:12px;color:var(--gray-mid);line-height:1.8}
+.sig-tagline{
+  font-size:11px;letter-spacing:.5px;color:var(--g-mid);
+  font-style:italic;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);
+}
+
+/* ── COLLATERAL SPECS ────────────────────────────────── */
+.collateral-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:32px}
+.collateral-card{background:var(--offwhite);padding:36px}
+.collateral-card h4{
+  font-family:'Montserrat',sans-serif;font-size:17px;
+  font-weight:800;color:var(--g-deep);margin-bottom:16px;
+}
+.spec-list{list-style:none;font-size:13px;color:var(--gray-mid);line-height:2}
+.spec-list li{
+  padding-left:16px;position:relative;
+}
+.spec-list li::before{
+  content:'—';position:absolute;left:0;
+  color:var(--terra);font-weight:700;
+}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+.playbook-footer{
+  background:var(--g-deep);color:rgba(255,255,255,.5);
+  padding:48px 0;
+  font-size:12px;text-align:center;
+  letter-spacing:.5px;line-height:1.8;
+}
+.playbook-footer strong{color:rgba(255,255,255,.85)}
+
+/* ── PAGE NUMBERS ────────────────────────────────────── */
+body{counter-reset:pg}
+#cover{counter-increment:pg;position:relative}
+#cover::after{
+  content:'Page 0' counter(pg);
+  position:absolute;bottom:32px;right:64px;
+  font-family:'Montserrat',sans-serif;font-size:11px;
+  font-weight:700;letter-spacing:3px;
+  color:rgba(255,255,255,.25);
+  pointer-events:none;
+}
+.page-section{counter-increment:pg;position:relative}
+.page-section::after{
+  content:'Page 0' counter(pg);
+  position:absolute;bottom:24px;right:24px;
+  font-family:'Montserrat',sans-serif;font-size:11px;
+  font-weight:700;letter-spacing:3px;
+  color:var(--gray-lt);pointer-events:none;
+}
+
+/* ── COLLATERAL MOCKUPS ──────────────────────────────── */
+.mockup-label{
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--terra);
+  margin:28px 0 14px;display:block;
+}
+.mockup-caption{font-size:11px;color:var(--gray-mid);margin-top:8px;font-style:italic}
+
+/* ── PRINT / PDF ─────────────────────────────────────── */
+@media print {
+  /* Force all background colors and images to print */
+  *{
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+  #toolbar{display:none !important}
+  body{font-size:12px}
+
+  /* Cover fills one full page */
+  #cover{
+    min-height:100vh;
+    page-break-after:always;
+    padding:48px;
+  }
+
+  /* Each main section starts on its own page */
+  #toc,#identity,#visual,#voice,#application{
+    page-break-before:always;
+  }
+
+  /* Prevent cards/subsections from splitting mid-element */
+  .card,.value-card,.msg-item,.dos-donts,.social-card,
+  .collateral-card,.pitch-card,.type-specimen,.swatch{
+    page-break-inside:avoid;
+  }
+
+  /* Keep section numbers visible but slightly scaled */
+  .section-num{font-size:72px}
+
+  /* Hide decorative page-number pseudo-elements in print
+     (the PDF viewer will have its own page numbers) */
+  #cover::after,.page-section::after{display:none}
+
+  /* Ensure links don't show URL suffixes */
+  a::after{content:none !important}
+
+  @page{
+    margin:.65in .75in;
+    size:letter portrait;
+  }
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media(max-width:768px){
+  .container{padding:0 24px}
+  .card-grid--3,.card-grid--4,.swatch-grid{grid-template-columns:1fr 1fr}
+  .card-grid--2,.dos-donts,.pitch-grid,.logo-grid{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .tone-table{font-size:12px}
+  #cover{padding:32px}
+  .cover-title{font-size:48px}
+}
+
+/* ── VALUE CARDS (mission/vision/values) ─────────────── */
+.value-card{
+  border-left:4px solid var(--terra);
+  padding:28px 28px 28px 32px;
+  background:var(--white);
+}
+.value-card + .value-card{margin-top:2px}
+.value-label{
+  font-size:11px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:var(--terra);margin-bottom:8px;
+}
+.value-text{
+  font-family:'Montserrat',sans-serif;
+  font-size:18px;font-weight:600;
+  color:var(--g-deep);line-height:1.5;
+}
+
+/* ── POSITIONING BOX ─────────────────────────────────── */
+.positioning-box{
+  background:var(--g-deep);color:#fff;
+  padding:56px;position:relative;overflow:hidden;
+}
+.positioning-box::after{
+  content:'';position:absolute;right:-80px;bottom:-80px;
+  width:300px;height:300px;border-radius:50%;
+  border:60px solid rgba(255,255,255,.04);
+}
+.positioning-quote{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(22px,3vw,32px);font-weight:700;
+  line-height:1.4;color:#fff;max-width:700px;
+  margin-bottom:32px;letter-spacing:-.5px;
+}
+.positioning-quote em{color:var(--terra-lt);font-style:normal}
+.positioning-meta{
+  font-size:13px;color:rgba(255,255,255,.5);
+  letter-spacing:.5px;
+}
+
+/* ── TAGLINE BLOCK ───────────────────────────────────── */
+.tagline-block{
+  background:var(--terra);padding:56px;
+  display:flex;flex-direction:column;gap:16px;
+}
+.tagline-main{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(28px,4vw,48px);font-weight:900;
+  color:#fff;letter-spacing:-1.5px;line-height:1.1;
+}
+.tagline-note{
+  font-size:14px;color:rgba(255,255,255,.7);
+  max-width:480px;line-height:1.6;
+}
+
+/* ── PITCH TEMPLATE ──────────────────────────────────── */
+.pitch-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:40px}
+.pitch-card{
+  padding:40px;
+  background:var(--offwhite);
+}
+.pitch-card:first-child{background:var(--g-tint)}
+.pitch-label{
+  font-size:11px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:var(--terra);margin-bottom:16px;
+}
+.pitch-text{
+  font-family:'Montserrat',sans-serif;
+  font-size:16px;font-weight:600;line-height:1.7;
+  color:var(--g-deep);
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOOLBAR ────────────────────────────────────────── -->
+<div id="toolbar">
+  <button id="btn-reset" onclick="resetEdits()">Reset</button>
+  <button id="btn-print" onclick="window.print()">Export PDF</button>
+  <button id="btn-edit" onclick="toggleEdit()">Edit Mode</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     COVER
+══════════════════════════════════════════════════════ -->
+<section id="cover">
+  <div class="cover-logo-area">
+    <div class="cover-logo-circle">
+      <img src="jrh-logo.jpg" alt="JRH Engineering Logo">
+    </div>
+    <span class="cover-company" data-edit>JRH Engineering &amp; Environmental Services</span>
+  </div>
+
+  <div class="cover-main">
+    <p class="cover-eyebrow">Brand Identity System</p>
+    <h1 class="cover-title">Brand<br><span>Playbook</span></h1>
+    <p class="cover-subtitle" data-edit>The definitive guide to how JRH Engineering looks, speaks, and shows up — across every platform, document, and client touchpoint.</p>
+  </div>
+
+  <div class="cover-footer">
+    <div class="cover-footer-left" data-edit>
+      Confidential — Internal Use Only<br>
+      JRH Engineering &amp; Environmental Services · jrhengineering.net
+    </div>
+    <div class="cover-version">Version 1.0 · 2026</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     TABLE OF CONTENTS
+══════════════════════════════════════════════════════ -->
+<section class="page-section page-section--tint" id="toc">
+  <div class="container">
+    <span class="sub-label">Navigation</span>
+    <h2 class="sub-title">Table of Contents</h2>
+    <p class="body-text">Use the sections below to jump directly to any part of the playbook.</p>
+
+    <div class="toc-grid">
+      <a class="toc-item" href="#identity">
+        <div class="toc-num">01</div>
+        <div>
+          <div class="toc-label">Identity Foundation</div>
+          <div class="toc-sub">Brand Story · Mission · Vision · Values · Positioning · Elevator Pitch</div>
+        </div>
+      </a>
+      <a class="toc-item" href="#visual">
+        <div class="toc-num">02</div>
+        <div>
+          <div class="toc-label">Visual Identity</div>
+          <div class="toc-sub">Logo System · Colors · Typography · Iconography · Imagery</div>
+        </div>
+      </a>
+      <a class="toc-item" href="#voice">
+        <div class="toc-num">03</div>
+        <div>
+          <div class="toc-label">Voice &amp; Messaging</div>
+          <div class="toc-sub">Personality · Tone · Key Messages · Taglines · Do's &amp; Don'ts</div>
+        </div>
+      </a>
+      <a class="toc-item" href="#application">
+        <div class="toc-num">04</div>
+        <div>
+          <div class="toc-label">Application Guidelines</div>
+          <div class="toc-sub">Social Media · Email &amp; Web · Business Collateral</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     PART 01 — IDENTITY FOUNDATION
+══════════════════════════════════════════════════════ -->
+<section class="page-section" id="identity">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-part">Part One</span>
+      <h2 class="section-title">Identity<br>Foundation</h2>
+      <div class="divider"></div>
+      <p class="section-desc">Who we are, what we stand for, and how we describe ourselves — the foundation every brand decision is built on.</p>
+    </div>
+
+    <!-- 1.1 Brand Story -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">1.1</span>
+      <h3 class="sub-title">Brand Story</h3>
+      <p class="body-text" style="margin-bottom:24px" data-edit>
+        JRH Engineering &amp; Environmental Services was founded on a simple belief: clients deserve engineering that moves at the speed of their projects. Too many firms let work pile up — backlogs grow, plans stall, and permits get delayed. JRH was built to be different.
+      </p>
+      <p class="body-text" data-edit>
+        From raw land to ready-to-build, we handle everything — drainage, utilities, structural design, site development, and environmental services — for developers, homeowners, and public agencies across Texas, North Carolina, and Florida. As a WBE-certified firm, we bring the resources of a large practice with the responsiveness of a firm that genuinely cares about your deadline.
+      </p>
+      <p class="body-text" style="margin-top:16px;font-style:italic;color:var(--g-mid)" data-edit>
+        ✏ Placeholder — Update with the founder's personal origin story, founding year, and key milestones.
+      </p>
+    </div>
+
+    <!-- 1.2 Mission / Vision / Values -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">1.2</span>
+      <h3 class="sub-title">Mission, Vision &amp; Values</h3>
+      <div style="margin-top:24px">
+        <div class="value-card">
+          <div class="value-label">Mission</div>
+          <div class="value-text" data-edit>To deliver fast, precise, and fairly priced engineering solutions that move our clients' projects forward — without the wait.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-label">Vision</div>
+          <div class="value-text" data-edit>To be the most trusted multi-state engineering firm for developers and public agencies who demand speed without compromise.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-label">Core Values</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px">
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--g-deep);margin-bottom:4px" data-edit>Speed</div>
+              <div style="font-size:13px;color:var(--gray-mid)" data-edit>We protect your schedule like it's our own. Backlog is the enemy.</div>
+            </div>
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--g-deep);margin-bottom:4px" data-edit>Precision</div>
+              <div style="font-size:13px;color:var(--gray-mid)" data-edit>Every set of plans that leaves our office is stamped, reviewed, and ready to submit.</div>
+            </div>
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--g-deep);margin-bottom:4px" data-edit>Accountability</div>
+              <div style="font-size:13px;color:var(--gray-mid)" data-edit>We pick up the phone. We hold kickoff meetings. We communicate every step of the way.</div>
+            </div>
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--g-deep);margin-bottom:4px" data-edit>Integrity</div>
+              <div style="font-size:13px;color:var(--gray-mid)" data-edit>We don't overpromise. We deliver honest assessments and fair value every time.</div>
+            </div>
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--g-deep);margin-bottom:4px" data-edit>Partnership</div>
+              <div style="font-size:13px;color:var(--gray-mid)" data-edit>Our best clients are repeat clients. We build relationships, not just plans.</div>
+            </div>
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--g-deep);margin-bottom:4px" data-edit>Excellence</div>
+              <div style="font-size:13px;color:var(--gray-mid)" data-edit>Our quality of work is what earns referrals. We never compromise on the stamp.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.3 Brand Positioning -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">1.3</span>
+      <h3 class="sub-title">Brand Positioning</h3>
+      <p class="body-text" style="margin-bottom:32px">The single idea that distinguishes JRH from every other firm in the market.</p>
+
+      <div class="positioning-box">
+        <div class="positioning-quote" data-edit>
+          JRH Engineering is the firm developers choose when <em>speed and accuracy aren't optional</em> — delivering stamped, permit-ready engineering plans faster than anyone else across Texas, North Carolina, and Florida.
+        </div>
+        <div class="positioning-meta">Positioning Statement — Internal Reference</div>
+      </div>
+
+      <div class="card-grid card-grid--3" style="margin-top:2px">
+        <div class="card">
+          <span class="card-icon">🎯</span>
+          <div class="card-title" data-edit>Target Audience</div>
+          <div class="card-body" data-edit>Land developers, residential and commercial builders, industrial developers, public agencies — primarily in TX, NC, and FL. Increasingly: larger institutional developers and enterprise clients.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">⚡</span>
+          <div class="card-title" data-edit>Primary Differentiator</div>
+          <div class="card-body" data-edit>Industry-leading turnaround on engineering plans. No backlog. No delays. Fast structural, fast civil — without sacrificing accuracy or permit-readiness.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">🤝</span>
+          <div class="card-title" data-edit>Secondary Differentiator</div>
+          <div class="card-body" data-edit>Deep relationships with counties and cities. Kickoff meetings before every civil project. Proactive communication throughout design — the opposite of a black-box engineering firm.</div>
+        </div>
+      </div>
+
+      <!-- We help / do / so they can -->
+      <div style="margin-top:40px;background:var(--offwhite);padding:40px">
+        <span class="sub-label">Positioning Formula</span>
+        <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--g-deep);line-height:1.8" data-edit>
+          We help <span style="color:var(--terra)">developers, homeowners, and public agencies</span> get stamped and sealed engineering plans that can be submitted for permits — so they can <span style="color:var(--terra)">break ground faster and build with confidence.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.4 Elevator Pitch -->
+    <div>
+      <span class="sub-label">1.4</span>
+      <h3 class="sub-title">Elevator Pitch &amp; Tagline</h3>
+      <p class="body-text" style="margin-bottom:32px">Use the official tagline consistently across all materials. Adapt the pitch length to the context.</p>
+
+      <div class="tagline-block">
+        <div class="tagline-main" data-edit>"Done Quickly. Done Right. And for the Best Value."</div>
+        <div class="tagline-note" data-edit>Official brand tagline — approved for use on website headers, email signatures, presentations, and business cards.</div>
+      </div>
+
+      <div class="pitch-grid">
+        <div class="pitch-card">
+          <div class="pitch-label">10-Second Pitch</div>
+          <div class="pitch-text" data-edit>"We're a civil and structural engineering firm — we take your land from raw to permit-ready, faster than anyone else, across Texas, North Carolina, and Florida."</div>
+        </div>
+        <div class="pitch-card">
+          <div class="pitch-label">30-Second Pitch</div>
+          <div class="pitch-text" data-edit>"JRH Engineering handles everything a developer needs to go from raw land to breaking ground — drainage, utilities, structural design, and environmental services. What sets us apart is our turnaround time and communication. Most firms get backlogged and your project stalls. We hold a kickoff before we start, we stay in contact during design, and we deliver stamped, permit-ready plans on schedule. We work across Texas, North Carolina, and Florida."</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     PART 02 — VISUAL IDENTITY
+══════════════════════════════════════════════════════ -->
+<section class="page-section page-section--tint" id="visual">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-part">Part Two</span>
+      <h2 class="section-title">Visual<br>Identity</h2>
+      <div class="divider"></div>
+      <p class="section-desc">The visual language of JRH — applied consistently across every platform, document, and client touchpoint.</p>
+    </div>
+
+    <!-- 2.1 Logo System -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">2.1</span>
+      <h3 class="sub-title">Logo System</h3>
+      <p class="body-text" style="margin-bottom:32px" data-edit>The JRH logo is a circular badge mark featuring an environmental landscape scene — communicating our roots in civil and environmental engineering. It must never be stretched, recolored, or placed on competing visual backgrounds.</p>
+
+      <div class="logo-grid">
+        <!-- Primary: border-radius:50% crops the black JPEG corners to show only the circle -->
+        <div class="logo-box logo-box--light" style="padding:48px 32px">
+          <img src="jrh-logo.jpg"
+               alt="JRH Logo — Primary"
+               style="width:120px;height:120px;object-fit:cover;border-radius:50%;display:block">
+          <div class="logo-box-label">Primary — Light Background</div>
+        </div>
+        <!-- Reversed: same crop, white ring adds separation from the dark green bg -->
+        <div class="logo-box logo-box--dark" style="padding:48px 32px">
+          <img src="jrh-logo.jpg"
+               alt="JRH Logo — Reversed"
+               style="width:120px;height:120px;object-fit:cover;border-radius:50%;box-shadow:0 0 0 3px rgba(255,255,255,0.35);display:block">
+          <div class="logo-box-label">Reversed — Dark Background</div>
+        </div>
+        <!-- Monochrome: grayscale filter + circle crop -->
+        <div class="logo-box logo-box--white" style="padding:48px 32px">
+          <img src="jrh-logo.jpg"
+               alt="JRH Logo — Monochrome"
+               style="width:120px;height:120px;object-fit:cover;border-radius:50%;filter:grayscale(100%) contrast(1.2);display:block">
+          <div class="logo-box-label">Monochrome — Single Color</div>
+        </div>
+      </div>
+
+      <div style="background:var(--white);margin-top:2px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px">
+          <div style="padding:28px;background:var(--offwhite)">
+            <div class="spec-label">Minimum Size (Digital)</div>
+            <div class="spec-val" data-edit>80px × 80px</div>
+            <div class="spec-note" data-edit>Never display smaller — legibility breaks below this threshold.</div>
+          </div>
+          <div style="padding:28px;background:var(--offwhite)">
+            <div class="spec-label">Minimum Size (Print)</div>
+            <div class="spec-val" data-edit>0.75" diameter</div>
+            <div class="spec-note" data-edit>For business cards, letterheads, and collateral.</div>
+          </div>
+          <div style="padding:28px;background:var(--offwhite)">
+            <div class="spec-label">Clear Space Rule</div>
+            <div class="spec-val" data-edit>½ logo diameter</div>
+            <div class="spec-note" data-edit>Maintain clear space equal to half the logo's diameter on all sides.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dos-donts" style="margin-top:24px">
+        <div class="do-card">
+          <span class="dd-badge do-badge">✓ Do</span>
+          <ul class="spec-list" style="margin-top:0">
+            <li data-edit>Use the full-color version on white or light backgrounds</li>
+            <li data-edit>Use the reversed white version on the Forest Green brand color</li>
+            <li data-edit>Use the monochrome version when full color is not available</li>
+            <li data-edit>Always source logo files from the approved asset library</li>
+            <li data-edit>Maintain required clear space at all times</li>
+          </ul>
+        </div>
+        <div class="dont-card">
+          <span class="dd-badge dont-badge">✗ Don't</span>
+          <ul class="spec-list" style="margin-top:0">
+            <li data-edit>Stretch, skew, or distort the logo in any direction</li>
+            <li data-edit>Change any colors within the logo mark</li>
+            <li data-edit>Place the logo on a busy photograph without sufficient contrast</li>
+            <li data-edit>Add drop shadows, outlines, or effects to the logo</li>
+            <li data-edit>Re-create the logo in a different typeface or illustration style</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.2 Color Palette -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">2.2</span>
+      <h3 class="sub-title">Color Palette</h3>
+      <p class="body-text" style="margin-bottom:8px" data-edit>The JRH color system is built around Forest Green (authority, trust, land) and Burnt Orange (energy, action, warmth). Together they communicate a firm that is established and grounded, but moves fast.</p>
+
+      <!-- Primary -->
+      <div style="margin-top:40px"><span class="sub-label" style="font-size:10px">Primary Colors</span></div>
+      <div class="swatch-grid" style="grid-template-columns:1fr 1fr">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1A3A2B"></div>
+          <div class="swatch-info">
+            <div class="swatch-name" data-edit>Deep Forest Green</div>
+            <div class="swatch-vals">
+              HEX &nbsp; #1A3A2B<br>
+              RGB &nbsp; 26, 58, 43<br>
+              CMYK  55 · 0 · 26 · 77<br>
+              Pantone  343 C (approx)
+            </div>
+            <div style="margin-top:12px;font-size:11px;color:var(--gray-mid)" data-edit>Primary brand color. Use for headers, navigation bars, hero backgrounds, footers.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#2C6B4F"></div>
+          <div class="swatch-info">
+            <div class="swatch-name" data-edit>Forest Green</div>
+            <div class="swatch-vals">
+              HEX &nbsp; #2C6B4F<br>
+              RGB &nbsp; 44, 107, 79<br>
+              CMYK  59 · 0 · 26 · 58<br>
+              Pantone  341 C (approx)
+            </div>
+            <div style="margin-top:12px;font-size:11px;color:var(--gray-mid)" data-edit>Secondary green. Use for hover states, section dividers, icon fills, and supporting backgrounds.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accent -->
+      <div style="margin-top:24px"><span class="sub-label" style="font-size:10px">Accent Colors</span></div>
+      <div class="swatch-grid" style="grid-template-columns:1fr 1fr">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#B8521A"></div>
+          <div class="swatch-info">
+            <div class="swatch-name" data-edit>Burnt Orange</div>
+            <div class="swatch-vals">
+              HEX &nbsp; #B8521A<br>
+              RGB &nbsp; 184, 82, 26<br>
+              CMYK  0 · 55 · 86 · 28<br>
+              Pantone  1525 C (approx)
+            </div>
+            <div style="margin-top:12px;font-size:11px;color:var(--gray-mid)" data-edit>CTA color. Use for buttons, highlights, badges, and key accent elements. Never use as a background for large areas.</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#E8A87C"></div>
+          <div class="swatch-info">
+            <div class="swatch-name" data-edit>Terracotta Light</div>
+            <div class="swatch-vals">
+              HEX &nbsp; #E8A87C<br>
+              RGB &nbsp; 232, 168, 124<br>
+              CMYK  0 · 28 · 47 · 9<br>
+              Pantone  722 C (approx)
+            </div>
+            <div style="margin-top:12px;font-size:11px;color:var(--gray-mid)" data-edit>Warm accent. Use for infographic fills, illustration highlights, and subtle warmth in tinted backgrounds.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Neutrals -->
+      <div style="margin-top:24px"><span class="sub-label" style="font-size:10px">Neutral Colors</span></div>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1A1A1A"></div>
+          <div class="swatch-info">
+            <div class="swatch-name" data-edit>Charcoal</div>
+            <div class="swatch-vals">HEX #1A1A1A<br>CMYK 0·0·0·90</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#6B6B6B"></div>
+          <div class="swatch-info">
+            <div class="swatch-name" data-edit>Gray Mid</div>
+            <div class="swatch-vals">HEX #6B6B6B<br>CMYK 0·0·0·58</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#D4D4CC"></div>
+          <div class="swatch-info">
+            <div class="swatch-name" data-edit>Gray Light</div>
+            <div class="swatch-vals">HEX #D4D4CC<br>CMYK 0·0·4·17</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#F7F6F2;border:1px solid #E2E0D8"></div>
+          <div class="swatch-info">
+            <div class="swatch-name" data-edit>Off-White</div>
+            <div class="swatch-vals">HEX #F7F6F2<br>CMYK 0·0·2·3</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approved combos -->
+      <div style="margin-top:32px;background:var(--white);padding:36px;border:1px solid var(--border)">
+        <span class="sub-label">Approved Color Combinations</span>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px">
+          <div style="padding:20px;background:#1A3A2B;border-radius:4px;text-align:center">
+            <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:#fff">White on Deep Green</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px">✓ WCAG AAA</div>
+          </div>
+          <div style="padding:20px;background:#2C6B4F;border-radius:4px;text-align:center">
+            <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:#fff">White on Forest Green</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px">✓ WCAG AA</div>
+          </div>
+          <div style="padding:20px;background:#B8521A;border-radius:4px;text-align:center">
+            <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:#fff">White on Burnt Orange</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px">✓ WCAG AA</div>
+          </div>
+          <div style="padding:20px;background:#F7F6F2;border-radius:4px;text-align:center;border:1px solid #E2E0D8">
+            <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:#1A3A2B">Dark on Off-White</div>
+            <div style="font-size:11px;color:#6B6B6B;margin-top:4px">✓ WCAG AAA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.3 Typography -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">2.3</span>
+      <h3 class="sub-title">Typography</h3>
+      <p class="body-text" style="margin-bottom:32px" data-edit>JRH uses a two-font system: Montserrat for all headlines and Montserrat-weight identifiers, and Inter for body copy, data, and UI elements. Both are available free via Google Fonts.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px">
+        <div class="type-specimen">
+          <div class="font-label">Primary — Montserrat</div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:48px;font-weight:800;color:var(--g-deep);letter-spacing:-1px;line-height:1.1">Aa Bb Cc</div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:15px;font-weight:400;color:var(--gray-mid);margin-top:12px;letter-spacing:.2px">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 !@#$%&amp;</div>
+          <div style="margin-top:20px;font-size:13px;color:var(--gray-mid)" data-edit>Weights in use: 300 Light · 400 Regular · 600 SemiBold · 700 Bold · 800 ExtraBold · 900 Black</div>
+        </div>
+        <div class="type-specimen">
+          <div class="font-label">Secondary — Inter</div>
+          <div style="font-family:'Inter',sans-serif;font-size:48px;font-weight:700;color:var(--g-deep);letter-spacing:-1px;line-height:1.1">Aa Bb Cc</div>
+          <div style="font-family:'Inter',sans-serif;font-size:15px;font-weight:400;color:var(--gray-mid);margin-top:12px">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 !@#$%&amp;</div>
+          <div style="margin-top:20px;font-size:13px;color:var(--gray-mid)" data-edit>Weights in use: 300 Light · 400 Regular · 500 Medium · 600 SemiBold · 700 Bold</div>
+        </div>
+      </div>
+
+      <!-- Type Scale -->
+      <div class="type-specimen" style="margin-top:0">
+        <div class="font-label">Type Scale</div>
+        <div class="type-scale-row"><span class="type-tag">H1</span><span class="type-sample-h1">Engineering</span></div>
+        <div class="type-scale-row"><span class="type-tag">H2</span><span class="type-sample-h2">Our Services</span></div>
+        <div class="type-scale-row"><span class="type-tag">H3</span><span class="type-sample-h3">Civil Engineering</span></div>
+        <div class="type-scale-row"><span class="type-tag">H4</span><span class="type-sample-h4">Site Development Plans</span></div>
+        <div class="type-scale-row"><span class="type-tag">H5</span><span class="type-sample-h5">Turnaround &amp; Communication</span></div>
+        <div class="type-scale-row"><span class="type-tag">H6</span><span class="type-sample-h6">Section Label · Eyebrow</span></div>
+        <div class="type-scale-row"><span class="type-tag">LG</span><span class="type-sample-body-lg">Large body copy for lead paragraphs and hero subheadings — 18px / 28px line height</span></div>
+        <div class="type-scale-row"><span class="type-tag">BODY</span><span class="type-sample-body">Standard body text for all general copy — 16px / 26px line height. Optimal line length 45–75 characters.</span></div>
+        <div class="type-scale-row"><span class="type-tag">SM</span><span class="type-sample-body-sm">Small text for captions, metadata, and supporting detail — 14px / 22px line height.</span></div>
+        <div class="type-scale-row"><span class="type-tag">CAP</span><span class="type-sample-caption">CAPTION / LABEL STYLE · 12PX · TRACKED · UPPERCASE</span></div>
+      </div>
+
+      <div style="margin-top:24px;background:var(--offwhite);padding:32px">
+        <span class="sub-label">Web Implementation (Wix &amp; HTML)</span>
+        <div style="font-size:13px;color:var(--gray-mid);line-height:2;margin-top:8px" data-edit>
+          Load via: <code style="background:var(--white);padding:2px 6px;border-radius:3px;font-size:12px">Google Fonts — Montserrat + Inter</code><br>
+          Fallback stack: <code style="background:var(--white);padding:2px 6px;border-radius:3px;font-size:12px">'Montserrat', 'Segoe UI', sans-serif</code> and <code style="background:var(--white);padding:2px 6px;border-radius:3px;font-size:12px">'Inter', 'Helvetica Neue', sans-serif</code><br>
+          In Wix: Add both fonts via Wix Font Manager → Upload or use Google Fonts connector.
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.4 Iconography -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">2.4</span>
+      <h3 class="sub-title">Iconography</h3>
+      <p class="body-text" style="margin-bottom:32px" data-edit>Icons reinforce our clean, modern visual direction. Use a consistent stroke-based icon style — never filled/solid icon sets — to match the open, professional feel of the brand.</p>
+
+      <div class="card-grid card-grid--3" style="gap:2px">
+        <div class="card">
+          <div class="card-title" data-edit>Style</div>
+          <div class="card-body" data-edit>Outline / stroke style only. No filled or solid icon sets. Recommended library: Phosphor Icons or Heroicons (both free, outline-first).</div>
+        </div>
+        <div class="card">
+          <div class="card-title" data-edit>Stroke Weight</div>
+          <div class="card-body" data-edit>1.5px–2px stroke weight. Consistent across all icons in a single layout. Scale stroke weight proportionally when resizing.</div>
+        </div>
+        <div class="card">
+          <div class="card-title" data-edit>Color Rules</div>
+          <div class="card-body" data-edit>Default color: Forest Green #1A3A2B. On dark backgrounds: White #FFFFFF. Accent icons (CTAs, alerts): Burnt Orange #B8521A.</div>
+        </div>
+        <div class="card">
+          <div class="card-title" data-edit>Grid &amp; Sizing</div>
+          <div class="card-body" data-edit>Design on 24×24px grid. Display sizes: 16px (inline), 24px (standard UI), 32px (feature cards), 48px (section icons).</div>
+        </div>
+        <div class="card">
+          <div class="card-title" data-edit>Corner Radius</div>
+          <div class="card-body" data-edit>Rounded corners preferred — radius of 2–4px on icon elements to match the brand's approachable but professional personality.</div>
+        </div>
+        <div class="card">
+          <div class="card-title" data-edit>What to Avoid</div>
+          <div class="card-body" data-edit>No 3D icons, no multi-color decorative icons, no clipart-style illustrations. Keep it clean and consistent.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.5 Imagery & Photography -->
+    <div>
+      <span class="sub-label">2.5</span>
+      <h3 class="sub-title">Imagery &amp; Photography</h3>
+      <p class="body-text" style="margin-bottom:32px" data-edit>Photography is one of the fastest ways to signal quality and build trust — especially for a brand revamp targeting larger institutional clients. Every image should feel like it belongs in an Architectural Digest feature on infrastructure, not a generic stock library.</p>
+
+      <div class="card-grid card-grid--2" style="gap:2px">
+        <div class="card" style="background:var(--white);border:1px solid var(--border)">
+          <div class="card-title" data-edit>Preferred Subjects</div>
+          <ul class="spec-list" style="margin-top:8px">
+            <li data-edit>Aerial drone shots of completed developments (subdivisions, commercial sites)</li>
+            <li data-edit>Civil engineering in action — grading, drainage, site work in progress</li>
+            <li data-edit>Blueprint/plan detail shots — hands reviewing drawings in the field</li>
+            <li data-edit>Professional team shots — engineers on site, not in a generic office</li>
+            <li data-edit>Landmark projects — big builds that establish portfolio credibility</li>
+          </ul>
+        </div>
+        <div class="card" style="background:var(--white);border:1px solid var(--border)">
+          <div class="card-title" data-edit>Photographic Style</div>
+          <ul class="spec-list" style="margin-top:8px">
+            <li data-edit>High contrast, clean — mirrors the clean/modern visual direction</li>
+            <li data-edit>Warm color grade with a slight green tint to align with brand palette</li>
+            <li data-edit>Golden hour / natural light preferred over overcast or flat lighting</li>
+            <li data-edit>Wide and establishing shots for hero areas; tight detail shots for service pages</li>
+            <li data-edit>People shown confidently, at work — not posed or stiff</li>
+          </ul>
+        </div>
+        <div class="dont-card" style="border-top:0;border-left:4px solid var(--terra)">
+          <span class="dd-badge dont-badge" style="margin-bottom:12px">✗ Avoid</span>
+          <ul class="spec-list">
+            <li data-edit>Generic white-collar stock photography (men in suits shaking hands)</li>
+            <li data-edit>Low-resolution images — minimum 1200px wide for web, 300 DPI for print</li>
+            <li data-edit>Highly saturated, unnatural color grades (Instagram filter look)</li>
+            <li data-edit>Empty job sites with no context or sense of scale</li>
+            <li data-edit>Images that don't relate to engineering, land development, or the built environment</li>
+          </ul>
+        </div>
+        <div class="do-card" style="border-top:0;border-left:4px solid var(--g-mid)">
+          <span class="dd-badge do-badge" style="margin-bottom:12px">✓ Sourcing</span>
+          <ul class="spec-list">
+            <li data-edit>Priority: Real JRH project photos — always more impactful than stock</li>
+            <li data-edit>Stock option: Unsplash, Adobe Stock filtered for "civil engineering" or "aerial construction"</li>
+            <li data-edit>For proposals &amp; RFPs: Use project-specific photography whenever available</li>
+            <li data-edit>Naming convention: <code>jrh-[project-name]-[type]-[number].jpg</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     PART 03 — VOICE & MESSAGING
+══════════════════════════════════════════════════════ -->
+<section class="page-section" id="voice">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-part">Part Three</span>
+      <h2 class="section-title">Voice &amp;<br>Messaging</h2>
+      <div class="divider"></div>
+      <p class="section-desc">How JRH sounds in every context — from a LinkedIn post to an RFP cover letter to a client email at 5pm on a Friday.</p>
+    </div>
+
+    <!-- 3.1 Brand Personality -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">3.1</span>
+      <h3 class="sub-title">Brand Personality</h3>
+      <p class="body-text" style="margin-bottom:32px" data-edit>The JRH brand has three defining personality traits. Each trait is paired with its opposite to show the line we don't cross.</p>
+
+      <div class="trait-grid">
+        <div class="trait-card">
+          <div class="trait-name" data-edit>Approachable</div>
+          <div class="trait-not" data-edit>— Not casual or unprofessional</div>
+          <div class="trait-desc" data-edit>We talk to clients like partners, not like a distant technical authority. We explain things clearly. We don't hide behind jargon. But we are still professionals who know our field.</div>
+        </div>
+        <div class="trait-card">
+          <div class="trait-name" data-edit>Reliable</div>
+          <div class="trait-not" data-edit>— Not rigid or inflexible</div>
+          <div class="trait-desc" data-edit>We do what we say, when we say it. Our brand should feel like a firm handshake — dependable and predictable in the best possible way. Consistency builds trust.</div>
+        </div>
+        <div class="trait-card">
+          <div class="trait-name" data-edit>Trustworthy</div>
+          <div class="trait-not" data-edit>— Not boastful or overconfident</div>
+          <div class="trait-desc" data-edit>We let our work and our process speak first. We don't oversell. We share the facts — turnaround times, project scale, certifications — and let clients reach their own conclusion of confidence.</div>
+        </div>
+        <div class="trait-card">
+          <div class="trait-name" data-edit>Expert</div>
+          <div class="trait-not" data-edit>— Not intimidating or academic</div>
+          <div class="trait-desc" data-edit>We've worked with counties, cities, and large developers. That experience informs everything. We reference it — not to impress, but to reassure clients they're in capable hands.</div>
+        </div>
+        <div class="trait-card">
+          <div class="trait-name" data-edit>Fast</div>
+          <div class="trait-not" data-edit>— Not rushed or reckless</div>
+          <div class="trait-desc" data-edit>Speed is our competitive edge, but it is always paired with precision. We move fast because of our process, not in spite of it. Every piece of copy should hint at urgency and momentum.</div>
+        </div>
+        <div class="trait-card">
+          <div class="trait-name" data-edit>Direct</div>
+          <div class="trait-not" data-edit>— Not blunt or dismissive</div>
+          <div class="trait-desc" data-edit>We get to the point. Developers and engineers don't have time for fluff. Our copy is tight, clear, and purposeful — but always respectful and warm in tone.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.2 Tone of Voice -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">3.2</span>
+      <h3 class="sub-title">Tone of Voice by Channel</h3>
+      <p class="body-text" style="margin-bottom:16px" data-edit>The core brand personality stays constant. The tone adjusts based on context.</p>
+
+      <table class="tone-table">
+        <thead>
+          <tr>
+            <th>Channel</th>
+            <th>Tone</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="tone-channel">Website (Wix)</div></td>
+            <td data-edit>Confident, clear, conversion-focused. Lead with outcomes. Use short sentences and strong verbs.</td>
+            <td data-edit>"From raw land to permit-ready — faster than any firm in Texas."</td>
+          </tr>
+          <tr>
+            <td><div class="tone-channel">LinkedIn</div></td>
+            <td data-edit>Professional authority with a human edge. Share expertise and project wins. Slightly formal but still warm.</td>
+            <td data-edit>"We just wrapped a 47-lot subdivision drainage plan in under 3 weeks. Here's how the team did it."</td>
+          </tr>
+          <tr>
+            <td><div class="tone-channel">Facebook</div></td>
+            <td data-edit>Community-forward, behind-the-scenes, approachable. Show the team. Tell the story behind the project.</td>
+            <td data-edit>"Big week for the JRH team — this project comes from 2 years of relationship-building with the county."</td>
+          </tr>
+          <tr>
+            <td><div class="tone-channel">Instagram</div></td>
+            <td data-edit>Visual-first, punchy captions. Let the image carry most of the weight. Use minimal text. Bold project claims.</td>
+            <td data-edit>"47 lots. 19 days. Done right. ✓ #CivilEngineering #JRH"</td>
+          </tr>
+          <tr>
+            <td><div class="tone-channel">Email (Client)</div></td>
+            <td data-edit>Direct and responsive. Reference the project specifically. No filler sentences. Always end with a clear next step.</td>
+            <td data-edit>"Hi [Name] — attached is the updated grading plan for Lot 12. Changes are marked in red. Let me know if you'd like a call this week."</td>
+          </tr>
+          <tr>
+            <td><div class="tone-channel">RFP / Proposals</div></td>
+            <td data-edit>Formal, precise, credibility-forward. Lead with differentiators. Use data — turnaround times, project counts, certifications.</td>
+            <td data-edit>"JRH Engineering has delivered over [X] civil and structural projects across Texas, North Carolina, and Florida — averaging a [X]-day turnaround on residential permit plans."</td>
+          </tr>
+          <tr>
+            <td><div class="tone-channel">Internal Comms</div></td>
+            <td data-edit>Casual, collaborative, and team-first. Informality is appropriate. The brand personality applies externally, not here.</td>
+            <td data-edit>"Good news on the Harris County project — county approved the drainage plan. Moving to structural next week."</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3.3 Key Messages -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">3.3</span>
+      <h3 class="sub-title">Key Messages</h3>
+      <p class="body-text" style="margin-bottom:32px" data-edit>Every piece of JRH content should reinforce at least one of these five core messages. They are not slogans — they are beliefs that should surface naturally in how we talk about our work.</p>
+
+      <div>
+        <div class="msg-item">
+          <div class="msg-num">1</div>
+          <div>
+            <div class="msg-text" data-edit>We deliver stamped, permit-ready plans faster than anyone else.</div>
+            <div class="msg-note" data-edit>This is the #1 differentiator. Reinforce it with specific turnaround data when possible. "Faster" must always be backed by proof — project timelines, client testimonials, county approval records.</div>
+          </div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-num">2</div>
+          <div>
+            <div class="msg-text" data-edit>We take your project from raw land to ready-to-build.</div>
+            <div class="msg-note" data-edit>Full-service positioning. Civil + Structural + Environmental under one roof. Clients don't have to coordinate between multiple firms — JRH handles the whole journey.</div>
+          </div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-num">3</div>
+          <div>
+            <div class="msg-text" data-edit>We communicate — before, during, and after every project.</div>
+            <div class="msg-note" data-edit>Directly addresses the #1 frustration clients have with other firms: silence. Reference the kickoff meeting process, mid-project check-ins, and responsiveness as differentiators.</div>
+          </div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-num">4</div>
+          <div>
+            <div class="msg-text" data-edit>We know how Texas, North Carolina, and Florida counties work.</div>
+            <div class="msg-note" data-edit>Regulatory familiarity is a silent competitive advantage. Clients working with firms that don't know local jurisdictions face revisions and delays. JRH's county/city experience prevents that.</div>
+          </div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-num">5</div>
+          <div>
+            <div class="msg-text" data-edit>Our best work has never been the loudest thing in the room — that changes now.</div>
+            <div class="msg-note" data-edit>Brand revamp message: the quality of JRH's work deserves to be visible. This message is internal-facing (brand strategy) but should inform all external positioning — don't hide the big projects.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.4 Taglines & Headlines -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">3.4</span>
+      <h3 class="sub-title">Taglines &amp; Headlines</h3>
+
+      <div style="background:var(--g-deep);padding:40px;margin-bottom:2px">
+        <span class="sub-label" style="color:var(--terra-lt)">Official Tagline</span>
+        <div style="font-family:'Montserrat',sans-serif;font-size:clamp(24px,3vw,40px);font-weight:900;color:#fff;letter-spacing:-1px;margin-top:8px" data-edit>"Done Quickly. Done Right. And for the Best Value."</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.55);margin-top:12px" data-edit>Primary tagline — approved for: website hero, email signatures, business cards, presentations, RFP cover pages.</div>
+      </div>
+
+      <div style="background:var(--offwhite);padding:40px;margin-bottom:2px">
+        <span class="sub-label">Approved Supporting Headlines</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px">
+          <div style="padding:20px;background:var(--white)">
+            <div style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;color:var(--g-deep);margin-bottom:6px" data-edit>"From Raw Land to Ready-to-Build."</div>
+            <div style="font-size:12px;color:var(--gray-mid)" data-edit>Use: Website homepage hero, service page headers</div>
+          </div>
+          <div style="padding:20px;background:var(--white)">
+            <div style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;color:var(--g-deep);margin-bottom:6px" data-edit>"Engineering That Moves at the Speed of Your Project."</div>
+            <div style="font-size:12px;color:var(--gray-mid)" data-edit>Use: About page, RFP opener, LinkedIn bio</div>
+          </div>
+          <div style="padding:20px;background:var(--white)">
+            <div style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;color:var(--g-deep);margin-bottom:6px" data-edit>"No Backlog. No Delays. Just Stamped Plans."</div>
+            <div style="font-size:12px;color:var(--gray-mid)" data-edit>Use: Social media, email subject lines, ad copy</div>
+          </div>
+          <div style="padding:20px;background:var(--white)">
+            <div style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;color:var(--g-deep);margin-bottom:6px" data-edit>"TX · NC · FL — Wherever Your Project Breaks Ground."</div>
+            <div style="font-size:12px;color:var(--gray-mid)" data-edit>Use: Footer tagline, multi-market ads, proposals</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--offwhite);padding:40px">
+        <span class="sub-label">Naming Conventions</span>
+        <div style="font-size:14px;color:var(--gray-mid);line-height:2;margin-top:12px" data-edit>
+          <strong style="color:var(--g-deep)">Company name:</strong> "JRH Engineering" (short form) or "JRH Engineering &amp; Environmental Services" (formal / first mention)<br>
+          <strong style="color:var(--g-deep)">Never:</strong> "JRH Eng." / "JRH Engineering and Environmental" (ampersand must be used) / lowercase "jrh"<br>
+          <strong style="color:var(--g-deep)">WBE Certification:</strong> Always spell out on first mention — "Women Business Enterprise (WBE)-Certified"<br>
+          <strong style="color:var(--g-deep)">Services:</strong> Civil Engineering, Structural Engineering, Environmental Services (capitalize as proper nouns)
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.5 Do's & Don'ts -->
+    <div>
+      <span class="sub-label">3.5</span>
+      <h3 class="sub-title">Copy Do's &amp; Don'ts</h3>
+      <p class="body-text" style="margin-bottom:32px" data-edit>Real before-and-after examples showing how JRH should and should not communicate.</p>
+
+      <div class="dos-donts">
+        <div class="do-card">
+          <span class="dd-badge do-badge">✓ Do — Website Hero</span>
+          <div class="dd-example" data-edit>"Civil, Structural &amp; Environmental Engineering — Delivered Fast, Done Right."</div>
+          <div class="dd-note" data-edit>Clear service description + differentiator in one line.</div>
+        </div>
+        <div class="dont-card">
+          <span class="dd-badge dont-badge">✗ Don't — Website Hero</span>
+          <div class="dd-example" data-edit>"Welcome to JRH Engineering &amp; Environmental Services, where we provide a comprehensive suite of engineering solutions to our valued clients."</div>
+          <div class="dd-note" data-edit>Generic, passive, says nothing specific. No client benefit. No differentiator.</div>
+        </div>
+        <div class="do-card">
+          <span class="dd-badge do-badge">✓ Do — Email Subject Line</span>
+          <div class="dd-example" data-edit>"Updated Grading Plans — [Project Name] · Ready for Review"</div>
+          <div class="dd-note" data-edit>Project-specific, action-oriented, instantly scannable.</div>
+        </div>
+        <div class="dont-card">
+          <span class="dd-badge dont-badge">✗ Don't — Email Subject Line</span>
+          <div class="dd-example" data-edit>"FWD: RE: Engineering files attached"</div>
+          <div class="dd-note" data-edit>Vague, unprofessional, erodes trust in a firm targeting enterprise clients.</div>
+        </div>
+        <div class="do-card">
+          <span class="dd-badge do-badge">✓ Do — LinkedIn Post</span>
+          <div class="dd-example" data-edit>"We completed structural drawings for a 120,000 sq ft industrial facility in 11 business days. The client had been waiting 8 weeks with their previous firm. Turnaround matters."</div>
+          <div class="dd-note" data-edit>Specific numbers, clear contrast with the competition, no bragging — just facts.</div>
+        </div>
+        <div class="dont-card">
+          <span class="dd-badge dont-badge">✗ Don't — LinkedIn Post</span>
+          <div class="dd-example" data-edit>"Excited to share that JRH Engineering is the best engineering firm in Texas! We work hard for our clients every day! #Engineering #JRH #Blessed"</div>
+          <div class="dd-note" data-edit>Exclamation spam, unsupported claims, hashtag overload. Reads like a small business, not an enterprise firm.</div>
+        </div>
+        <div class="do-card">
+          <span class="dd-badge do-badge">✓ Do — RFP Opening</span>
+          <div class="dd-example" data-edit>"JRH Engineering has delivered over [X] permit-ready civil and structural plans across Texas, North Carolina, and Florida — averaging a [X]-day turnaround on residential projects. We are WBE-certified and have direct experience working with [County Name] on drainage and utilities approvals."</div>
+          <div class="dd-note" data-edit>Data-led, credential-specific, shows local knowledge immediately.</div>
+        </div>
+        <div class="dont-card">
+          <span class="dd-badge dont-badge">✗ Don't — RFP Opening</span>
+          <div class="dd-example" data-edit>"JRH Engineering is a full-service engineering firm committed to excellence and client satisfaction. We look forward to the opportunity to serve your project needs."</div>
+          <div class="dd-note" data-edit>Zero specifics. Could be written by any firm in any industry. Decision-makers discard proposals that open this way.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     PART 04 — APPLICATION GUIDELINES
+══════════════════════════════════════════════════════ -->
+<section class="page-section page-section--tint" id="application">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-part">Part Four</span>
+      <h2 class="section-title">Application<br>Guidelines</h2>
+      <div class="divider"></div>
+      <p class="section-desc">How the JRH brand is applied across every platform and document type — consistently, correctly, and with impact.</p>
+    </div>
+
+    <!-- 4.1 Social Media -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">4.1</span>
+      <h3 class="sub-title">Social Media Guidelines</h3>
+      <p class="body-text" style="margin-bottom:40px" data-edit>JRH is active on LinkedIn, Facebook, and Instagram. Each platform has a different audience and different content expectations. The brand personality is consistent; the format and tone adjust per platform.</p>
+
+      <!-- LinkedIn -->
+      <div class="social-card">
+        <div class="social-header">
+          <div class="social-icon social-icon--li">in</div>
+          <div>
+            <div class="social-platform">LinkedIn</div>
+            <div class="social-handle" data-edit>@JRHEngineering · Primary B2B platform</div>
+          </div>
+        </div>
+        <div class="social-specs">
+          <div class="spec-box"><div class="spec-label">Audience</div><div class="spec-val" data-edit>Developers, GCs, PE firms, public agency decision-makers</div></div>
+          <div class="spec-box"><div class="spec-label">Posting Frequency</div><div class="spec-val" data-edit>3–4× per week</div></div>
+          <div class="spec-box"><div class="spec-label">Best Post Times</div><div class="spec-val" data-edit>Tue–Thu · 8–10am or 12–1pm local</div></div>
+          <div class="spec-box"><div class="spec-label">Image Size</div><div class="spec-val" data-edit>1200 × 628px</div><div class="spec-note">Feed single image</div></div>
+          <div class="spec-box"><div class="spec-label">Profile Banner</div><div class="spec-val" data-edit>1584 × 396px</div><div class="spec-note">Deep Green background + tagline</div></div>
+          <div class="spec-box"><div class="spec-label">Copy Length</div><div class="spec-val" data-edit>150–300 words</div><div class="spec-note">Hook in first 2 lines</div></div>
+        </div>
+        <div class="post-types">
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Project Showcase</div><div class="pt-note" data-edit>Completed project with scope, timeline, and outcome. Include real numbers.</div></div></div>
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Industry Insight</div><div class="pt-note" data-edit>Commentary on Texas/NC/FL permit timelines, county code updates, development trends.</div></div></div>
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Team Spotlight</div><div class="pt-note" data-edit>Engineer bio, hiring announcement, WBE certification awareness.</div></div></div>
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Process Post</div><div class="pt-note" data-edit>How a kickoff meeting works, what happens from raw land to stamped plan — educational authority content.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Facebook -->
+      <div class="social-card" style="margin-top:2px">
+        <div class="social-header">
+          <div class="social-icon social-icon--fb">f</div>
+          <div>
+            <div class="social-platform">Facebook</div>
+            <div class="social-handle" data-edit>@JRHEngineeringServices · Community + brand awareness</div>
+          </div>
+        </div>
+        <div class="social-specs">
+          <div class="spec-box"><div class="spec-label">Audience</div><div class="spec-val" data-edit>Homeowners, local developers, community referral network</div></div>
+          <div class="spec-box"><div class="spec-label">Posting Frequency</div><div class="spec-val" data-edit>2–3× per week</div></div>
+          <div class="spec-box"><div class="spec-label">Best Post Times</div><div class="spec-val" data-edit>Wed–Fri · 1–4pm local</div></div>
+          <div class="spec-box"><div class="spec-label">Image Size</div><div class="spec-val" data-edit>1200 × 630px</div><div class="spec-note">Feed image</div></div>
+          <div class="spec-box"><div class="spec-label">Cover Photo</div><div class="spec-val" data-edit>820 × 312px</div><div class="spec-note">Deep Green + logo + tagline</div></div>
+          <div class="spec-box"><div class="spec-label">Copy Length</div><div class="spec-val" data-edit>40–80 words</div><div class="spec-note">Shorter and more conversational</div></div>
+        </div>
+        <div class="post-types">
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Behind the Scenes</div><div class="pt-note" data-edit>Team in the field, office culture, project kick-off photos.</div></div></div>
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Community Projects</div><div class="pt-note" data-edit>Public agency or municipal work — shows JRH working for the community.</div></div></div>
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Client Testimonials</div><div class="pt-note" data-edit>Short quote + photo from a developer or homeowner project.</div></div></div>
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Before &amp; After</div><div class="pt-note" data-edit>Raw site vs. completed development — visually compelling, shows transformation.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Instagram -->
+      <div class="social-card" style="margin-top:2px">
+        <div class="social-header">
+          <div class="social-icon social-icon--ig">◈</div>
+          <div>
+            <div class="social-platform">Instagram</div>
+            <div class="social-handle" data-edit>@jrhengineering · Visual portfolio + brand presence</div>
+          </div>
+        </div>
+        <div class="social-specs">
+          <div class="spec-box"><div class="spec-label">Audience</div><div class="spec-val" data-edit>Younger developers, architects, design-adjacent industry audience</div></div>
+          <div class="spec-box"><div class="spec-label">Posting Frequency</div><div class="spec-val" data-edit>3–5× per week</div></div>
+          <div class="spec-box"><div class="spec-label">Best Post Times</div><div class="spec-val" data-edit>Mon, Wed, Fri · 9–11am</div></div>
+          <div class="spec-box"><div class="spec-label">Feed Post</div><div class="spec-val" data-edit>1080 × 1080px</div><div class="spec-note">Square preferred for grid</div></div>
+          <div class="spec-box"><div class="spec-label">Stories / Reels</div><div class="spec-val" data-edit>1080 × 1920px</div><div class="spec-note">Vertical 9:16</div></div>
+          <div class="spec-box"><div class="spec-label">Caption Length</div><div class="spec-val" data-edit>5–15 words</div><div class="spec-note">Image does the talking</div></div>
+        </div>
+        <div class="post-types">
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Aerial / Drone Shots</div><div class="pt-note" data-edit>Completed sites from above — visually striking and shows scale of work.</div></div></div>
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Blueprint / Detail Close-up</div><div class="pt-note" data-edit>Close-up of plans, stamps, technical drawings — shows craft and precision.</div></div></div>
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Stat Cards</div><div class="pt-note" data-edit>Branded graphic: "47 lots · 19 days · Done." Deep green background + white Montserrat type.</div></div></div>
+          <div class="post-type"><div class="pt-dot"></div><div><div class="pt-label" data-edit>Reels — Site Walkthroughs</div><div class="pt-note" data-edit>60-sec walk of a completed project from raw land to finished site. No talking head required.</div></div></div>
+        </div>
+        <div style="margin-top:24px;padding:20px;background:var(--white)">
+          <div class="spec-label">Approved Hashtag Set (use 5–10 per post)</div>
+          <div style="font-size:13px;color:var(--g-mid);line-height:2;margin-top:8px" data-edit>
+            #JRHEngineering &nbsp; #CivilEngineering &nbsp; #StructuralEngineering &nbsp; #EnvironmentalEngineering<br>
+            #TexasEngineering &nbsp; #NCEngineering &nbsp; #FloridaEngineering &nbsp; #LandDevelopment<br>
+            #PermitReady &nbsp; #SiteDevelopment &nbsp; #Engineering &nbsp; #WBECertified
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.2 Email & Web Copy -->
+    <div style="margin-bottom:80px">
+      <span class="sub-label">4.2</span>
+      <h3 class="sub-title">Email &amp; Web Copy</h3>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:32px">
+        <div style="padding:36px;background:var(--white);border:1px solid var(--border)">
+          <span class="sub-label">Email Signature — Standard Format</span>
+          <div class="sig-preview" style="margin-top:20px">
+            <div class="sig-name" data-edit>[First Name] [Last Name], P.E.</div>
+            <div class="sig-title" data-edit>[Title] · JRH Engineering &amp; Environmental Services</div>
+            <div class="sig-divider"></div>
+            <div class="sig-company">JRH Engineering &amp; Environmental Services</div>
+            <div class="sig-detail" data-edit>
+              📞 1-800-227-9635<br>
+              📧 admin@jrhengineering.net<br>
+              🌐 jrhengineering.net<br>
+              📍 TX · NC · FL
+            </div>
+            <div class="sig-tagline" data-edit>"Done Quickly. Done Right. And for the Best Value." | WBE-Certified</div>
+          </div>
+        </div>
+        <div style="padding:36px;background:var(--white);border:1px solid var(--border)">
+          <span class="sub-label">Email Copy Rules</span>
+          <ul class="spec-list" style="margin-top:16px">
+            <li data-edit>Subject line: Project name first, then action needed. Max 50 characters.</li>
+            <li data-edit>Greeting: "Hi [First Name]" — no "Dear Sir/Madam" ever.</li>
+            <li data-edit>Opening line: Reference the project or last conversation immediately.</li>
+            <li data-edit>Body: Max 3 short paragraphs. Use bullet points for deliverable lists.</li>
+            <li data-edit>Closing: Always include a specific next step or question.</li>
+            <li data-edit>Sign-off: "Best," or "Thanks," — not "Regards," or "Sincerely,"</li>
+            <li data-edit>Attachments: Name files as <code>JRH-[ProjectName]-[Type]-v[#].pdf</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="background:var(--white);padding:36px;border:1px solid var(--border)">
+        <span class="sub-label">Website (Wix) Copy Guidelines</span>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:20px">
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--g-deep);margin-bottom:8px">Hero Section</div>
+            <ul class="spec-list">
+              <li data-edit>Headline: 8 words max. Outcome-first.</li>
+              <li data-edit>Subheadline: 1–2 sentences, no jargon.</li>
+              <li data-edit>CTA button: "Get a Free Consultation" or "View Our Work"</li>
+              <li data-edit>CTA color: Burnt Orange #B8521A</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--g-deep);margin-bottom:8px">Service Pages</div>
+            <ul class="spec-list">
+              <li data-edit>Open with the client problem, not the service description.</li>
+              <li data-edit>Use H2 for service name, H3 for sub-services.</li>
+              <li data-edit>Include at least one stat or turnaround time claim.</li>
+              <li data-edit>End every service page with a clear CTA.</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--g-deep);margin-bottom:8px">General Rules</div>
+            <ul class="spec-list">
+              <li data-edit>Use "you" and "your" — speak to the visitor directly.</li>
+              <li data-edit>Active voice only: "We deliver" not "Plans are delivered by us."</li>
+              <li data-edit>Contractions are fine on web: "We'll" "You're" "Don't"</li>
+              <li data-edit>Avoid: "solutions," "leverage," "synergy," "world-class"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.3 Business Collateral -->
+    <div>
+      <span class="sub-label">4.3</span>
+      <h3 class="sub-title">Business Collateral</h3>
+      <p class="body-text" style="margin-bottom:32px" data-edit>All physical and digital collateral must follow the same visual system — Deep Green primary, Burnt Orange accents, Montserrat headlines, and Inter body copy.</p>
+
+      <div class="collateral-grid">
+        <div class="collateral-card">
+          <h4>Business Cards</h4>
+          <ul class="spec-list">
+            <li data-edit>Size: 3.5" × 2" (standard US) or 85mm × 55mm</li>
+            <li data-edit>Front: Deep Forest Green (#1A3A2B) background, white logo + name, title, phone, email</li>
+            <li data-edit>Back: Off-White (#F7F6F2) background, tagline in Montserrat 800, Burnt Orange accent line</li>
+            <li data-edit>Print: Matte laminate preferred. No gloss — keeps the premium, clean feel.</li>
+            <li data-edit>Font sizes: Name 11pt Montserrat Bold · Details 8pt Inter Regular</li>
+            <li data-edit>WBE logo/badge included on front or back</li>
+          </ul>
+          <!-- MOCKUP -->
+          <span class="mockup-label">Visual Example</span>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <!-- Front -->
+            <div style="width:252px;height:144px;background:#1A3A2B;border-radius:6px;padding:18px;position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.18);flex-shrink:0">
+              <div style="position:absolute;right:-30px;top:-30px;width:130px;height:130px;border-radius:50%;border:35px solid rgba(255,255,255,.04)"></div>
+              <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:#B8521A"></div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+                <img src="jrh-logo.jpg" style="width:32px;height:32px;border-radius:50%;object-fit:cover;background:#fff" onerror="this.style.display='none'">
+                <div style="font-family:'Montserrat',sans-serif;font-size:8px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:1px;text-transform:uppercase;line-height:1.4">JRH Engineering &amp;<br>Environmental Services</div>
+              </div>
+              <div style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:800;color:#fff;letter-spacing:-.3px">JOHN R. HERNANDEZ, P.E.</div>
+              <div style="font-size:9px;color:#E8A87C;font-weight:600;margin-top:2px">Principal Engineer · Civil Division</div>
+              <div style="font-size:8px;color:rgba(255,255,255,.5);margin-top:8px;line-height:1.8">1-800-227-9635 &nbsp;·&nbsp; john@jrhengineering.net<br>jrhengineering.net &nbsp;·&nbsp; TX · NC · FL</div>
+            </div>
+            <!-- Back -->
+            <div style="width:252px;height:144px;background:#F7F6F2;border-radius:6px;padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:0 6px 24px rgba(0,0,0,.10);border:1px solid #E2E0D8;flex-shrink:0;text-align:center;position:relative;overflow:hidden">
+              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#B8521A"></div>
+              <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:900;color:#1A3A2B;letter-spacing:-.3px;line-height:1.4">"Done Quickly.<br>Done Right.<br>And for the Best Value."</div>
+              <div style="width:32px;height:2px;background:#B8521A;margin:10px auto"></div>
+              <div style="font-size:8px;color:#6B6B6B;letter-spacing:1px;text-transform:uppercase">WBE-Certified · Est. TX · NC · FL</div>
+            </div>
+          </div>
+          <p class="mockup-caption">Front (left) &amp; Back (right) at 3.5" × 2"</p>
+        </div>
+        <div class="collateral-card">
+          <h4>Letterhead</h4>
+          <ul class="spec-list">
+            <li data-edit>Header: Logo left-aligned + Burnt Orange 2px rule spanning full width</li>
+            <li data-edit>Company info block: right-aligned in Inter 9pt, Gray Mid color</li>
+            <li data-edit>Body font: Inter 11pt Regular, 15pt line height, Charcoal color</li>
+            <li data-edit>Footer: Full-width Deep Green bar with website + WBE certification note</li>
+            <li data-edit>Paper: 24lb bond for print, white only</li>
+            <li data-edit>Margins: 1" top/bottom, 0.875" left/right</li>
+          </ul>
+          <!-- MOCKUP -->
+          <span class="mockup-label">Visual Example</span>
+          <div style="width:100%;max-width:280px;background:#fff;border:1px solid #E2E0D8;box-shadow:0 4px 18px rgba(0,0,0,.10);font-family:'Inter',sans-serif">
+            <!-- Header -->
+            <div style="padding:14px 16px 10px;display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:8px">
+                <img src="jrh-logo.jpg" style="width:34px;height:34px;border-radius:50%;object-fit:cover" onerror="this.style.display='none'">
+                <div>
+                  <div style="font-family:'Montserrat',sans-serif;font-size:8px;font-weight:800;color:#1A3A2B;letter-spacing:.3px">JRH ENGINEERING &amp;</div>
+                  <div style="font-family:'Montserrat',sans-serif;font-size:8px;font-weight:800;color:#1A3A2B;letter-spacing:.3px">ENVIRONMENTAL SERVICES</div>
+                </div>
+              </div>
+              <div style="text-align:right;font-size:7px;color:#6B6B6B;line-height:1.9">jrhengineering.net<br>1-800-227-9635<br>TX · NC · FL</div>
+            </div>
+            <div style="height:2px;background:#B8521A;margin:0 0 14px"></div>
+            <!-- Body lines -->
+            <div style="padding:0 16px">
+              <div style="height:5px;background:#F7F6F2;border-radius:2px;margin-bottom:7px;width:55%"></div>
+              <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:5px;width:90%"></div>
+              <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:5px;width:78%"></div>
+              <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:5px;width:85%"></div>
+              <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:14px;width:62%"></div>
+              <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:5px;width:92%"></div>
+              <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:5px;width:70%"></div>
+              <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:5px;width:88%"></div>
+              <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:18px;width:50%"></div>
+            </div>
+            <!-- Footer bar -->
+            <div style="background:#1A3A2B;padding:8px 16px;display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:7px;color:rgba(255,255,255,.6);letter-spacing:.8px">JRHENGINEERING.NET</div>
+              <div style="font-size:7px;color:rgba(255,255,255,.6);letter-spacing:.8px">WBE-CERTIFIED</div>
+            </div>
+          </div>
+          <p class="mockup-caption">Standard letterhead — 8.5" × 11" (scaled preview)</p>
+        </div>
+        <div class="collateral-card">
+          <h4>Presentations (RFPs, Proposals)</h4>
+          <ul class="spec-list">
+            <li data-edit>Cover slide: Full Deep Green background, white logo, project name in Montserrat 900</li>
+            <li data-edit>Section dividers: Burnt Orange accent bar left + section number in large Montserrat 900</li>
+            <li data-edit>Content slides: White background, Charcoal body text, Deep Green headers</li>
+            <li data-edit>Data visualizations: Use brand palette only — no default PowerPoint colors</li>
+            <li data-edit>Slide size: 16:9 widescreen (1920 × 1080px)</li>
+            <li data-edit>Max 5 bullet points per slide; prefer visuals over text walls</li>
+          </ul>
+          <!-- MOCKUP -->
+          <span class="mockup-label">Visual Example</span>
+          <div style="display:flex;flex-direction:column;gap:8px;max-width:360px">
+            <!-- Cover Slide -->
+            <div style="width:100%;aspect-ratio:16/9;background:#1A3A2B;border-radius:5px;padding:20px 24px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,.18);position:relative;overflow:hidden">
+              <div style="position:absolute;right:-40px;bottom:-40px;width:180px;height:180px;border-radius:50%;border:50px solid rgba(255,255,255,.04)"></div>
+              <div style="position:absolute;top:16px;right:20px;display:flex;align-items:center;gap:6px">
+                <img src="jrh-logo.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover;background:#fff" onerror="this.style.display='none'">
+                <div style="font-family:'Montserrat',sans-serif;font-size:7px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.5px;text-transform:uppercase">JRH Engineering</div>
+              </div>
+              <div style="width:3px;height:32px;background:#B8521A;margin-bottom:10px"></div>
+              <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1.1">PROJECT<br>PROPOSAL</div>
+              <div style="font-size:9px;color:rgba(255,255,255,.45);margin-top:8px;font-family:'Inter',sans-serif">[Client Name] · [Project Location] · 2026</div>
+            </div>
+            <!-- Content Slide -->
+            <div style="width:100%;aspect-ratio:16/9;background:#fff;border-radius:5px;padding:16px 20px;box-shadow:0 4px 18px rgba(0,0,0,.08);border:1px solid #E2E0D8;position:relative;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #B8521A">
+                <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;color:#1A3A2B">Our Process &amp; Deliverables</div>
+                <img src="jrh-logo.jpg" style="width:20px;height:20px;border-radius:50%;object-fit:cover" onerror="this.style.display='none'">
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div>
+                  <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:4px;width:90%"></div>
+                  <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:4px;width:75%"></div>
+                  <div style="height:3px;background:#F7F6F2;border-radius:2px;margin-bottom:4px;width:82%"></div>
+                </div>
+                <div style="background:#EBF5EE;border-radius:3px;padding:6px 8px">
+                  <div style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:900;color:#1A3A2B;line-height:1">14</div>
+                  <div style="font-size:7px;color:#2C6B4F;font-weight:600;margin-top:1px">BUSINESS DAYS AVG</div>
+                </div>
+              </div>
+              <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:#1A3A2B"></div>
+            </div>
+          </div>
+          <p class="mockup-caption">Cover slide (top) &amp; Content slide (bottom) — 16:9 format</p>
+        </div>
+        <div class="collateral-card">
+          <h4>Stamp &amp; Seal Standards</h4>
+          <ul class="spec-list">
+            <li data-edit>PE stamp placement: Lower right of title block on all sheets</li>
+            <li data-edit>Title block: Company name spelled out in full — "JRH Engineering &amp; Environmental Services"</li>
+            <li data-edit>Project file naming: <code>JRH-[State]-[County]-[ProjectName]-[SheetType]-v[#].pdf</code></li>
+            <li data-edit>Page headers: Logo (small, 60px height) + project name + sheet number</li>
+            <li data-edit>Issue block: Always include revision date, revision number, and PE initials</li>
+            <li data-edit>Digital signatures: Use Bluebeam or Adobe Sign for digital PE stamps</li>
+          </ul>
+          <!-- MOCKUP -->
+          <span class="mockup-label">Visual Example</span>
+          <div style="max-width:360px;background:#fff;border:1.5px solid #1A3A2B;font-family:'Inter',sans-serif;font-size:8px;box-shadow:0 4px 18px rgba(0,0,0,.08)">
+            <!-- Sheet header bar -->
+            <div style="background:#1A3A2B;padding:6px 12px;display:flex;align-items:center;justify-content:space-between">
+              <div style="font-family:'Montserrat',sans-serif;font-size:8px;font-weight:700;color:#fff;letter-spacing:.5px">JRH-TX-HARRIS-RANCHVIEW-C1-v0.pdf</div>
+              <div style="font-size:7px;color:rgba(255,255,255,.5)">Sheet 1 of 5</div>
+            </div>
+            <!-- Drawing area placeholder -->
+            <div style="background:#F7F6F2;height:80px;display:flex;align-items:center;justify-content:center">
+              <div style="font-size:9px;color:#D4D4CC;letter-spacing:2px;text-transform:uppercase">[ Engineering Drawing ]</div>
+            </div>
+            <!-- Title block -->
+            <div style="border-top:1.5px solid #1A3A2B;display:grid;grid-template-columns:1fr 1px 1fr 1px 120px">
+              <!-- Company block -->
+              <div style="padding:10px 12px">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+                  <img src="jrh-logo.jpg" style="width:24px;height:24px;border-radius:50%;object-fit:cover" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:7px;color:#1A3A2B;letter-spacing:.3px">JRH ENGINEERING &amp;</div>
+                    <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:7px;color:#1A3A2B;letter-spacing:.3px">ENVIRONMENTAL SERVICES</div>
+                  </div>
+                </div>
+                <div style="color:#6B6B6B;line-height:1.9;font-size:7px">jrhengineering.net &nbsp;·&nbsp; 1-800-227-9635<br>TX · NC · FL &nbsp;·&nbsp; WBE-Certified</div>
+              </div>
+              <div style="background:#E2E0D8"></div>
+              <!-- Project info block -->
+              <div style="padding:10px 12px">
+                <div style="color:#6B6B6B;line-height:2;font-size:7px">
+                  <span style="font-weight:700;color:#1A3A2B">PROJECT:</span> Ranchview Subdivision<br>
+                  <span style="font-weight:700;color:#1A3A2B">CLIENT:</span> [Developer Name]<br>
+                  <span style="font-weight:700;color:#1A3A2B">LOCATION:</span> Harris County, TX<br>
+                  <span style="font-weight:700;color:#1A3A2B">SHEET:</span> C-1 — Drainage Plan
+                </div>
+              </div>
+              <div style="background:#E2E0D8"></div>
+              <!-- Revision + PE stamp block -->
+              <div style="padding:10px 12px">
+                <div style="color:#6B6B6B;line-height:2;font-size:7px;margin-bottom:6px">
+                  <span style="font-weight:700;color:#1A3A2B">DATE:</span> 04/27/2026<br>
+                  <span style="font-weight:700;color:#1A3A2B">DRAWN:</span> JRH<br>
+                  <span style="font-weight:700;color:#1A3A2B">REV:</span> 0
+                </div>
+                <!-- PE Stamp placeholder -->
+                <div style="width:48px;height:48px;border-radius:50%;border:1.5px solid #6B6B6B;display:flex;align-items:center;justify-content:center;text-align:center;margin-left:auto">
+                  <div style="font-size:6px;color:#6B6B6B;line-height:1.4;font-weight:700">PE<br>STAMP</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mockup-caption">Engineering drawing title block — PE stamp in lower-right corner</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer class="playbook-footer">
+  <strong>JRH Engineering &amp; Environmental Services</strong><br>
+  jrhengineering.net &nbsp;·&nbsp; 1-800-227-9635 &nbsp;·&nbsp; admin@jrhengineering.net<br>
+  Texas &nbsp;·&nbsp; North Carolina &nbsp;·&nbsp; Florida &nbsp;·&nbsp; WBE-Certified<br><br>
+  <span data-edit>Brand Playbook v1.0 · 2026 · Confidential — Internal Use Only</span><br>
+  Questions about brand usage? Contact the marketing lead or project manager.
+</footer>
+
+<script>
+// ── EDIT MODE ────────────────────────────────────────────
+const STORAGE_KEY = 'jrh-brand-playbook-edits';
+const editables   = () => document.querySelectorAll('[data-edit]');
+
+function toggleEdit() {
+  const btn  = document.getElementById('btn-edit');
+  const body = document.body;
+  const on   = !body.classList.contains('editing');
+  body.classList.toggle('editing', on);
+  btn.textContent = on ? 'Done Editing' : 'Edit Mode';
+  btn.classList.toggle('active', on);
+  document.getElementById('btn-reset').classList.toggle('visible', on);
+  editables().forEach(el => {
+    el.setAttribute('contenteditable', on ? 'true' : 'false');
+    if (on) el.addEventListener('input', saveEdits);
+  });
+}
+
+function saveEdits() {
+  const data = {};
+  editables().forEach((el, i) => { data[i] = el.innerHTML; });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function loadEdits() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  const data = JSON.parse(raw);
+  editables().forEach((el, i) => {
+    if (data[i] !== undefined) el.innerHTML = data[i];
+  });
+}
+
+function resetEdits() {
+  if (!confirm('Reset all edits to the default content?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+document.addEventListener('DOMContentLoaded', loadEdits);
+</script>
+</body>
+</html>
